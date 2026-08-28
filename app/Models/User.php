@@ -12,6 +12,8 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $table = 'usuarios';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -30,8 +32,39 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'senha',
         'remember_token',
     ];
+
+    protected function name(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            get: fn ($value, array $attributes) => $attributes['nome'] ?? null,
+            set: fn ($value) => ['nome' => $value],
+        );
+    }
+
+    protected function password(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            get: fn ($value, array $attributes) => $attributes['senha'] ?? null,
+            set: fn ($value) => ['senha' => $value],
+        );
+    }
+
+    public function getAuthPasswordName(): string
+    {
+        return 'senha';
+    }
+
+    public function getAuthPassword(): string
+    {
+        return (string) $this->senha;
+    }
+
+    public function setRememberToken($value): void
+    {
+    }
 
     /**
      * Get the attributes that should be cast.
@@ -41,7 +74,6 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
