@@ -1,0 +1,429 @@
+/* ========================================
+   CONFIGURAÇÕES GERAIS
+======================================== */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    min-height: 100%;
+
+    font-family: Figtree, sans-serif;
+}
+
+body {
+    background: #202020;
+}
+
+
+/* ========================================
+   PÁGINA
+======================================== */
+
+.login-page {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #202020;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+}
+
+
+/* ========================================
+   CARD PRINCIPAL
+======================================== */
+
+.login-container {
+    width: 600px;
+    height: 400px;
+
+    display: flex;
+
+    background: #ffffff;
+
+    border-radius: 25px;
+
+    overflow: hidden;
+
+    flex-shrink: 0;
+}
+
+.login-form-container {
+    width: 58%;
+    flex: 0 0 58%;
+
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+}
+
+/* ========================================
+   LADO ESQUERDO
+======================================== */
+
+.login-image-content {
+    position: absolute;
+
+    right: 0;
+    top: 50%;
+
+    width: 70px;
+
+    transform: translateY(-50%);
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 14px;
+
+    z-index: 10;
+}
+.login-image {
+    width: 42%;
+    flex: 0 0 42%;
+    height: 100%;
+    background: #843F9A;
+
+    position: relative;
+
+    background-image: url('../../public/build/assets/image_937f86bf\ 1.png');
+    background-size: cover;
+    background-position: center;
+
+    overflow: hidden;
+}
+
+.side-login {
+    width: 70px;
+    height: 27px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    color: #202020;
+
+    font-size: 9px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    flex-shrink: 0;
+}
+
+.register-link {
+    width: 70px;
+
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 8px;
+    font-weight: 600;
+
+    line-height: 10px;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+/* ========================================
+   LADO DIREITO
+======================================== */
+
+.login-form-container {
+    width: 58%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+
+    flex-shrink: 0;
+}
+
+.login-form {
+    width: 240px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-form form {
+    width: 100%;
+}
+
+/* ========================================
+   ÍCONE DO USUÁRIO
+======================================== */
+
+.user-icon {
+    width: 56px;
+    height: 56px;
+
+    position: relative;
+
+    margin-bottom: 8px;
+
+    background: #b28be0;
+
+    border-radius: 50%;
+}
+
+.user-head {
+    width: 18px;
+    height: 18px;
+
+    position: absolute;
+
+    top: 11px;
+    left: 19px;
+
+    background: #ffffff;
+
+    border-radius: 50%;
+}
+
+.user-body {
+    width: 32px;
+    height: 16px;
+
+    position: absolute;
+
+    left: 12px;
+    bottom: 10px;
+
+    background: #ffffff;
+
+    border-radius: 50% 50% 45% 45%;
+}
+
+
+/* ========================================
+   TÍTULO
+======================================== */
+
+.login-form h1 {
+    margin: 0 0 13px;
+
+    font-family: Georgia, serif;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    color: #543579;
+}
+
+
+/* ========================================
+   CAMPOS
+======================================== */
+
+.input-group {
+    width: 100%;
+    height: 40px;
+
+    display: flex;
+    align-items: flex-end;
+
+    border-bottom: 1px solid #777;
+
+    margin-bottom: 7px;
+}
+
+.input-icon {
+    width: 25px;
+    height: 100%;
+
+    display: flex;
+
+    color: #b28be0;
+    align-items: center;
+}
+
+.input-content {
+    flex: 1;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    padding-bottom: 3px;
+}
+
+.input-content label {
+    font-size: 8px;
+    line-height: 10px;
+
+    margin: 0 0 1px 0;
+
+    color: #555;
+}
+
+.input-content input {
+    width: 100%;
+
+    height: 15px;
+
+    padding: 0;
+
+    border: none !important;
+    outline: none !important;
+
+    font-size: 9px;
+    line-height: 15px;
+
+    background: transparent;
+
+    box-shadow: none !important;
+}
+
+/* ========================================
+   ERROS
+======================================== */
+
+.input-error {
+    width: 100%;
+
+    margin-top: -3px;
+    margin-bottom: 5px;
+
+    font-size: 8px;
+    color: #d00000;
+}
+
+.login-status {
+    margin-bottom: 8px;
+
+    font-size: 9px;
+
+    color: #543579;
+}
+
+
+/* ========================================
+   BOTÕES
+======================================== */
+
+.login-actions {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 7px;
+}
+
+.forgot-password {
+    color: #9900ff;
+
+    font-size: 8px;
+
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.login-button {
+    width: 54px;
+    height: 20px;
+
+    border: none;
+    border-radius: 15px;
+
+    background: #9900ff;
+
+    color: #ffffff;
+
+    font-size: 8px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.login-button:hover {
+    background: #7d00d4;
+}
+
+
+/* ========================================
+   RESPONSIVO
+======================================== */
+
+@media (max-width: 600px) {
+
+    .login-page {
+        padding: 15px;
+    }
+
+    .login-container {
+        width: 100%;
+        max-width: 400px;
+
+        height: auto;
+        min-height: 500px;
+
+        flex-direction: column;
+    }
+
+    .login-image {
+        width: 100%;
+        height: 150px;
+    }
+
+    .login-form-container {
+        width: 100%;
+
+        min-height: 350px;
+
+        padding: 30px 20px;
+    }
+
+    .login-form {
+        width: 85%;
+    }
+
+    .login-image-content {
+        bottom: 25px;
+
+        flex-direction: row;
+
+        justify-content: center;
+
+        gap: 15px;
+    }
+}
