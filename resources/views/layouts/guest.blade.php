@@ -22,6 +22,7 @@
     'resources/css/app.css',
     'resources/css/login.css',
     'resources/css/cadastro.css',
+    'resources/css/forgotPassword.css',
     'resources/js/app.js'
     ])
 </head>
