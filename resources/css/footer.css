@@ -1,0 +1,325 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    min-height: 100%;
+
+    font-family: Figtree, sans-serif;
+}
+
+body {
+    background: #202020;
+}
+
+
+/* =========================================
+   FOOTER GERAL
+========================================= */
+
+.footer {
+    width: 100%;
+
+    background: #684176;
+
+    color: #fff;
+
+    font-family: Figtree, sans-serif;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   PARTE PRINCIPAL
+========================================= */
+
+.footer-main {
+    position: relative;
+
+    width: 100%;
+
+    min-height: 180px;
+
+    padding: 25px 12% 20px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.footer-logo {
+    position: absolute;
+
+    left: 25%;
+    top: 30px;
+
+    width: 105px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+}
+
+.footer-logo img {
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
+}
+
+
+/* =========================================
+   MENU SUPERIOR
+========================================= */
+
+.footer-nav {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 25px;
+}
+
+.footer-nav a {
+    color: #fff;
+
+    font-size: 8px;
+    font-weight: 400;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+}
+
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   DESCRIÇÃO
+========================================= */
+
+.footer-description {
+    width: 320px;
+
+    margin-top: 30px;
+}
+
+.footer-description p {
+    margin: 0;
+
+    color: #fff;
+
+    font-size: 9px;
+
+    line-height: 11px;
+
+    font-weight: 400;
+
+    text-align: left;
+}
+
+
+/* =========================================
+   PARTE INFERIOR
+========================================= */
+
+.footer-bottom {
+    width: 100%;
+
+    min-height: 38px;
+
+    padding: 0 8px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   COPYRIGHT
+========================================= */
+
+.footer-bottom > span {
+    color: #fff;
+
+    font-size: 8px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   LINKS LEGAIS
+========================================= */
+
+.footer-legal {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+.footer-legal a {
+    color: #fff;
+
+    font-size: 8px;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+}
+
+.footer-legal a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+    .footer-main {
+        padding-left: 8%;
+        padding-right: 8%;
+    }
+
+    .footer-logo {
+        left: 25%;
+    }
+
+    .footer-nav {
+        gap: 15px;
+    }
+
+    .footer-description {
+        width: 320px;
+    }
+
+    .footer-legal {
+        gap: 12px;
+    }
+
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 600px) {
+
+    .footer-main {
+        min-height: auto;
+
+        padding: 25px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+    }
+
+
+    /* LOGO */
+
+    .footer-logo {
+        position: static;
+
+        width: 100px;
+        height: auto;
+
+        margin-bottom: 20px;
+    }
+
+
+    /* MENU */
+
+    .footer-nav {
+        width: 100%;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 12px 18px;
+    }
+
+    .footer-nav a {
+        font-size: 9px;
+    }
+
+
+    /* DESCRIÇÃO */
+
+    .footer-description {
+        width: 100%;
+        max-width: 350px;
+
+        margin-top: 25px;
+    }
+
+    .footer-description p {
+        font-size: 9px;
+
+        line-height: 12px;
+
+        text-align: center;
+    }
+
+
+    /* PARTE INFERIOR */
+
+    .footer-bottom {
+        min-height: auto;
+
+        padding: 12px 15px;
+
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .footer-bottom > span {
+        font-size: 8px;
+    }
+
+
+    /* LINKS */
+
+    .footer-legal {
+        width: 100%;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+        gap: 8px 15px;
+    }
+
+    .footer-legal a {
+        font-size: 8px;
+    }
+
+}

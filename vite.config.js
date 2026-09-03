@@ -11,6 +11,7 @@ export default defineConfig({
                 'resources/css/forgotPassword.css',
                 'resources/css/landing.css',
                 'resources/css/navLanding.css',
+                'resources/css/footer.css',
                 'resources/js/app.js',
             ],
 

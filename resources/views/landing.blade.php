@@ -14,19 +14,23 @@
     'resources/css/app.css',
     'resources/css/landing.css',
     'resources/css/navLanding.css',
+    'resources/css/footer.css',
     'resources/js/app.js'
     ])
 </head>
 
-<body>
+<body class="landing-body">
+
+    {{-- =========================================
+        HEADER
 
     {{-- =========================================
         NAVBAR
     ========================================== --}}
 
-    <x-nav-landing/>
+    <x-nav-landing />
 
-        
+
 
 
     {{-- =========================================
@@ -76,19 +80,39 @@
 
 
             {{-- BANNERS LATERAIS --}}
+
+
             <div class="landing-banner-side">
 
-                <a href="#" class="landing-side-banner">
-                    <img
-                        src="{{ asset('assets/images/DeadpoolControl.jpeg') }}"
-                        alt="Cheeky Controller">
-                </a>
+                <div class="landing-side-banner">
+                    <img src="{{ asset('assets/images/DeadpoolControl.jpeg') }}" alt="Cheeky Controller">
 
-                <a href="#" class="landing-side-banner">
-                    <img
-                        src="{{ asset('assets/images/wolverineAlexa.webp') }}"
-                        alt="Alexarine">
-                </a>
+                    <div class="landing-side-banner-content">
+                        <h2>
+                            Cheeky Controller<br>
+                            by Deadpool
+                        </h2>
+
+                        <a href="#">
+                            Compre Agora →
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="landing-side-banner">
+                    <img src="{{ asset('assets/images/wolverineAlexa.webp') }}" alt="Alexarine">
+
+                    <div class="landing-side-banner-content">
+                        <h2>
+                            Alexarine
+                        </h2>
+
+                        <a href="#">
+                            Compre Agora →
+                        </a>
+                    </div>
+                </div>
 
             </div>
 
@@ -466,8 +490,11 @@
         </section>
 
 
+
+
     </main>
 
 </body>
+<x-footer />
 
 </html>

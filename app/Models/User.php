@@ -20,9 +20,16 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'nome',
         'email',
-        'password',
+        'senha',
+        'tipo',
+        'cpf',
+        'data_nascimento',
+        'telefone',
+        'saldo',
+        'foto',
+        'criador_id',
     ];
 
     /**
@@ -74,7 +81,10 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'password' => 'hashed',
+            'senha' => 'hashed',
+            'email_verified_at' => 'datetime',
+            'data_nascimento' => 'date',
+            'saldo' => 'decimal:2',
         ];
     }
 }

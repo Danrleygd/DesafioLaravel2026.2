@@ -3,10 +3,7 @@
     <div class="footer-main">
 
         <div class="footer-logo">
-            <img
-                src="{{ asset('images/logo.png') }}"
-                alt="D-tech"
-            >
+            <x-application-logo class="landing-logo" />
         </div>
 
         <nav class="footer-nav">

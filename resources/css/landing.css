@@ -1,389 +1,242 @@
-/* =========================================
+/* =========================================================
    RESET
-========================================= */
+========================================================= */
 
 * {
     box-sizing: border-box;
+}
+
+html {
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+    display: none;
 }
 
 html,
 body {
     margin: 0;
     padding: 0;
+    width: 100%;
 }
 
 body {
-    background: #d8d4da;
-    color: #111;
-
-    font-family: Arial, Helvetica, sans-serif;
+    background: #202020;
+    font-family: Figtree, sans-serif;
 }
 
 
-/* =========================================
-   NAVBAR
-========================================= */
-
-.landing-navbar {
-    width: 100%;
-    height: 78px;
-
-    background: #d8d4da;
-
-    border: 2px solid #111;
-
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-
-/* =========================================
-   PARTE SUPERIOR
-========================================= */
-
-.landing-navbar-top {
-    width: 100%;
-    height: 48px;
-
-    position: relative;
-}
-
-
-/* =========================================
-   LOGO
-========================================= */
-
-.landing-logo {
-    position: absolute;
-
-    left: 28px;
-    top: 50%;
-
-    width: 105px;
-    height: 40px;
-
-    display: flex;
-    align-items: center;
-
-    transform: translateY(-50%);
-
-    text-decoration: none;
-
-    z-index: 3;
-}
-
-.landing-logo img {
-    width: 95px;
-    height: auto;
-
-    max-height: 38px;
-
-    display: block;
-
-    object-fit: contain;
-}
-
-
-/* =========================================
-   PESQUISA
-========================================= */
-
-.landing-search {
-    position: absolute;
-
-    left: 50%;
-    top: 50%;
-
-    width: 1000px;
-    max-width: calc(100% - 400px);
-
-    height: 24px;
-
-    margin: 0;
-
-    transform: translate(-50%, -50%);
-
-    display: flex;
-    align-items: center;
-
-    background: #f5f3f5;
-
-    border: 1px solid #aaa5ac;
-
-    border-radius: 20px;
-
-    overflow: hidden;
-
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-
-    z-index: 2;
-}
-
-
-/* INPUT */
-
-.landing-search input {
-    flex: 1;
-
-    min-width: 0;
-
-    width: 100%;
-    height: 100%;
-
-    padding: 0 10px;
-
-    border: none;
-    outline: none;
-
-    background: transparent;
-
-    color: #333;
-
-    font-size: 12px;
-}
-
-.landing-search input::placeholder {
-    color: #777;
-}
-
-
-/* LUPA */
-
-.landing-search button {
-    width: 35px;
-    height: 100%;
-
-    padding: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: none;
-
-    background: transparent;
-
-    color: #111;
-
-    cursor: pointer;
-}
-
-.landing-search button svg {
-    width: 17px;
-    height: 17px;
-}
-
-
-/* =========================================
-   ÍCONES
-========================================= */
-
-.landing-navbar-icons {
-    position: absolute;
-
-    right: 28px;
-    top: 50%;
-
-    height: 30px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 27px;
-
-    transform: translateY(-50%);
-
-    z-index: 3;
-}
-
-.landing-nav-icon {
-    width: 27px;
-    height: 27px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: #000;
-
-    text-decoration: none;
-}
-
-.landing-nav-icon svg {
-    width: 27px;
-    height: 27px;
-
-    stroke-width: 1.6;
-}
-
-.landing-nav-icon:hover {
-    transform: scale(1.08);
-}
-
-
-/* =========================================
-   MENU INFERIOR
-========================================= */
-
-.landing-navbar-bottom {
-    width: 100%;
-    height: 28px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 100px;
-}
-
-.landing-menu-link {
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-
-    color: #111;
-
-    font-size: 14px;
-    font-weight: 500;
-
-    text-decoration: none;
-}
-
-.landing-menu-link:nth-child(1) {
-    width: 223px;
-}
-
-.landing-menu-link:nth-child(2) {
-    width: 228px;
-
-    justify-content: center;
-}
-
-.landing-menu-link:nth-child(3) {
-    width: auto;
-
-    justify-content: flex-end;
-}
-
-.landing-menu-link:hover {
-    color: #7400b8;
-}
-
-
-/* =========================================
-   CONTEÚDO
-========================================= */
+/* =========================================================
+   CONTEÚDO PRINCIPAL
+========================================================= */
 
 .landing-content {
     width: 100%;
-
-    padding: 8px 10px 20px;
+    min-height: 100vh;
+    margin: 0;
+    padding: 8px 10px 30px;
+    background: #d8d4da;
 }
 
 
-/* =========================================
+/* =========================================================
    BANNERS
-========================================= */
+========================================================= */
 
 .landing-banners {
     width: 100%;
-
-    height: 275px;
-
-    display: grid;
-
-    grid-template-columns: 2fr 1.1fr;
-
+    height: 500px;
+    display: flex;
+    justify-content: center;
     gap: 10px;
 }
 
 
-/* =========================================
+/* =========================================================
    BANNER PRINCIPAL
-========================================= */
+========================================================= */
 
 .landing-banner-main {
     position: relative;
-
-    width: 100%;
-    height: 275px;
-
+    width: 64%;
+    height: 100%;
     overflow: hidden;
-
-    border-radius: 40px;
+    border-radius: 35px;
+    background: #111;
 }
 
 .landing-banner-main img {
     width: 100%;
     height: 100%;
-
     display: block;
-
     object-fit: cover;
 }
 
 
-/* TEXTO DO BANNER */
+/* =========================================================
+   BANNERS LATERAIS
+========================================================= */
+
+.landing-banner-side {
+    width: 20vw;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.landing-side-banner {
+    position: relative;
+    width: 100%;
+    height: calc(50% - 5px);
+    overflow: hidden;
+    border-radius: 28px;
+    background: #111;
+}
+
+.landing-side-banner img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   TEXTO DOS BANNERS LATERAIS
+========================================================= */
+
+/* O conteúdo fica sobre a imagem */
+.landing-side-banner h2 {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    z-index: 3;
+
+    margin: 0;
+    padding: 0;
+
+    max-width: 180px;
+
+    color: #fff;
+    font-size: 18px;
+    line-height: 20px;
+    font-weight: 700;
+
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Texto menor, caso exista */
+.landing-side-banner p {
+    position: absolute;
+    left: 18px;
+    top: calc(50% + 28px);
+
+    z-index: 3;
+
+    margin: 0;
+
+    color: #fff;
+    font-size: 9px;
+    line-height: 11px;
+    font-weight: 500;
+}
+
+
+/* Botão Compre Agora */
+.landing-side-banner a {
+    position: absolute;
+    left: 18px;
+    top: calc(50% + 45px);
+
+    z-index: 3;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px 10px;
+
+    border-radius: 7px;
+
+    background: #9b32d8;
+    color: #fff;
+
+    font-size: 8px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.landing-side-banner a:hover {
+    background: #7d20b5;
+}
+
+
+/* =========================================================
+   TEXTO DO BANNER PRINCIPAL
+========================================================= */
 
 .landing-banner-overlay {
     position: absolute;
-
     left: 28px;
     top: 50%;
-
     transform: translateY(-50%);
+
+    z-index: 2;
 
     display: flex;
     flex-direction: column;
-
     align-items: flex-start;
 
     color: #fff;
 
-    font-size: 12px;
-    font-weight: bold;
-
-    text-shadow: 0 1px 2px #000;
-}
-
-.landing-banner-overlay span {
-    line-height: 14px;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 700;
 }
 
 .landing-banner-overlay a {
     margin-top: 10px;
-
-    padding: 6px 12px;
+    padding: 7px 13px;
 
     border-radius: 8px;
 
-    background: #a43bd4;
-
+    background: #9b32d8;
     color: #fff;
 
-    font-size: 11px;
+    font-size: 9px;
+    font-weight: 600;
 
     text-decoration: none;
+}
 
-    text-shadow: none;
+.landing-banner-overlay a:hover {
+    background: #7d20b5;
 }
 
 
-/* =========================================
-   SLIDER
-========================================= */
+/* =========================================================
+   PONTOS DO SLIDER
+========================================================= */
 
 .landing-slider-dots {
     position: absolute;
-
-    bottom: 10px;
     left: 50%;
+    bottom: 10px;
 
     transform: translateX(-50%);
 
-    width: 95px;
-    height: 23px;
+    width: 90px;
+    height: 22px;
 
     display: flex;
     align-items: center;
@@ -392,8 +245,9 @@ body {
     gap: 9px;
 
     background: #fff;
-
     border-radius: 20px;
+
+    z-index: 5;
 }
 
 .landing-slider-dots button {
@@ -403,86 +257,43 @@ body {
     padding: 0;
 
     border: none;
-
     border-radius: 50%;
 
-    background: #777;
+    background: #999;
 
     cursor: pointer;
 }
 
-.landing-slider-dots button.active {
-    background: #222;
-}
 
-
-/* =========================================
-   BANNERS LATERAIS
-========================================= */
-
-.landing-banner-side {
-    width: 100%;
-    height: 275px;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 8px;
-}
-
-.landing-side-banner {
-    width: 100%;
-    height: calc(50% - 4px);
-
-    display: block;
-
-    overflow: hidden;
-
-    border-radius: 32px;
-}
-
-.landing-side-banner img {
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    object-fit: cover;
-}
-
-
-/* =========================================
+/* =========================================================
    CATEGORIAS
-========================================= */
+========================================================= */
 
 .landing-categories {
     width: 100%;
-
-    margin-top: 16px;
+    margin-top: 15px;
 
     display: flex;
-
     justify-content: center;
+    align-items: center;
 
-    gap: 10px;
+    gap: 100px;
 }
 
 .landing-category {
-    width: 60px;
+    width: 100px;
+    min-width: 100px;
 
     display: flex;
     flex-direction: column;
-
     align-items: center;
-
-    color: #111;
 
     text-decoration: none;
 }
 
 .landing-category-image {
-    width: 60px;
-    height: 60px;
+    width: 100px;
+    height: 100px;
 
     display: flex;
     align-items: center;
@@ -490,121 +301,101 @@ body {
 
     overflow: hidden;
 
-    background: #7478ed;
-
-    border-radius: 13px;
+    background: #7775df;
+    border-radius: 14px;
 }
 
 .landing-category-image img {
-    width: 85%;
-    height: 85%;
+    width: 82%;
+    height: 82%;
 
     object-fit: contain;
 }
 
 .landing-category span {
-    width: 100%;
+    margin-top: 10px;
 
-    margin-top: 3px;
+    color: #111;
+
+    font-size: 15px;
+    line-height: 6px;
 
     text-align: center;
-
-    font-size: 6px;
-    line-height: 7px;
+    white-space: nowrap;
 }
 
 
-/* =========================================
+/* =========================================================
    SEÇÃO DE PRODUTOS
-========================================= */
+========================================================= */
 
 .landing-products-section {
     width: 100%;
-
-    margin-top: 10px;
+    margin-top: 18px;
 }
 
 
-/* =========================================
+/* =========================================================
    CABEÇALHO DA SEÇÃO
-========================================= */
+========================================================= */
 
 .landing-section-header {
     width: 100%;
-    height: 28px;
+    height: 24px;
 
     display: flex;
-
     align-items: center;
     justify-content: space-between;
-
-    padding: 0 5px;
 }
 
 .landing-section-title {
     display: flex;
-
     align-items: center;
-
     gap: 5px;
-
-    font-size: 11px;
 }
 
 .landing-section-title strong {
+    color: #111;
     font-size: 10px;
+    font-weight: 700;
+}
+
+.landing-section-icon {
+    width: 21px;
+    height: 21px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid #5a087c;
+    border-radius: 50%;
+
+    color: #5a087c;
+
+    font-size: 11px;
+    font-weight: 700;
 }
 
 .landing-section-header > a {
     color: #111;
 
     font-size: 9px;
-    font-weight: bold;
+    font-weight: 600;
 
     text-decoration: none;
 }
 
 
-/* =========================================
-   ÍCONE DA SEÇÃO
-========================================= */
-
-.landing-section-icon {
-    width: 22px;
-    height: 22px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 2px solid #41125d;
-
-    border-radius: 50%;
-
-    background: #e5d9e8;
-
-    color: #41125d;
-
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.landing-section-icon.upgrade {
-    font-size: 11px;
-}
-
-
-/* =========================================
-   PRODUTOS
-========================================= */
+/* =========================================================
+   ÁREA DOS PRODUTOS
+========================================================= */
 
 .landing-products-wrapper {
-    width: 100%;
-
     position: relative;
 
-    display: flex;
-    align-items: center;
+    width: 100%;
+    margin-top: 7px;
 }
 
 .landing-products {
@@ -612,71 +403,90 @@ body {
 
     display: grid;
 
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
 
     gap: 14px;
 
-    padding: 0 50px;
+    padding: 0 45px;
+
+    overflow: hidden;
 }
 
 
-/* =========================================
+/* =========================================================
    CARD
-========================================= */
+========================================================= */
 
 .landing-product-card {
     position: relative;
 
     width: 100%;
-    height: 138px;
+    height: 164px;
+    min-height: 164px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 6px 8px 7px;
 
     overflow: hidden;
 
-    background: #b083d8;
+    background: #b080d9;
 
-    border-radius: 7px;
-
-    padding: 5px 7px;
-
-    color: #111;
+    border-radius: 8px;
 }
 
 
-/* DESCONTO */
+/* =========================================================
+   DESCONTO
+========================================================= */
 
 .landing-discount {
     position: absolute;
 
-    top: 5px;
-    left: 5px;
+    top: 6px;
+    left: 6px;
 
-    padding: 2px 4px;
+    min-width: 28px;
+    height: 17px;
 
-    background: #53106e;
+    padding: 0 5px;
 
-    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    font-size: 8px;
-    font-weight: bold;
+    background: #5a008c;
 
     border-radius: 2px;
 
-    z-index: 2;
+    color: #fff;
+
+    font-size: 7px;
+    font-weight: 700;
+
+    z-index: 3;
 }
 
 
-/* FAVORITO */
+/* =========================================================
+   FAVORITO
+========================================================= */
 
 .landing-favorite {
     position: absolute;
 
-    top: 3px;
-    right: 5px;
+    top: 5px;
+    right: 6px;
 
     width: 22px;
     height: 22px;
 
     padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     border: none;
 
@@ -684,22 +494,26 @@ body {
 
     color: #111;
 
-    font-size: 22px;
-    line-height: 20px;
+    font-size: 18px;
+    line-height: 1;
 
     cursor: pointer;
 
-    z-index: 2;
+    z-index: 3;
 }
 
 
-/* =========================================
+/* =========================================================
    IMAGEM DO PRODUTO
-========================================= */
+========================================================= */
 
 .landing-product-image {
     width: 100%;
-    height: 78px;
+    height: 82px;
+
+    flex-shrink: 0;
+
+    margin-top: 2px;
 
     display: flex;
     align-items: center;
@@ -707,62 +521,107 @@ body {
 }
 
 .landing-product-image img {
-    width: 90px;
-    height: 75px;
+    width: 76px;
+    height: 76px;
+
+    display: block;
 
     object-fit: contain;
 }
 
 
-/* =========================================
+/* =========================================================
    INFORMAÇÕES
-========================================= */
+========================================================= */
 
 .landing-product-info {
     width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 2px 2px 0;
 }
 
 .landing-product-info h3 {
+    width: 100%;
+
     margin: 0;
 
+    color: #111;
+
     font-size: 10px;
+    line-height: 12px;
     font-weight: 500;
 
-    line-height: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
+
+/* =========================================================
+   PREÇO
+========================================================= */
+
 .landing-price {
+    width: 100%;
+
+    margin-top: 2px;
+
     display: flex;
+    align-items: center;
 
-    align-items: baseline;
-
-    gap: 4px;
+    gap: 5px;
 }
 
 .landing-price strong {
+    color: #111;
+
     font-size: 10px;
+    line-height: 11px;
+    font-weight: 700;
 }
 
 .landing-price del {
-    font-size: 6px;
+    color: #555;
+
+    font-size: 7px;
+    line-height: 9px;
 }
 
-.landing-rating {
-    margin-top: 1px;
 
-    font-size: 6px;
+/* =========================================================
+   AVALIAÇÃO
+========================================================= */
+
+.landing-rating {
+    width: 100%;
+
+    margin-top: 3px;
+
+    display: flex;
+    align-items: center;
+
+    color: #111;
+
+    font-size: 7px;
+    line-height: 9px;
 }
 
 .landing-rating span {
+    margin-right: 2px;
+
     color: #ffd400;
 
-    font-size: 10px;
+    font-size: 9px;
 }
 
 
-/* =========================================
+/* =========================================================
    SETAS
-========================================= */
+========================================================= */
 
 .landing-arrow {
     position: absolute;
@@ -771,205 +630,146 @@ body {
 
     transform: translateY(-50%);
 
-    width: 25px;
-    height: 25px;
+    width: 27px;
+    height: 27px;
+
+    padding: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    padding: 0;
-
     border: none;
-
     border-radius: 50%;
 
     background: #fff;
 
-    color: #ddd;
+    color: #d0d0d0;
 
-    font-size: 28px;
-    line-height: 20px;
+    font-size: 21px;
+    line-height: 27px;
 
     cursor: pointer;
 
-    z-index: 5;
-}
-
-.landing-arrow-left {
-    left: 14px;
-}
-
-.landing-arrow-right {
-    right: 14px;
+    z-index: 10;
 }
 
 .landing-arrow:hover {
     color: #7400b8;
 }
 
+.landing-arrow-left {
+    left: 8px;
+}
 
-/* =========================================
-   TABLET
-========================================= */
+.landing-arrow-right {
+    right: 8px;
+}
 
-@media (max-width: 1000px) {
 
-    .landing-search {
-        width: 600px;
-        max-width: calc(100% - 350px);
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .landing-product-card {
+        height: 164px;
+        min-height: 164px;
     }
 
+    .landing-product-image {
+        height: 82px;
+    }
+
+    .landing-product-image img {
+        width: 74px;
+        height: 74px;
+    }
+
+    .landing-side-banner h2 {
+        font-size: 15px;
+        line-height: 17px;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
     .landing-banners {
-        grid-template-columns: 2fr 1fr;
+        height: 240px;
+    }
+
+    .landing-products {
+        gap: 10px;
+        padding-left: 38px;
+        padding-right: 38px;
+    }
+
+    .landing-product-card {
+        height: 160px;
+        min-height: 160px;
+    }
+
+    .landing-product-image {
+        height: 79px;
+    }
+
+    .landing-product-image img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .landing-side-banner h2 {
+        left: 14px;
+        font-size: 13px;
+        line-height: 15px;
+    }
+
+    .landing-side-banner a {
+        left: 14px;
+        top: calc(50% + 32px);
+        font-size: 7px;
+        padding: 4px 8px;
+    }
+}
+
+
+/* =========================================================
+   TABLET PEQUENO
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .landing-banners {
+        height: 220px;
+        gap: 8px;
+    }
+
+    .landing-side-banner h2 {
+        left: 12px;
+        font-size: 11px;
+        line-height: 13px;
+    }
+
+    .landing-side-banner a {
+        left: 12px;
+        top: calc(50% + 28px);
+        font-size: 6px;
+        padding: 3px 6px;
     }
 
     .landing-categories {
         gap: 7px;
     }
 
-    .landing-products {
-        gap: 10px;
-        padding: 0 40px;
-    }
-
-}
-
-
-/* =========================================
-   CELULAR
-========================================= */
-
-@media (max-width: 700px) {
-
-    .landing-navbar {
-        height: 100px;
-    }
-
-    .landing-navbar-top {
-        height: 70px;
-    }
-
-    .landing-logo {
-        left: 15px;
-        top: 22px;
-
-        width: 80px;
-        height: 30px;
-
-        transform: none;
-    }
-
-    .landing-logo img {
-        width: 80px;
-        max-height: 30px;
-    }
-
-    .landing-navbar-icons {
-        right: 15px;
-        top: 22px;
-
-        gap: 8px;
-
-        transform: none;
-    }
-
-    .landing-nav-icon,
-    .landing-nav-icon svg {
-        width: 22px;
-        height: 22px;
-    }
-
-    .landing-search {
-        left: 50%;
-        top: 54px;
-
-        width: calc(100% - 30px);
-        max-width: none;
-
-        height: 24px;
-    }
-
-    .landing-navbar-bottom {
-        height: 30px;
-
-        padding: 0 15px;
-    }
-
-    .landing-menu-link {
-        width: auto !important;
-
-        font-size: 10px;
-    }
-
-
-    /* BANNERS */
-
-    .landing-content {
-        padding: 6px;
-    }
-
-    .landing-banners {
-        height: auto;
-
-        display: flex;
-        flex-direction: column;
-    }
-
-    .landing-banner-main {
-        height: 220px;
-    }
-
-    .landing-banner-side {
-        height: 180px;
-
-        flex-direction: row;
-    }
-
-    .landing-side-banner {
-        height: 100%;
-        width: 50%;
-    }
-
-
-    /* CATEGORIAS */
-
-    .landing-categories {
-        overflow-x: auto;
-
-        justify-content: flex-start;
-
-        padding-bottom: 5px;
-    }
-
-    .landing-category {
-        flex-shrink: 0;
-    }
-
-
-    /* PRODUTOS */
-
-    .landing-products {
-        grid-template-columns: repeat(2, 1fr);
-
-        padding: 0 35px;
-    }
-
-    .landing-product-card {
-        height: 145px;
-    }
-
-}
-
-
-/* =========================================
-   CELULAR PEQUENO
-========================================= */
-
-@media (max-width: 450px) {
-
     .landing-category {
         width: 55px;
+        min-width: 55px;
     }
 
     .landing-category-image {
@@ -978,24 +778,215 @@ body {
     }
 
     .landing-products {
-        grid-template-columns: repeat(2, 1fr);
-
         gap: 8px;
-
-        padding: 0 30px;
+        padding-left: 32px;
+        padding-right: 32px;
     }
 
     .landing-product-card {
-        height: 140px;
+        height: 150px;
+        min-height: 150px;
+        padding: 5px 6px;
     }
 
     .landing-product-image {
-        height: 76px;
+        height: 72px;
     }
 
     .landing-product-image img {
-        width: 80px;
-        height: 70px;
+        width: 64px;
+        height: 64px;
     }
 
+    .landing-product-info h3 {
+        font-size: 9px;
+        line-height: 10px;
+    }
+
+    .landing-price strong {
+        font-size: 9px;
+    }
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width: 550px) {
+
+    .landing-content {
+        padding: 6px;
+    }
+
+    .landing-banners {
+        height: 200px;
+    }
+
+    .landing-side-banner {
+        border-radius: 20px;
+    }
+
+    .landing-side-banner h2 {
+        left: 10px;
+        font-size: 9px;
+        line-height: 11px;
+        max-width: 100px;
+    }
+
+    .landing-side-banner a {
+        left: 10px;
+        top: calc(50% + 23px);
+        font-size: 5px;
+        padding: 3px 5px;
+    }
+
+    .landing-categories {
+        margin-top: 12px;
+        gap: 5px;
+    }
+
+    .landing-category {
+        width: 48px;
+        min-width: 48px;
+    }
+
+    .landing-category-image {
+        width: 48px;
+        height: 48px;
+    }
+
+    .landing-products-section {
+        margin-top: 14px;
+    }
+
+    .landing-products {
+        gap: 6px;
+        padding-left: 27px;
+        padding-right: 27px;
+    }
+
+    .landing-product-card {
+        height: 142px;
+        min-height: 142px;
+        padding: 5px;
+    }
+
+    .landing-product-image {
+        height: 67px;
+    }
+
+    .landing-product-image img {
+        width: 59px;
+        height: 59px;
+    }
+
+    .landing-product-info h3 {
+        font-size: 7px;
+        line-height: 8px;
+    }
+
+    .landing-price strong {
+        font-size: 7px;
+    }
+
+    .landing-price del {
+        font-size: 5px;
+    }
+
+    .landing-rating {
+        font-size: 5px;
+    }
+
+    .landing-rating span {
+        font-size: 7px;
+    }
+
+    .landing-section-title strong {
+        font-size: 8px;
+    }
+
+    .landing-section-header > a {
+        font-size: 7px;
+    }
+}
+
+
+/* =========================================================
+   CELULAR PEQUENO
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .landing-banners {
+        height: 180px;
+    }
+
+    .landing-side-banner h2 {
+        left: 8px;
+        font-size: 8px;
+        line-height: 9px;
+        max-width: 80px;
+    }
+
+    .landing-side-banner a {
+        left: 8px;
+        top: calc(50% + 20px);
+        font-size: 4px;
+        padding: 2px 4px;
+    }
+
+    .landing-category {
+        width: 40px;
+        min-width: 40px;
+    }
+
+    .landing-category-image {
+        width: 40px;
+        height: 40px;
+    }
+
+    .landing-products {
+        gap: 5px;
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .landing-product-card {
+        height: 132px;
+        min-height: 132px;
+        padding: 4px;
+    }
+
+    .landing-product-image {
+        height: 61px;
+    }
+
+    .landing-product-image img {
+        width: 54px;
+        height: 54px;
+    }
+
+    .landing-product-info h3 {
+        font-size: 6px;
+        line-height: 7px;
+    }
+
+    .landing-price strong {
+        font-size: 6px;
+    }
+
+    .landing-rating {
+        font-size: 4px;
+    }
+
+    .landing-rating span {
+        font-size: 6px;
+    }
+
+    .landing-arrow {
+        width: 22px;
+        height: 22px;
+        font-size: 17px;
+    }
 }
