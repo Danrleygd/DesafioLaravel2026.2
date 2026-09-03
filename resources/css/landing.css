@@ -1,0 +1,1001 @@
+/* =========================================
+   RESET
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #d8d4da;
+    color: #111;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+.landing-navbar {
+    width: 100%;
+    height: 78px;
+
+    background: #d8d4da;
+
+    border: 2px solid #111;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================================
+   PARTE SUPERIOR
+========================================= */
+
+.landing-navbar-top {
+    width: 100%;
+    height: 48px;
+
+    position: relative;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.landing-logo {
+    position: absolute;
+
+    left: 28px;
+    top: 50%;
+
+    width: 105px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+
+    transform: translateY(-50%);
+
+    text-decoration: none;
+
+    z-index: 3;
+}
+
+.landing-logo img {
+    width: 95px;
+    height: auto;
+
+    max-height: 38px;
+
+    display: block;
+
+    object-fit: contain;
+}
+
+
+/* =========================================
+   PESQUISA
+========================================= */
+
+.landing-search {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 1000px;
+    max-width: calc(100% - 400px);
+
+    height: 24px;
+
+    margin: 0;
+
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    align-items: center;
+
+    background: #f5f3f5;
+
+    border: 1px solid #aaa5ac;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+
+    z-index: 2;
+}
+
+
+/* INPUT */
+
+.landing-search input {
+    flex: 1;
+
+    min-width: 0;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 0 10px;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #333;
+
+    font-size: 12px;
+}
+
+.landing-search input::placeholder {
+    color: #777;
+}
+
+
+/* LUPA */
+
+.landing-search button {
+    width: 35px;
+    height: 100%;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    background: transparent;
+
+    color: #111;
+
+    cursor: pointer;
+}
+
+.landing-search button svg {
+    width: 17px;
+    height: 17px;
+}
+
+
+/* =========================================
+   ÍCONES
+========================================= */
+
+.landing-navbar-icons {
+    position: absolute;
+
+    right: 28px;
+    top: 50%;
+
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 27px;
+
+    transform: translateY(-50%);
+
+    z-index: 3;
+}
+
+.landing-nav-icon {
+    width: 27px;
+    height: 27px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #000;
+
+    text-decoration: none;
+}
+
+.landing-nav-icon svg {
+    width: 27px;
+    height: 27px;
+
+    stroke-width: 1.6;
+}
+
+.landing-nav-icon:hover {
+    transform: scale(1.08);
+}
+
+
+/* =========================================
+   MENU INFERIOR
+========================================= */
+
+.landing-navbar-bottom {
+    width: 100%;
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 100px;
+}
+
+.landing-menu-link {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+
+    color: #111;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    text-decoration: none;
+}
+
+.landing-menu-link:nth-child(1) {
+    width: 223px;
+}
+
+.landing-menu-link:nth-child(2) {
+    width: 228px;
+
+    justify-content: center;
+}
+
+.landing-menu-link:nth-child(3) {
+    width: auto;
+
+    justify-content: flex-end;
+}
+
+.landing-menu-link:hover {
+    color: #7400b8;
+}
+
+
+/* =========================================
+   CONTEÚDO
+========================================= */
+
+.landing-content {
+    width: 100%;
+
+    padding: 8px 10px 20px;
+}
+
+
+/* =========================================
+   BANNERS
+========================================= */
+
+.landing-banners {
+    width: 100%;
+
+    height: 275px;
+
+    display: grid;
+
+    grid-template-columns: 2fr 1.1fr;
+
+    gap: 10px;
+}
+
+
+/* =========================================
+   BANNER PRINCIPAL
+========================================= */
+
+.landing-banner-main {
+    position: relative;
+
+    width: 100%;
+    height: 275px;
+
+    overflow: hidden;
+
+    border-radius: 40px;
+}
+
+.landing-banner-main img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+/* TEXTO DO BANNER */
+
+.landing-banner-overlay {
+    position: absolute;
+
+    left: 28px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    color: #fff;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    text-shadow: 0 1px 2px #000;
+}
+
+.landing-banner-overlay span {
+    line-height: 14px;
+}
+
+.landing-banner-overlay a {
+    margin-top: 10px;
+
+    padding: 6px 12px;
+
+    border-radius: 8px;
+
+    background: #a43bd4;
+
+    color: #fff;
+
+    font-size: 11px;
+
+    text-decoration: none;
+
+    text-shadow: none;
+}
+
+
+/* =========================================
+   SLIDER
+========================================= */
+
+.landing-slider-dots {
+    position: absolute;
+
+    bottom: 10px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 95px;
+    height: 23px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    background: #fff;
+
+    border-radius: 20px;
+}
+
+.landing-slider-dots button {
+    width: 5px;
+    height: 5px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #777;
+
+    cursor: pointer;
+}
+
+.landing-slider-dots button.active {
+    background: #222;
+}
+
+
+/* =========================================
+   BANNERS LATERAIS
+========================================= */
+
+.landing-banner-side {
+    width: 100%;
+    height: 275px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.landing-side-banner {
+    width: 100%;
+    height: calc(50% - 4px);
+
+    display: block;
+
+    overflow: hidden;
+
+    border-radius: 32px;
+}
+
+.landing-side-banner img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+/* =========================================
+   CATEGORIAS
+========================================= */
+
+.landing-categories {
+    width: 100%;
+
+    margin-top: 16px;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+}
+
+.landing-category {
+    width: 60px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    color: #111;
+
+    text-decoration: none;
+}
+
+.landing-category-image {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #7478ed;
+
+    border-radius: 13px;
+}
+
+.landing-category-image img {
+    width: 85%;
+    height: 85%;
+
+    object-fit: contain;
+}
+
+.landing-category span {
+    width: 100%;
+
+    margin-top: 3px;
+
+    text-align: center;
+
+    font-size: 6px;
+    line-height: 7px;
+}
+
+
+/* =========================================
+   SEÇÃO DE PRODUTOS
+========================================= */
+
+.landing-products-section {
+    width: 100%;
+
+    margin-top: 10px;
+}
+
+
+/* =========================================
+   CABEÇALHO DA SEÇÃO
+========================================= */
+
+.landing-section-header {
+    width: 100%;
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 5px;
+}
+
+.landing-section-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    font-size: 11px;
+}
+
+.landing-section-title strong {
+    font-size: 10px;
+}
+
+.landing-section-header > a {
+    color: #111;
+
+    font-size: 9px;
+    font-weight: bold;
+
+    text-decoration: none;
+}
+
+
+/* =========================================
+   ÍCONE DA SEÇÃO
+========================================= */
+
+.landing-section-icon {
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid #41125d;
+
+    border-radius: 50%;
+
+    background: #e5d9e8;
+
+    color: #41125d;
+
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.landing-section-icon.upgrade {
+    font-size: 11px;
+}
+
+
+/* =========================================
+   PRODUTOS
+========================================= */
+
+.landing-products-wrapper {
+    width: 100%;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.landing-products {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 14px;
+
+    padding: 0 50px;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.landing-product-card {
+    position: relative;
+
+    width: 100%;
+    height: 138px;
+
+    overflow: hidden;
+
+    background: #b083d8;
+
+    border-radius: 7px;
+
+    padding: 5px 7px;
+
+    color: #111;
+}
+
+
+/* DESCONTO */
+
+.landing-discount {
+    position: absolute;
+
+    top: 5px;
+    left: 5px;
+
+    padding: 2px 4px;
+
+    background: #53106e;
+
+    color: #fff;
+
+    font-size: 8px;
+    font-weight: bold;
+
+    border-radius: 2px;
+
+    z-index: 2;
+}
+
+
+/* FAVORITO */
+
+.landing-favorite {
+    position: absolute;
+
+    top: 3px;
+    right: 5px;
+
+    width: 22px;
+    height: 22px;
+
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    color: #111;
+
+    font-size: 22px;
+    line-height: 20px;
+
+    cursor: pointer;
+
+    z-index: 2;
+}
+
+
+/* =========================================
+   IMAGEM DO PRODUTO
+========================================= */
+
+.landing-product-image {
+    width: 100%;
+    height: 78px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.landing-product-image img {
+    width: 90px;
+    height: 75px;
+
+    object-fit: contain;
+}
+
+
+/* =========================================
+   INFORMAÇÕES
+========================================= */
+
+.landing-product-info {
+    width: 100%;
+}
+
+.landing-product-info h3 {
+    margin: 0;
+
+    font-size: 10px;
+    font-weight: 500;
+
+    line-height: 13px;
+}
+
+.landing-price {
+    display: flex;
+
+    align-items: baseline;
+
+    gap: 4px;
+}
+
+.landing-price strong {
+    font-size: 10px;
+}
+
+.landing-price del {
+    font-size: 6px;
+}
+
+.landing-rating {
+    margin-top: 1px;
+
+    font-size: 6px;
+}
+
+.landing-rating span {
+    color: #ffd400;
+
+    font-size: 10px;
+}
+
+
+/* =========================================
+   SETAS
+========================================= */
+
+.landing-arrow {
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 25px;
+    height: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    color: #ddd;
+
+    font-size: 28px;
+    line-height: 20px;
+
+    cursor: pointer;
+
+    z-index: 5;
+}
+
+.landing-arrow-left {
+    left: 14px;
+}
+
+.landing-arrow-right {
+    right: 14px;
+}
+
+.landing-arrow:hover {
+    color: #7400b8;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .landing-search {
+        width: 600px;
+        max-width: calc(100% - 350px);
+    }
+
+    .landing-banners {
+        grid-template-columns: 2fr 1fr;
+    }
+
+    .landing-categories {
+        gap: 7px;
+    }
+
+    .landing-products {
+        gap: 10px;
+        padding: 0 40px;
+    }
+
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 700px) {
+
+    .landing-navbar {
+        height: 100px;
+    }
+
+    .landing-navbar-top {
+        height: 70px;
+    }
+
+    .landing-logo {
+        left: 15px;
+        top: 22px;
+
+        width: 80px;
+        height: 30px;
+
+        transform: none;
+    }
+
+    .landing-logo img {
+        width: 80px;
+        max-height: 30px;
+    }
+
+    .landing-navbar-icons {
+        right: 15px;
+        top: 22px;
+
+        gap: 8px;
+
+        transform: none;
+    }
+
+    .landing-nav-icon,
+    .landing-nav-icon svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .landing-search {
+        left: 50%;
+        top: 54px;
+
+        width: calc(100% - 30px);
+        max-width: none;
+
+        height: 24px;
+    }
+
+    .landing-navbar-bottom {
+        height: 30px;
+
+        padding: 0 15px;
+    }
+
+    .landing-menu-link {
+        width: auto !important;
+
+        font-size: 10px;
+    }
+
+
+    /* BANNERS */
+
+    .landing-content {
+        padding: 6px;
+    }
+
+    .landing-banners {
+        height: auto;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .landing-banner-main {
+        height: 220px;
+    }
+
+    .landing-banner-side {
+        height: 180px;
+
+        flex-direction: row;
+    }
+
+    .landing-side-banner {
+        height: 100%;
+        width: 50%;
+    }
+
+
+    /* CATEGORIAS */
+
+    .landing-categories {
+        overflow-x: auto;
+
+        justify-content: flex-start;
+
+        padding-bottom: 5px;
+    }
+
+    .landing-category {
+        flex-shrink: 0;
+    }
+
+
+    /* PRODUTOS */
+
+    .landing-products {
+        grid-template-columns: repeat(2, 1fr);
+
+        padding: 0 35px;
+    }
+
+    .landing-product-card {
+        height: 145px;
+    }
+
+}
+
+
+/* =========================================
+   CELULAR PEQUENO
+========================================= */
+
+@media (max-width: 450px) {
+
+    .landing-category {
+        width: 55px;
+    }
+
+    .landing-category-image {
+        width: 55px;
+        height: 55px;
+    }
+
+    .landing-products {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 8px;
+
+        padding: 0 30px;
+    }
+
+    .landing-product-card {
+        height: 140px;
+    }
+
+    .landing-product-image {
+        height: 76px;
+    }
+
+    .landing-product-image img {
+        width: 80px;
+        height: 70px;
+    }
+
+}
