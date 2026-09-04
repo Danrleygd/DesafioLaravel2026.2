@@ -3,12 +3,16 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\ProdutoIndexController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingController::class, 'index'])
     ->name('landing');
 Route::get('/produto/{id}', [ProdutoController::class, 'show'])
     ->name('produto.show');
+
+Route::get('/produtos', [ProdutoIndexController::class, 'index'])
+    ->name('produtos.index');
 
 Route::get('/posts', [LandingController::class, 'index'])
     ->name('posts');

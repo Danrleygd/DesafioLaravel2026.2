@@ -10,24 +10,13 @@ class LandingController extends Controller
 {
     public function index(Request $request)
     {
-        /*
-        |--------------------------------------------------------------------------
-        | BUSCA E FILTRO
-        |--------------------------------------------------------------------------
-        */
-
         $busca = $request->input('busca');
         $categoria = $request->input('categoria');
 
-
         /*
         |--------------------------------------------------------------------------
-        | PRINCIPAIS PROMOÇÕES
+        | PRODUTOS PRINCIPAIS
         |--------------------------------------------------------------------------
-        |
-        | Mantém a busca e o filtro por categoria.
-        | Mostra somente 7 produtos.
-        |
         */
 
         $query = Produto::with('categoria')
@@ -53,22 +42,15 @@ class LandingController extends Controller
             ->take(7)
             ->get();
 
-
         /*
         |--------------------------------------------------------------------------
-        | HORA DO UPGRADE
+        | PRODUTOS DA SEÇÃO "HORA DO UPGRADE"
         |--------------------------------------------------------------------------
-        |
-        | Produtos relacionados a tecnologia:
-        | Smartphones, Tablets, Computadores,
-        | Consoles, Controles e Audio.
-        |
         */
 
         $produtosUpgrade = Produto::with('categoria')
             ->where('quantidade', '>', 0)
             ->whereHas('categoria', function ($query) {
-
                 $query->whereIn('nome', [
                     'Smartphones',
                     'Tablets',
@@ -77,37 +59,98 @@ class LandingController extends Controller
                     'Controles',
                     'Audio',
                 ]);
-
             })
             ->orderBy('id', 'DESC')
             ->take(7)
             ->get();
 
-
         /*
         |--------------------------------------------------------------------------
-        | O QUE FALTA NA SUA CASA
+        | PRODUTOS DA SEÇÃO "O QUE FALTA NA SUA CASA"
         |--------------------------------------------------------------------------
-        |
-        | Produtos relacionados à casa:
-        | Eletrodomesticos e Acessorios.
-        |
         */
 
         $produtosCasa = Produto::with('categoria')
             ->where('quantidade', '>', 0)
             ->whereHas('categoria', function ($query) {
-
                 $query->whereIn('nome', [
                     'Eletrodomesticos',
                     'Acessorios',
                 ]);
-
             })
             ->orderBy('id', 'DESC')
             ->take(7)
             ->get();
 
+        /*
+        |--------------------------------------------------------------------------
+        | PRODUTOS DOS BANNERS LATERAIS
+        |--------------------------------------------------------------------------
+        |
+        | Aqui pegamos somente 2 produtos disponíveis.
+        | Eles NÃO são carrossel.
+        |
+        */
+
+        $produtosLaterais = Produto::where('quantidade', '>', 0)
+            ->whereNotNull('foto')
+            ->where('foto', '!=', '')
+            ->orderBy('id', 'DESC')
+            ->take(2)
+            ->get();
+
+        /*
+        |--------------------------------------------------------------------------
+        | BANNERS PRINCIPAIS
+        |--------------------------------------------------------------------------
+        |
+        | O carrossel possui no máximo 3 itens.
+        |
+        */
+
+        $bannersPrincipais = [
+            [
+                'imagem' => 'razer-kraken-kitty-v2-gengar_inner-details_desktop-1920x700.webp',
+                'alt' => 'Razer Kraken Kitty V2 Gengar',
+                'titulo' => [
+                    'RAZER KRAKEN',
+                    'KITTY V2',
+                    'EDIÇÃO GENGAR'
+                ],
+                'link' => '#'
+            ],
+
+            [
+                'imagem' => 'DeadpoolControl.jpeg',
+                'alt' => 'Controle Deadpool',
+                'titulo' => [
+                    'CHEEKY CONTROLLER',
+                    'BY DEADPOOL'
+                ],
+                'link' => '#'
+            ],
+
+            [
+                'imagem' => 'wolverineAlexa.webp',
+                'alt' => 'Alexarine',
+                'titulo' => [
+                    'ALEXARINE'
+                ],
+                'link' => '#'
+            ],
+        ];
+
+        /*
+        |--------------------------------------------------------------------------
+        | GARANTE NO MÁXIMO 3 BANNERS
+        |--------------------------------------------------------------------------
+        */
+
+        $bannersPrincipais = array_slice(
+            $bannersPrincipais,
+            0,
+            3
+        );
 
         /*
         |--------------------------------------------------------------------------
@@ -117,10 +160,9 @@ class LandingController extends Controller
 
         $categorias = Categoria::orderBy('nome')->get();
 
-
         /*
         |--------------------------------------------------------------------------
-        | RETORNO PARA A LANDING
+        | RETORNO
         |--------------------------------------------------------------------------
         */
 
@@ -128,6 +170,8 @@ class LandingController extends Controller
             'produtos',
             'produtosUpgrade',
             'produtosCasa',
+            'produtosLaterais',
+            'bannersPrincipais',
             'categorias',
             'busca',
             'categoria'

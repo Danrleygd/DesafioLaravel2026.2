@@ -47,10 +47,13 @@ body {
 .landing-banners {
     width: 100%;
     height: 500px;
+
     display: flex;
     justify-content: center;
+
     gap: 10px;
 }
+
 
 /* =========================================================
    BANNER PRINCIPAL
@@ -58,120 +61,59 @@ body {
 
 .landing-banner-main {
     position: relative;
+
     width: 64%;
     height: 100%;
+
     overflow: hidden;
+
     border-radius: 35px;
+
     background: #111;
 }
 
-.landing-banner-main img {
+
+/* =========================================================
+   SLIDES DO CARROSSEL
+========================================================= */
+
+.landing-main-slide {
+    position: absolute;
+
+    inset: 0;
+
     width: 100%;
     height: 100%;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.6s ease,
+        visibility 0.6s ease;
+}
+
+.landing-main-slide.active {
+    opacity: 1;
+    visibility: visible;
+
+    z-index: 1;
+}
+
+
+/* =========================================================
+   IMAGEM DO BANNER PRINCIPAL
+========================================================= */
+
+.landing-main-slide img {
+    width: 100%;
+    height: 100%;
+
     display: block;
+
     object-fit: cover;
 }
 
-/* =========================================================
-   BANNERS LATERAIS
-========================================================= */
-
-.landing-banner-side {
-    width: 20vw;
-    height: 50vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.landing-side-banner {
-    position: relative;
-    width: 100%;
-    height: calc(50% - 5px);
-    overflow: hidden;
-    border-radius: 28px;
-    background: #111;
-}
-
-.landing-side-banner img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-}
-
-/* =========================================================
-   TEXTO DOS BANNERS LATERAIS
-========================================================= */
-
-/* O conteúdo fica sobre a imagem */
-.landing-side-banner h2 {
-    position: absolute;
-    left: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-
-    z-index: 3;
-
-    margin: 0;
-    padding: 0;
-
-    max-width: 180px;
-
-    color: #fff;
-    font-size: 18px;
-    line-height: 20px;
-    font-weight: 700;
-
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-/* Texto menor, caso exista */
-.landing-side-banner p {
-    position: absolute;
-    left: 18px;
-    top: calc(50% + 28px);
-
-    z-index: 3;
-
-    margin: 0;
-
-    color: #fff;
-    font-size: 9px;
-    line-height: 11px;
-    font-weight: 500;
-}
-
-/* Botão Compre Agora */
-.landing-side-banner a {
-    position: absolute;
-    left: 18px;
-    top: calc(50% + 45px);
-
-    z-index: 3;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 5px 10px;
-
-    border-radius: 7px;
-
-    background: #9b32d8;
-    color: #fff;
-
-    font-size: 8px;
-    font-weight: 600;
-
-    text-decoration: none;
-}
-
-.landing-side-banner a:hover {
-    background: #7d20b5;
-}
 
 /* =========================================================
    TEXTO DO BANNER PRINCIPAL
@@ -179,8 +121,10 @@ body {
 
 .landing-banner-overlay {
     position: absolute;
+
     left: 28px;
     top: 50%;
+
     transform: translateY(-50%);
 
     z-index: 2;
@@ -198,11 +142,13 @@ body {
 
 .landing-banner-overlay a {
     margin-top: 10px;
+
     padding: 7px 13px;
 
     border-radius: 8px;
 
     background: #9b32d8;
+
     color: #fff;
 
     font-size: 9px;
@@ -215,12 +161,14 @@ body {
     background: #7d20b5;
 }
 
+
 /* =========================================================
-   PONTOS DO SLIDER
+   INDICADORES
 ========================================================= */
 
 .landing-slider-dots {
     position: absolute;
+
     left: 50%;
     bottom: 10px;
 
@@ -236,9 +184,10 @@ body {
     gap: 9px;
 
     background: #fff;
+
     border-radius: 20px;
 
-    z-index: 5;
+    z-index: 10;
 }
 
 .landing-slider-dots button {
@@ -248,12 +197,327 @@ body {
     padding: 0;
 
     border: none;
+
     border-radius: 50%;
 
     background: #999;
 
     cursor: pointer;
 }
+
+.landing-slider-dots button.active {
+    background: #111;
+
+    transform: scale(1.4);
+}
+
+
+/* =========================================================
+   BANNERS / PRODUTOS LATERAIS
+========================================================= */
+
+.landing-banner-side {
+    width: 20vw;
+    height: 50vh;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 10px;
+}
+
+
+/* =========================================================
+   CARD DO PRODUTO LATERAL
+========================================================= */
+
+.landing-side-banner {
+    position: relative;
+
+    width: 100%;
+    height: calc(50% - 5px);
+
+    display: block;
+
+    overflow: hidden;
+
+    border-radius: 28px;
+
+    background: #111;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   IMAGEM
+========================================================= */
+
+.landing-side-banner img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition: transform 0.3s ease;
+}
+
+.landing-side-banner:hover img {
+    transform: scale(1.04);
+}
+
+
+/* =========================================================
+   ÁREA DO NOME DO PRODUTO
+========================================================= */
+
+.landing-side-product-info {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 3;
+
+    padding: 35px 14px 14px;
+
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.85),
+        rgba(0, 0, 0, 0.55),
+        transparent
+    );
+
+    color: #fff;
+}
+
+
+/* =========================================================
+   NOME
+========================================================= */
+
+.landing-side-product-info h2 {
+    width: 100%;
+
+    margin: 0;
+
+    color: #fff;
+
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 700;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   TEXTO COMPRAR AGORA
+========================================================= */
+
+.landing-side-product-info span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #d78aff;
+
+    font-size: 9px;
+    line-height: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   HOVER DO TEXTO
+========================================================= */
+
+.landing-side-banner:hover .landing-side-product-info h2 {
+    color: #e0a4ff;
+}
+
+.landing-side-banner:hover .landing-side-product-info span {
+    color: #fff;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .landing-banners {
+        height: 240px;
+    }
+
+    .landing-banner-overlay {
+        left: 18px;
+
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .landing-banner-overlay a {
+        font-size: 8px;
+
+        padding: 6px 10px;
+    }
+
+    .landing-side-product-info {
+        padding: 28px 10px 10px;
+    }
+
+    .landing-side-product-info h2 {
+        font-size: 11px;
+        line-height: 14px;
+    }
+
+    .landing-side-product-info span {
+        font-size: 7px;
+    }
+}
+
+
+/* =========================================================
+   TABLET PEQUENO
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .landing-banners {
+        height: 220px;
+
+        gap: 8px;
+    }
+
+    .landing-banner-overlay {
+        left: 12px;
+
+        font-size: 10px;
+        line-height: 12px;
+    }
+
+    .landing-banner-overlay a {
+        font-size: 7px;
+
+        padding: 5px 8px;
+    }
+
+    .landing-side-product-info {
+        padding: 25px 8px 8px;
+    }
+
+    .landing-side-product-info h2 {
+        font-size: 9px;
+        line-height: 11px;
+    }
+
+    .landing-side-product-info span {
+        font-size: 6px;
+        line-height: 8px;
+    }
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width: 550px) {
+
+    .landing-banners {
+        height: 200px;
+    }
+
+    .landing-banner-main {
+        width: 100%;
+    }
+
+    .landing-banner-side {
+        width: 35%;
+    }
+
+    .landing-banner-overlay {
+        left: 10px;
+
+        font-size: 8px;
+        line-height: 10px;
+    }
+
+    .landing-banner-overlay a {
+        margin-top: 7px;
+
+        font-size: 6px;
+
+        padding: 4px 7px;
+    }
+
+    .landing-side-product-info {
+        padding: 22px 7px 7px;
+    }
+
+    .landing-side-product-info h2 {
+        font-size: 8px;
+        line-height: 10px;
+    }
+
+    .landing-side-product-info span {
+        font-size: 5px;
+    }
+}
+
+
+/* =========================================================
+   CELULAR PEQUENO
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .landing-banners {
+        height: 180px;
+    }
+
+    .landing-banner-overlay {
+        left: 8px;
+
+        font-size: 7px;
+        line-height: 9px;
+    }
+
+    .landing-banner-overlay a {
+        font-size: 5px;
+
+        padding: 3px 6px;
+    }
+
+    .landing-side-product-info {
+        padding: 18px 5px 5px;
+    }
+
+    .landing-side-product-info h2 {
+        font-size: 7px;
+        line-height: 9px;
+    }
+
+    .landing-side-product-info span {
+        font-size: 4px;
+        line-height: 6px;
+    }
+}
+
 
 /* =========================================================
    CATEGORIAS

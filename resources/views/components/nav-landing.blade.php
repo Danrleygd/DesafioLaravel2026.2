@@ -169,14 +169,7 @@
         </a>
 
         <a
-            href="#categorias"
-            class="landing-menu-link"
-        >
-            Categorias
-        </a>
-
-        <a
-            href="#produtos"
+            href="produtos"
             class="landing-menu-link"
         >
             Produtos
