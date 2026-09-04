@@ -3,10 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>D-tech</title>
 
@@ -22,28 +19,18 @@
 <body class="landing-body">
 
     {{-- =========================================
-        HEADER
-
-    {{-- =========================================
-        NAVBAR
+         NAVBAR
     ========================================== --}}
-
     <x-nav-landing />
-
-
-
 
     {{-- =========================================
          CONTEÚDO
     ========================================== --}}
-
     <main class="landing-content">
-
 
         {{-- =========================================
              BANNERS
         ========================================== --}}
-
         <section class="landing-banners">
 
             {{-- BANNER PRINCIPAL --}}
@@ -65,7 +52,6 @@
 
                 </div>
 
-
                 {{-- CONTROLES --}}
                 <div class="landing-slider-dots">
 
@@ -78,16 +64,17 @@
 
             </div>
 
-
             {{-- BANNERS LATERAIS --}}
-
-
             <div class="landing-banner-side">
 
                 <div class="landing-side-banner">
-                    <img src="{{ asset('assets/images/DeadpoolControl.jpeg') }}" alt="Cheeky Controller">
+
+                    <img
+                        src="{{ asset('assets/images/DeadpoolControl.jpeg') }}"
+                        alt="Cheeky Controller">
 
                     <div class="landing-side-banner-content">
+
                         <h2>
                             Cheeky Controller<br>
                             by Deadpool
@@ -96,14 +83,19 @@
                         <a href="#">
                             Compre Agora →
                         </a>
+
                     </div>
+
                 </div>
 
-
                 <div class="landing-side-banner">
-                    <img src="{{ asset('assets/images/wolverineAlexa.webp') }}" alt="Alexarine">
+
+                    <img
+                        src="{{ asset('assets/images/wolverineAlexa.webp') }}"
+                        alt="Alexarine">
 
                     <div class="landing-side-banner-content">
+
                         <h2>
                             Alexarine
                         </h2>
@@ -111,7 +103,9 @@
                         <a href="#">
                             Compre Agora →
                         </a>
+
                     </div>
+
                 </div>
 
             </div>
@@ -122,22 +116,25 @@
         {{-- =========================================
              CATEGORIAS
         ========================================== --}}
-
         <section
             id="categorias"
             class="landing-categories">
 
             @php
+
             $imagensCategorias = [
-                'Smartphones' => 'Celular.png',
-                'Tablets' => 'tablet.png',
-                'Computadores' => 'Pc.png',
-                'Controles' => 'controleSwt.png',
-                'Consoles' => 'play5.png',
-                'Audio' => 'fone.png',
-                'Acessorios' => 'carregador.png',
-                'Eletrodomesticos' => 'geladeira.png',
+
+            'Smartphones' => 'Celular.png',
+            'Tablets' => 'tablet.png',
+            'Computadores' => 'Pc.png',
+            'Controles' => 'controleSwt.png',
+            'Consoles' => 'play5.png',
+            'Audio' => 'fone.png',
+            'Acessorios' => 'carregador.png',
+            'Eletrodomesticos' => 'geladeira.png',
+
             ];
+
             @endphp
 
 
@@ -169,7 +166,6 @@
         {{-- =========================================
              PRINCIPAIS PROMOÇÕES
         ========================================== --}}
-
         <section
             id="produtos"
             class="landing-products-section">
@@ -200,7 +196,9 @@
                 <button
                     class="landing-arrow landing-arrow-left"
                     type="button">
+
                     ‹
+
                 </button>
 
 
@@ -210,37 +208,53 @@
 
                     <article class="landing-product-card">
 
+                        {{-- DESCONTO --}}
                         <div class="landing-discount">
                             OFERTA
                         </div>
 
+
+                        {{-- FAVORITO --}}
                         <button
                             class="landing-favorite"
                             type="button">
+
                             ♡
+
                         </button>
 
+
+                        {{-- IMAGEM --}}
                         <a
                             href="{{ route('produto.show', $produto->id) }}"
                             class="landing-product-image">
 
                             @if ($produto->foto)
+
                             <img
-                                src="{{ str_starts_with($produto->foto, 'http://') || str_starts_with($produto->foto, 'https://') ? $produto->foto : asset('storage/' . ltrim($produto->foto, '/')) }}"
+                                src="{{ str_starts_with($produto->foto, 'http://') || str_starts_with($produto->foto, 'https://')
+                                            ? $produto->foto
+                                            : asset('storage/' . ltrim($produto->foto, '/')) }}"
                                 alt="{{ $produto->nome }}">
+
                             @else
+
                             <img
                                 src="{{ asset('assets/images/foneCase.png') }}"
                                 alt="{{ $produto->nome }}">
+
                             @endif
 
                         </a>
 
+
+                        {{-- INFORMAÇÕES --}}
                         <div class="landing-product-info">
 
                             <h3>
                                 {{ $produto->nome }}
                             </h3>
+
 
                             <div class="landing-price">
 
@@ -251,9 +265,16 @@
 
                             </div>
 
+
                             <div class="landing-rating">
-                                <span>★</span>
-                                Disponível: {{ $produto->quantidade }}
+
+                                <span>
+                                    ★
+                                </span>
+
+                                Disponível:
+                                {{ $produto->quantidade }}
+
                             </div>
 
                         </div>
@@ -274,7 +295,9 @@
                 <button
                     class="landing-arrow landing-arrow-right"
                     type="button">
+
                     ›
+
                 </button>
 
             </div>
@@ -285,7 +308,6 @@
         {{-- =========================================
              HORA DO UPGRADE
         ========================================== --}}
-
         <section class="landing-products-section">
 
             <div class="landing-section-header">
@@ -314,68 +336,98 @@
                 <button
                     class="landing-arrow landing-arrow-left"
                     type="button">
+
                     ‹
+
                 </button>
 
 
                 <div class="landing-products">
 
-                    @for ($i = 1; $i <= 5; $i++)
+                    @forelse ($produtosUpgrade as $produto)
 
-                        <article class="landing-product-card">
+                    <article class="landing-product-card">
 
+                        {{-- DESCONTO --}}
                         <div class="landing-discount">
                             -20%
                         </div>
 
 
+                        {{-- FAVORITO --}}
                         <button
                             class="landing-favorite"
                             type="button">
+
                             ♡
+
                         </button>
 
 
-                        <div class="landing-product-image">
+                        {{-- IMAGEM --}}
+                        <a
+                            href="{{ route('produto.show', $produto->id) }}"
+                            class="landing-product-image">
+
+                            @if ($produto->foto)
+
+                            <img
+                                src="{{ str_starts_with($produto->foto, 'http://') || str_starts_with($produto->foto, 'https://')
+                                            ? $produto->foto
+                                            : asset('storage/' . ltrim($produto->foto, '/')) }}"
+                                alt="{{ $produto->nome }}">
+
+                            @else
 
                             <img
                                 src="{{ asset('assets/images/foneCase.png') }}"
-                                alt="Fone de Ouvido">
+                                alt="{{ $produto->nome }}">
 
-                        </div>
+                            @endif
+
+                        </a>
 
 
+                        {{-- INFORMAÇÕES --}}
                         <div class="landing-product-info">
 
                             <h3>
-                                Fone de Ouvido
+                                {{ $produto->nome }}
                             </h3>
+
 
                             <div class="landing-price">
 
                                 <strong>
-                                    R$ 50,00
+                                    R$
+                                    {{ number_format($produto->preco, 2, ',', '.') }}
                                 </strong>
-
-                                <del>
-                                    R$ 60,00
-                                </del>
 
                             </div>
 
+
                             <div class="landing-rating">
 
-                                <span>★</span>
+                                <span>
+                                    ★
+                                </span>
 
-                                4.7 (218)
+                                Disponível:
+                                {{ $produto->quantidade }}
 
                             </div>
 
                         </div>
 
-                        </article>
+                    </article>
 
-                        @endfor
+                    @empty
+
+                    <p>
+                        Nenhum produto encontrado.
+                    </p>
+
+                    @endforelse
 
                 </div>
 
@@ -383,13 +435,19 @@
                 <button
                     class="landing-arrow landing-arrow-right"
                     type="button">
+
                     ›
+
                 </button>
 
             </div>
 
         </section>
 
+
+        {{-- =========================================
+             O QUE FALTA NA SUA CASA
+        ========================================== --}}
         <section class="landing-products-section">
 
             <div class="landing-section-header">
@@ -418,68 +476,98 @@
                 <button
                     class="landing-arrow landing-arrow-left"
                     type="button">
+
                     ‹
+
                 </button>
 
 
                 <div class="landing-products">
 
-                    @for ($i = 1; $i <= 5; $i++)
+                    @forelse ($produtosCasa as $produto)
 
-                        <article class="landing-product-card">
+                    <article class="landing-product-card">
 
+                        {{-- DESCONTO --}}
                         <div class="landing-discount">
                             -20%
                         </div>
 
 
+                        {{-- FAVORITO --}}
                         <button
                             class="landing-favorite"
                             type="button">
+
                             ♡
+
                         </button>
 
 
-                        <div class="landing-product-image">
+                        {{-- IMAGEM --}}
+                        <a
+                            href="{{ route('produto.show', $produto->id) }}"
+                            class="landing-product-image">
+
+                            @if ($produto->foto)
+
+                            <img
+                                src="{{ str_starts_with($produto->foto, 'http://') || str_starts_with($produto->foto, 'https://')
+                                            ? $produto->foto
+                                            : asset('storage/' . ltrim($produto->foto, '/')) }}"
+                                alt="{{ $produto->nome }}">
+
+                            @else
 
                             <img
                                 src="{{ asset('assets/images/foneCase.png') }}"
-                                alt="Fone de Ouvido">
+                                alt="{{ $produto->nome }}">
 
-                        </div>
+                            @endif
+
+                        </a>
 
 
+                        {{-- INFORMAÇÕES --}}
                         <div class="landing-product-info">
 
                             <h3>
-                                Fone de Ouvido
+                                {{ $produto->nome }}
                             </h3>
+
 
                             <div class="landing-price">
 
                                 <strong>
-                                    R$ 50,00
+                                    R$
+                                    {{ number_format($produto->preco, 2, ',', '.') }}
                                 </strong>
-
-                                <del>
-                                    R$ 60,00
-                                </del>
 
                             </div>
 
+
                             <div class="landing-rating">
 
-                                <span>★</span>
+                                <span>
+                                    ★
+                                </span>
 
-                                4.7 (218)
+                                Disponível:
+                                {{ $produto->quantidade }}
 
                             </div>
 
                         </div>
 
-                        </article>
+                    </article>
 
-                        @endfor
+                    @empty
+
+                    <p>
+                        Nenhum produto encontrado.
+                    </p>
+
+                    @endforelse
 
                 </div>
 
@@ -487,19 +575,23 @@
                 <button
                     class="landing-arrow landing-arrow-right"
                     type="button">
+
                     ›
+
                 </button>
 
             </div>
 
         </section>
 
-
-
-
     </main>
 
+
+    {{-- =========================================
+        FOOTER
+    ========================================== --}}
+    <x-footer />
+
 </body>
-<x-footer />
 
 </html>
