@@ -1,0 +1,161 @@
+/* D-TECH DASHBOARD STYLES (CSS PURO) */
+
+/* ESTRUTURA GERAL */
+.dtech-body {
+    min-height: 100vh;
+    background: #d8d4da!important;
+    color: #111827;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.dtech-navbar {
+    width: 100%;
+    background-color: #eae6ec;
+    border-bottom: 1px solid #D1D5DB;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dtech-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #8B5CF6;
+    letter-spacing: -0.025em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dtech-main {
+    flex: 1 1 0%;
+    padding: 2rem;
+    max-width: 80rem;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* CARDS DE MÉTRICAS */
+.dtech-card-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .dtech-card-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+.dtech-stat-card {
+    background-color: #A78BFA;
+    color: #FFFFFF;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dtech-stat-card:hover {
+    transform: scale(1.05);
+}
+
+.dtech-stat-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #EDE9FE;
+}
+
+.dtech-stat-value {
+    font-size: 1.875rem;
+    font-weight: 800;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: #FFFFFF;
+}
+
+.dtech-stat-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #7C3AED;
+    background-color: #FFFFFF;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    width: fit-content;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* TABELAS E PAINÉIS */
+.dtech-panel {
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dtech-panel-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1F2937;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dtech-table {
+    width: 100%;
+    text-align: left;
+    font-size: 0.875rem;
+    color: #4B5563;
+    border-collapse: collapse;
+}
+
+.dtech-table th {
+    padding-bottom: 0.75rem;
+    color: #7C3AED;
+    border-bottom: 1px solid #E5E7EB;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.dtech-table td {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #F3F4F6;
+}
+
+/* BOTÃO PURPLE */
+.dtech-btn-purple {
+    background-color: #8B5CF6;
+    color: #FFFFFF;
+    font-weight: 700;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.75rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dtech-btn-purple:hover {
+    background-color: #7C3AED;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: scale(1.05);
+}

@@ -2,27 +2,25 @@
 
 namespace Database\Factories;
 
+use App\Models\Produto;
 use App\Models\Categoria;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Produto>
- */
 class ProdutoFactory extends Factory
 {
+    protected $model = Produto::class;
+
     public function definition(): array
     {
-        $preco = fake()->randomFloat(2, 10, 5000);
-
         return [
-            'nome' => fake()->words(3, true),
-            'descricao' => fake()->paragraph(),
-            'foto' => null,
-            'preco' => $preco,
-            'quantidade' => fake()->numberBetween(0, 100),
-            'UsuarioId' => User::factory(),
+            'nome' => ucfirst($this->faker->words(3, true)),
+            'descricao' => $this->faker->paragraph(),
+            'preco' => $this->faker->randomFloat(2, 50, 2500),
+            'quantidade' => $this->faker->numberBetween(1, 50),
+            'foto' => 'https://picsum.photos/640/480?random=' . $this->faker->numberBetween(1, 1000),
             'categoria_id' => Categoria::factory(),
+            'UsuarioId' => User::factory(),
         ];
     }
 }

@@ -128,15 +128,15 @@
             class="landing-categories">
 
             @php
-            $categorias = [
-            ['nome' => 'Smartphones', 'imagem' => 'Celular.png'],
-            ['nome' => 'Tablets', 'imagem' => 'tablet.png'],
-            ['nome' => 'Computadores', 'imagem' => 'Pc.png'],
-            ['nome' => 'Controles', 'imagem' => 'controleSwt.png'],
-            ['nome' => 'Consoles', 'imagem' => 'play5.png'],
-            ['nome' => 'Áudio', 'imagem' => 'fone.png'],
-            ['nome' => 'Acessórios', 'imagem' => 'carregador.png'],
-            ['nome' => 'Eletrodomésticos', 'imagem' => 'geladeira.png'],
+            $imagensCategorias = [
+                'Smartphones' => 'Celular.png',
+                'Tablets' => 'tablet.png',
+                'Computadores' => 'Pc.png',
+                'Controles' => 'controleSwt.png',
+                'Consoles' => 'play5.png',
+                'Audio' => 'fone.png',
+                'Acessorios' => 'carregador.png',
+                'Eletrodomesticos' => 'geladeira.png',
             ];
             @endphp
 
@@ -144,19 +144,19 @@
             @foreach ($categorias as $categoria)
 
             <a
-                href="#"
+                href="{{ route('landing', ['categoria' => $categoria->id]) }}"
                 class="landing-category">
 
                 <div class="landing-category-image">
 
                     <img
-                        src="{{ asset('assets/images/' . $categoria['imagem']) }}"
-                        alt="{{ $categoria['nome'] }}">
+                        src="{{ asset('assets/images/' . ($imagensCategorias[$categoria->nome] ?? 'fone.png')) }}"
+                        alt="{{ $categoria->nome }}">
 
                 </div>
 
                 <span>
-                    {{ $categoria['nome'] }}
+                    {{ $categoria->nome }}
                 </span>
 
             </a>
@@ -206,14 +206,13 @@
 
                 <div class="landing-products">
 
-                    @for ($i = 1; $i <= 5; $i++)
+                    @forelse ($produtos as $produto)
 
-                        <article class="landing-product-card">
+                    <article class="landing-product-card">
 
                         <div class="landing-discount">
-                            -20%
+                            OFERTA
                         </div>
-
 
                         <button
                             class="landing-favorite"
@@ -221,47 +220,53 @@
                             ♡
                         </button>
 
+                        <a
+                            href="{{ route('produto.show', $produto->id) }}"
+                            class="landing-product-image">
 
-                        <div class="landing-product-image">
-
+                            @if ($produto->foto)
+                            <img
+                                src="{{ str_starts_with($produto->foto, 'http://') || str_starts_with($produto->foto, 'https://') ? $produto->foto : asset('storage/' . ltrim($produto->foto, '/')) }}"
+                                alt="{{ $produto->nome }}">
+                            @else
                             <img
                                 src="{{ asset('assets/images/foneCase.png') }}"
-                                alt="Fone de Ouvido">
+                                alt="{{ $produto->nome }}">
+                            @endif
 
-                        </div>
-
+                        </a>
 
                         <div class="landing-product-info">
 
                             <h3>
-                                Fone de Ouvido
+                                {{ $produto->nome }}
                             </h3>
 
                             <div class="landing-price">
 
                                 <strong>
-                                    R$ 50,00
+                                    R$
+                                    {{ number_format($produto->preco, 2, ',', '.') }}
                                 </strong>
-
-                                <del>
-                                    R$ 60,00
-                                </del>
 
                             </div>
 
                             <div class="landing-rating">
-
                                 <span>★</span>
-
-                                4.7 (218)
-
+                                Disponível: {{ $produto->quantidade }}
                             </div>
 
                         </div>
 
-                        </article>
+                    </article>
 
-                        @endfor
+                    @empty
+
+                    <p>
+                        Nenhum produto encontrado.
+                    </p>
+
+                    @endforelse
 
                 </div>
 

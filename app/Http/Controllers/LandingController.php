@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Produto;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class LandingPageController extends Controller
+class LandingController extends Controller
 {
     public function index(Request $request)
     {
@@ -17,11 +16,6 @@ class LandingPageController extends Controller
         $query = Produto::with('categoria')
             ->where('quantidade', '>', 0);
 
-        if (Auth::check()) {
-            $query->where('UsuarioId', '!=', Auth::id());
-        }
-
-
         if (!empty($busca)) {
             $query->where('nome', 'LIKE', '%' . $busca . '%');
         }
@@ -30,18 +24,10 @@ class LandingPageController extends Controller
             $query->where('categoria_id', $categoria);
         }
 
-
-
         $produtos = $query
             ->orderBy('id', 'DESC')
             ->paginate(10)
             ->withQueryString();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Categorias
-        |--------------------------------------------------------------------------
-        */
 
         $categorias = Categoria::orderBy('nome')->get();
 
