@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Categoria;
+use App\Models\Produto;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +14,34 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $administrador = User::factory()->create([
+            'nome' => 'Administrador',
+            'email' => 'admin@dtech.test',
+            'tipo' => 'administrador',
+            'cpf' => '00000000001',
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $usuarios = User::factory(5)->create();
+        $vendedores = $usuarios->push($administrador);
+
+        $nomesCategorias = [
+            'Smartphones',
+            'Tablets',
+            'Computadores',
+            'Controles',
+            'Consoles',
+            'Audio',
+            'Acessorios',
+            'Eletrodomesticos',
+        ];
+
+        $categorias = collect($nomesCategorias)->map(
+            fn (string $nome) => Categoria::factory()->create(['nome' => $nome])
+        );
+
+        Produto::factory(24)->create([
+            'UsuarioId' => fn () => $vendedores->random()->id,
+            'categoria_id' => fn () => $categorias->random()->id,
         ]);
     }
 }

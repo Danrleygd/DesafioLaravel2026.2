@@ -6,13 +6,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    protected $table = 'usuarios';
+    protected $table = 'Usuarios';
 
     /**
      * The attributes that are mass assignable.
@@ -71,6 +75,46 @@ class User extends Authenticatable
 
     public function setRememberToken($value): void
     {
+    }
+
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'criador_id');
+    }
+
+    public function createdUsers(): HasMany
+    {
+        return $this->hasMany(self::class, 'criador_id');
+    }
+
+    public function enderecos(): BelongsToMany
+    {
+        return $this->belongsToMany(Endereco::class, 'Usuarios_Enderecos', 'UsuarioId', 'EnderecoId');
+    }
+
+    public function produtos(): HasMany
+    {
+        return $this->hasMany(Produto::class, 'UsuarioId');
+    }
+
+    public function carrinho(): HasOne
+    {
+        return $this->hasOne(Carrinho::class, 'UsuarioId');
+    }
+
+    public function cartoes(): HasMany
+    {
+        return $this->hasMany(Cartao::class, 'UsuarioId');
+    }
+
+    public function vendasComoComprador(): HasMany
+    {
+        return $this->hasMany(Venda::class, 'CompradorId');
+    }
+
+    public function itensVendidos(): HasMany
+    {
+        return $this->hasMany(ItemVenda::class, 'VendedorId');
     }
 
     /**
