@@ -1,475 +1,1347 @@
+/* =========================================================
+   D-TECH - PRODUTO INDEX
+   Cards seguindo o mesmo visual da Landing Page
+========================================================= */
+
+:root {
+    --produto-bg: #f1eff3;
+    --produto-white: #ffffff;
+
+    --produto-purple: #6d19a8;
+    --produto-purple-dark: #4f087e;
+    --produto-purple-hover: #7400b8;
+
+    --produto-card-start: #bd92e2;
+    --produto-card-end: #a978d6;
+
+    --produto-text: #17121c;
+    --produto-text-soft: #6f6875;
+
+    --produto-border: rgba(85, 35, 115, 0.12);
+
+    --produto-shadow:
+        0 4px 11px rgba(71, 38, 91, 0.08);
+
+    --produto-shadow-hover:
+        0 9px 20px rgba(71, 38, 91, 0.15);
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
 * {
     box-sizing: border-box;
 }
+
 html {
+    width: 100%;
+
     overflow-y: auto;
+
     scrollbar-width: none;
     -ms-overflow-style: none;
+
+    scroll-behavior: smooth;
 }
 
 html::-webkit-scrollbar {
     display: none;
 }
 
-
+html,
 body {
     margin: 0;
     padding: 0;
-    background: #d8d4da;
-    font-family: Figtree, sans-serif;
-    color: #111;
+
+    width: 100%;
 }
+
+body {
+    min-height: 100vh;
+
+    margin: 0;
+
+    background: var(--produto-bg);
+
+    color: var(--produto-text);
+
+    font-family:
+        Figtree,
+        Arial,
+        sans-serif;
+}
+
+
+/* =========================================================
+   PÁGINA
+========================================================= */
 
 .produtos-page {
     width: 100%;
     min-height: 100vh;
-    background: #d8d4da;
+
+    padding:
+        28px
+        0
+        55px;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(109, 25, 168, 0.05),
+            transparent 30%
+        ),
+        var(--produto-bg);
 }
 
+
+/* =========================================================
+   TÍTULO
+========================================================= */
+
 .produtos-topo {
-    width: 100%;
-    height: 33px;
+    width: min(
+        1180px,
+        calc(100% - 32px)
+    );
+
+    margin:
+        0
+        auto
+        22px;
+
+    padding: 0;
+
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 0 18px;
-    margin-top: 20px;
-    background: #eeeeee;
-    border: 1px solid #999;
 }
 
 .produtos-topo h1 {
     margin: 0;
-    font-size: 15px;
-    font-weight: 700;
+
+    color: #17121c;
+
+    font-size: 28px;
+    line-height: 1.2;
+
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
 }
+
+
+/* =========================================================
+   CONTEÚDO
+========================================================= */
 
 .produtos-conteudo {
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    gap: 35px;
-    padding: 10px 22px 30px;
+    width: min(
+        1180px,
+        calc(100% - 32px)
+    );
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        230px
+        minmax(0, 1fr);
+
+    align-items: start;
+
+    gap: 26px;
 }
 
-/* =========================
+
+/* =========================================================
    FILTROS
-========================= */
+========================================================= */
 
 .filtros {
-    width: 220px;
-    min-width: 220px;
-    padding: 14px 12px;
-    background: #eeeaf0;
-    border-radius: 4px;
+    width: 100%;
+
+    padding:
+        20px
+        18px;
+
+    border:
+        1px solid
+        rgba(70, 35, 90, 0.08);
+
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 5px 18px rgba(45, 25, 55, 0.05);
 }
 
+
+/* =========================================================
+   TÍTULO DOS FILTROS
+========================================================= */
+
 .filtros h2 {
-    margin: 0 0 14px;
-    font-size: 12px;
-    font-weight: 700;
+    margin:
+        0
+        0
+        18px;
+
+    color: #1a1420;
+
+    font-size: 15px;
+    line-height: 1.2;
+
+    font-weight: 800;
 }
+
+
+/* =========================================================
+   BUSCA
+========================================================= */
 
 .filtro-busca {
     width: 100%;
-    height: 32px;
+    height: 39px;
+
     display: flex;
     align-items: center;
-    border: 1px solid #c9c3ca;
-    background: #fff;
-    border-radius: 3px;
+
     overflow: hidden;
+
+    border:
+        1px solid
+        #ded9e2;
+
+    border-radius: 9px;
+
+    background: #faf9fb;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.filtro-busca:focus-within {
+    border-color:
+        rgba(109, 25, 168, 0.55);
+
+    box-shadow:
+        0
+        0
+        0
+        3px
+        rgba(109, 25, 168, 0.08);
 }
 
 .filtro-busca input {
     width: 100%;
     height: 100%;
-    padding: 0 8px;
+
+    min-width: 0;
+
+    padding:
+        0
+        11px;
+
     border: none;
     outline: none;
+
     background: transparent;
+
+    color: #211729;
+
+    font-family: inherit;
     font-size: 12px;
+}
+
+.filtro-busca input::placeholder {
+    color: #99919e;
 }
 
 .filtro-busca button {
-    width: 30px;
+    width: 38px;
     height: 100%;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     border: none;
+
     background: transparent;
-    color: #777;
-    font-size: 14px;
+
+    color: #6d19a8;
+
+    font-size: 18px;
+
     cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
 }
+
+.filtro-busca button:hover {
+    background:
+        rgba(109, 25, 168, 0.07);
+
+    color: #4f087e;
+}
+
+
+/* =========================================================
+   GRUPO DOS FILTROS
+========================================================= */
 
 .filtro-grupo {
     width: 100%;
-    margin-top: 17px;
-    padding-top: 12px;
-    border-top: 1px solid #d0cad1;
+
+    margin-top: 20px;
+
+    padding-top: 17px;
+
+    border-top:
+        1px solid
+        #ece7ef;
 }
 
 .filtro-grupo h3 {
-    margin: 0 0 9px;
-    font-size: 12px;
-    font-weight: 600;
+    margin:
+        0
+        0
+        11px;
+
+    color: #261d2c;
+
+    font-size: 13px;
+    line-height: 1.2;
+
+    font-weight: 700;
 }
 
+
+/* =========================================================
+   PREÇO
+========================================================= */
+
 .preco-linha {
+    width: 100%;
+
     display: flex;
     align-items: center;
-    gap: 5px;
+
+    gap: 6px;
 }
 
 .preco-linha input {
-    width: calc(50% - 3px);
-    height: 26px;
-    padding: 3px 6px;
-    border: 1px solid #c9c3ca;
-    border-radius: 3px;
-    background: #fff;
-    font-size: 12px;
+    width: calc(50% - 8px);
+    height: 34px;
+
+    min-width: 0;
+
+    padding:
+        0
+        8px;
+
+    border:
+        1px solid
+        #ded9e2;
+
+    border-radius: 7px;
+
     outline: none;
+
+    background: #faf9fb;
+
+    color: #211729;
+
+    font-family: inherit;
+    font-size: 11px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.preco-linha input:focus {
+    border-color:
+        rgba(109, 25, 168, 0.55);
+
+    box-shadow:
+        0
+        0
+        0
+        2px
+        rgba(109, 25, 168, 0.07);
 }
 
 .preco-linha span {
-    color: #777;
-    font-size: 12px;
+    color: #968f99;
+
+    font-size: 11px;
 }
+
+
+/* =========================================================
+   BOTÃO FILTRAR
+========================================================= */
 
 .botao-filtrar {
     width: 100%;
-    height: 26px;
-    margin-top: 8px;
+    height: 36px;
+
+    margin-top: 10px;
+
     border: none;
-    border-radius: 3px;
-    background: #5a087c;
-    color: #fff;
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #711ab0,
+            #59118d
+        );
+
+    color: #ffffff;
+
+    font-family: inherit;
     font-size: 12px;
+    font-weight: 700;
+
     cursor: pointer;
+
+    box-shadow:
+        0 5px 12px
+        rgba(109, 25, 168, 0.18);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .botao-filtrar:hover {
-    background: #7400a8;
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 15px
+        rgba(109, 25, 168, 0.25);
 }
 
+
+/* =========================================================
+   CATEGORIAS
+========================================================= */
+
 .categorias-filtro {
-    border-top: none;
-    margin-top: 14px;
+    margin-top: 18px;
+
+    border-top:
+        1px solid
+        #ece7ef;
 }
 
 .categoria-item {
     width: 100%;
-    min-height: 22px;
+    min-height: 31px;
+
+    padding:
+        3px
+        2px;
+
     display: flex;
     align-items: center;
-    gap: 6px;
+
+    gap: 8px;
+
     cursor: pointer;
+
+    border-radius: 6px;
+
+    transition:
+        background 0.2s ease;
+}
+
+.categoria-item:hover {
+    background:
+        rgba(109, 25, 168, 0.05);
 }
 
 .categoria-item input {
-    width: 11px;
-    height: 11px;
+    width: 13px;
+    height: 13px;
+
     margin: 0;
-    accent-color: #5a087c;
+
     flex-shrink: 0;
+
+    accent-color: #6d19a8;
+
+    cursor: pointer;
 }
 
 .categoria-item span {
     flex: 1;
+
+    color: #312638;
+
     font-size: 12px;
-    line-height: 11px;
+    line-height: 1.2;
 }
 
 .categoria-item small {
-    color: #777;
-    font-size: 7px;
+    color: #918897;
+
+    font-size: 9px;
 }
 
-/* =========================
+
+/* =========================================================
    LISTAGEM
-========================= */
+========================================================= */
 
 .produtos-listagem {
-    flex: 1;
+    width: 100%;
+
     min-width: 0;
 }
+
+
+/* =========================================================
+   TOPO DA LISTAGEM
+========================================================= */
 
 .produtos-listagem-topo {
     width: 100%;
-    height: 27px;
+    min-height: 38px;
+
+    margin-bottom: 14px;
+
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
+
+    gap: 20px;
 }
 
 .produtos-listagem-topo strong {
+    color: #45394b;
+
     font-size: 12px;
-    font-weight: 700;
+    line-height: 1.2;
+
+    font-weight: 600;
 }
 
 .produtos-listagem-topo form {
-    margin-top: -4px;
+    margin: 0;
 }
 
+
+/* =========================================================
+   ORDENAÇÃO
+========================================================= */
+
 .ordenacao {
-    width: 100px;
-    height: 25px;
-    padding: 0 5px;
-    border: 1px solid #aaa;
-    border-radius: 2px;
-    background: #eee;
-    color: #222;
-    font-size: 12px;
+    min-width: 145px;
+    height: 36px;
+
+    padding:
+        0
+        34px
+        0
+        12px;
+
+    border:
+        1px solid
+        #ddd7e1;
+
+    border-radius: 8px;
+
     outline: none;
+
+    background: #ffffff;
+
+    color: #302737;
+
+    font-family: inherit;
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
+
+.ordenacao:focus {
+    border-color:
+        rgba(109, 25, 168, 0.55);
+
+    box-shadow:
+        0
+        0
+        0
+        3px
+        rgba(109, 25, 168, 0.07);
+}
+
+
+/* =========================================================
+   GRID DE PRODUTOS
+
+   A landing possui 5 cards ocupando a largura principal.
+   Como aqui existe uma sidebar de filtros, usamos 4 cards
+   para que eles mantenham praticamente o mesmo tamanho.
+========================================================= */
 
 .produtos-grid {
     width: 100%;
+
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 14px;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
+
+    align-items: stretch;
+
+    gap: 16px;
 }
+
+
+/* =========================================================
+   CARD DO PRODUTO
+   MESMO VISUAL DA LANDING
+========================================================= */
 
 .produto-card {
     position: relative;
+
     width: 100%;
-    height: 190px;
     min-width: 0;
+
+    height: 275px;
+
     display: flex;
     flex-direction: column;
+
     overflow: hidden;
-    background: #b080d9;
-    border-radius: 8px;
-    border: 1px solid rgba(90, 0, 140, 0.25);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    border:
+        1px solid
+        rgba(85, 35, 115, 0.12);
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #bd92e2,
+            #a978d6
+        );
+
+    box-shadow:
+        0 4px 11px
+        rgba(71, 38, 91, 0.08);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .produto-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 14px rgba(90, 0, 140, 0.22);
+
+    border-color:
+        rgba(109, 25, 168, 0.32);
+
+    box-shadow:
+        0 9px 20px
+        rgba(71, 38, 91, 0.15);
 }
+
+
+/* =========================================================
+   OFERTA
+========================================================= */
 
 .produto-desconto {
     position: absolute;
-    top: 5px;
-    left: 5px;
-    padding: 2px 4px;
-    background: #5a087c;
-    color: #fff;
-    border-radius: 2px;
-    font-size: 9px;
-    line-height: 12px;
-    font-weight: 700;
-    z-index: 5;
+
+    top: 8px;
+    left: 8px;
+
+    z-index: 6;
+
+    min-width: 48px;
+    height: 22px;
+
+    padding:
+        0
+        7px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 6px;
+
+    background: #58127e;
+
+    color: #ffffff;
+
+    font-size: 8px;
+    line-height: 1;
+
+    font-weight: 800;
+
+    letter-spacing: 0.3px;
 }
+
+
+/* =========================================================
+   FAVORITO
+========================================================= */
 
 .produto-favorito {
     position: absolute;
-    top: 4px;
-    right: 5px;
-    width: 23px;
-    height: 23px;
+
+    top: 7px;
+    right: 7px;
+
+    z-index: 7;
+
+    width: 29px;
+    height: 29px;
+
+    padding: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
+
     border: none;
-    background: transparent;
-    color: #111;
-    font-size: 22px;
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.70);
+
+    color: #3c244b;
+
+    font-size: 20px;
     line-height: 1;
+
     cursor: pointer;
-    z-index: 6;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
 }
 
+.produto-favorito:hover {
+    background: #ffffff;
+
+    color: #6d19a8;
+
+    transform: scale(1.08);
+}
+
+
+/* =========================================================
+   IMAGEM DO PRODUTO
+========================================================= */
+
 .produto-imagem {
+    position: relative;
+
     width: 100%;
-    height: 112px;
+    height: 175px;
+
+    flex-shrink: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 18px 4px;
+
+    padding:
+        18px
+        14px
+        8px;
+
     overflow: hidden;
+
+    background:
+        rgba(255, 255, 255, 0.10);
+
     text-decoration: none;
 }
 
 .produto-imagem img {
     width: 100%;
     height: 100%;
+
     display: block;
+
     object-fit: contain;
     object-position: center;
-    transition: transform 0.25s ease;
+
+    filter:
+        drop-shadow(
+            0 6px 5px
+            rgba(50, 25, 62, 0.14)
+        );
+
+    transition:
+        transform 0.25s ease;
 }
 
-.produto-card:hover .produto-imagem img {
-    transform: scale(1.06);
+.produto-card:hover
+.produto-imagem img {
+    transform: scale(1.04);
 }
+
+
+/* =========================================================
+   INFORMAÇÕES
+========================================================= */
 
 .produto-info {
-    flex: 1;
     width: 100%;
+
+    flex: 1;
+
+    padding:
+        8px
+        11px
+        10px;
+
     display: flex;
     flex-direction: column;
-    padding: 5px 8px 7px;
+
+    background: transparent;
 }
+
+
+/* =========================================================
+   NOME
+========================================================= */
 
 .produto-info h3 {
     width: 100%;
-    height: 25px;
-    margin: 0 0 2px;
-    color: #111;
-    font-size: 10px;
-    line-height: 12px;
+    min-height: 31px;
+
+    margin:
+        0
+        0
+        5px;
+
+    color: #19121e;
+
+    font-size: 12px;
+    line-height: 1.2;
+
     font-weight: 500;
+
     display: -webkit-box;
+
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+
     overflow: hidden;
+
     text-overflow: ellipsis;
 }
 
+
+/* =========================================================
+   PREÇO
+========================================================= */
+
 .produto-preco {
     width: 100%;
+
+    margin-top: auto;
+
     display: flex;
     align-items: baseline;
+
     gap: 5px;
 }
 
 .produto-preco strong {
-    color: #111;
-    font-size: 12px;
-    line-height: 14px;
-    font-weight: 800;
+    color: #1c1024;
+
+    font-size: 14px;
+    line-height: 1.15;
+
+    font-weight: 900;
 }
 
-.produto-preco del {
-    color: #555;
-    font-size: 7px;
-    line-height: 9px;
-}
+
+/* =========================================================
+   AVALIAÇÃO / ESTOQUE
+========================================================= */
 
 .produto-avaliacao {
     width: 100%;
+
+    margin-top: 5px;
+
     display: flex;
     align-items: center;
-    margin-top: 3px;
-    color: #222;
-    font-size: 7px;
-    line-height: 9px;
+
+    color: #47394e;
+
+    font-size: 9px;
+    line-height: 1;
 }
 
 .produto-avaliacao span {
-    margin-right: 3px;
-    color: #ffd400;
-    font-size: 9px;
+    margin-right: 4px;
+
+    color: #ffd500;
+
+    font-size: 12px;
 }
 
-.produto-avaliacao small {
-    margin-left: 2px;
-    color: #333;
-    font-size: 6px;
-}
+
+/* =========================================================
+   NENHUM PRODUTO
+========================================================= */
 
 .nenhum-produto {
-    grid-column: 1 / -1;
-    padding: 50px 20px;
+    grid-column:
+        1
+        /
+        -1;
+
+    width: 100%;
+    min-height: 320px;
+
+    padding: 40px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     text-align: center;
-    background: #eeeaf0;
-    border-radius: 8px;
+
+    border:
+        1px solid
+        #ebe6ee;
+
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 5px 18px
+        rgba(40, 20, 50, 0.04);
 }
 
 .nenhum-produto h2 {
-    margin: 0 0 8px;
-    font-size: 16px;
+    margin:
+        0
+        0
+        8px;
+
+    color: #271d2d;
+
+    font-size: 20px;
+    font-weight: 800;
 }
 
 .nenhum-produto p {
     margin: 0;
-    font-size: 11px;
+
+    color: #807786;
+
+    font-size: 13px;
 }
 
-/* =========================
+
+/* =========================================================
    PAGINAÇÃO
-========================= */
+========================================================= */
 
 .produtos-paginacao {
     width: 100%;
+
+    margin-top: 32px;
+
     display: flex;
     justify-content: center;
-    margin-top: 25px;
 }
+
+
+/* =========================================================
+   PAGINAÇÃO DO LARAVEL
+========================================================= */
 
 .produtos-paginacao nav {
-    font-size: 9px;
+    width: auto;
 }
 
-/* =========================
-   RESPONSIVIDADE
-========================= */
+.produtos-paginacao nav > div:first-child {
+    display: none;
+}
+
+.produtos-paginacao nav > div:last-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.produtos-paginacao nav
+div:last-child
+> div:first-child {
+    display: none;
+}
+
+.produtos-paginacao nav
+div:last-child
+> div:last-child {
+    display: flex;
+    align-items: center;
+}
+
+
+/* =========================================================
+   LINKS DA PAGINAÇÃO
+========================================================= */
+
+.produtos-paginacao span[aria-current="page"] span,
+.produtos-paginacao a {
+    min-width: 36px;
+    height: 36px;
+
+    padding:
+        0
+        11px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin:
+        0
+        3px;
+
+    border:
+        1px solid
+        #ded8e2;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #514658;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.produtos-paginacao a:hover {
+    transform: translateY(-1px);
+
+    border-color:
+        #6d19a8;
+
+    background:
+        rgba(109, 25, 168, 0.06);
+
+    color: #6d19a8;
+}
+
+.produtos-paginacao
+span[aria-current="page"]
+span {
+    border-color: #6d19a8;
+
+    background:
+        linear-gradient(
+            135deg,
+            #721ab3,
+            #57108b
+        );
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   SETAS DA PAGINAÇÃO
+========================================================= */
+
+.produtos-paginacao svg {
+    width: 15px;
+    height: 15px;
+}
+
+
+/* =========================================================
+   DESKTOP GRANDE
+========================================================= */
+
+@media (min-width: 1450px) {
+
+    .produtos-topo,
+    .produtos-conteudo {
+        width: 1280px;
+    }
+
+    .produtos-conteudo {
+        grid-template-columns:
+            240px
+            minmax(0, 1fr);
+    }
+
+    .produtos-grid {
+        grid-template-columns:
+            repeat(
+                4,
+                minmax(0, 1fr)
+            );
+    }
+}
+
+
+/* =========================================================
+   NOTEBOOK
+========================================================= */
 
 @media (max-width: 1100px) {
+
+    .produtos-topo,
     .produtos-conteudo {
-        gap: 20px;
-        padding-left: 10px;
-        padding-right: 10px;
+        width:
+            min(
+                calc(100% - 28px),
+                1050px
+            );
     }
 
-    .filtros {
-        width: 200px;
-        min-width: 200px;
+    .produtos-conteudo {
+        grid-template-columns:
+            210px
+            minmax(0, 1fr);
+
+        gap: 20px;
     }
 
     .produtos-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0, 1fr)
+            );
     }
 }
+
+
+/* =========================================================
+   TABLET
+========================================================= */
 
 @media (max-width: 850px) {
-    .produtos-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    .produtos-page {
+        padding-top: 22px;
     }
 
-    .filtros {
-        width: 180px;
-        min-width: 180px;
+    .produtos-topo {
+        margin-bottom: 18px;
     }
-}
 
-@media (max-width: 650px) {
+    .produtos-topo h1 {
+        font-size: 24px;
+    }
+
     .produtos-conteudo {
-        flex-direction: column;
+        grid-template-columns: 1fr;
     }
 
     .filtros {
         width: 100%;
-        min-width: 100%;
+    }
+
+    .filtros form {
+        width: 100%;
     }
 
     .produtos-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0, 1fr)
+            );
     }
 }
 
-@media (max-width: 400px) {
+
+/* =========================================================
+   TABLET PEQUENO
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .produtos-topo,
+    .produtos-conteudo {
+        width:
+            calc(100% - 24px);
+    }
+
+    .produtos-listagem-topo {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .ordenacao {
+        width: 165px;
+    }
+
     .produtos-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px;
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+
+    .produtos-page {
+        padding:
+            18px
+            0
+            35px;
+    }
+
+    .produtos-topo,
+    .produtos-conteudo {
+        width:
+            calc(100% - 20px);
+    }
+
+    .produtos-topo h1 {
+        font-size: 21px;
+    }
+
+    .filtros {
+        padding:
+            17px
+            14px;
+
+        border-radius: 13px;
+    }
+
+    .produtos-grid {
+        gap: 10px;
     }
 
     .produto-card {
-        height: 165px;
+        height: 245px;
+
+        border-radius: 11px;
     }
 
     .produto-imagem {
-        height: 92px;
+        height: 150px;
+
+        padding:
+            15px
+            10px
+            7px;
+    }
+
+    .produto-info {
+        padding:
+            7px
+            9px
+            9px;
     }
 
     .produto-info h3 {
-        font-size: 9px;
+        min-height: 28px;
+
+        font-size: 11px;
     }
 
     .produto-preco strong {
+        font-size: 13px;
+    }
+
+    .produto-desconto {
+        height: 19px;
+
+        font-size: 7px;
+    }
+
+    .produto-favorito {
+        width: 26px;
+        height: 26px;
+
+        font-size: 18px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE PEQUENO
+========================================================= */
+
+@media (max-width: 390px) {
+
+    .produtos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .produto-card {
+        width: 100%;
+        height: 310px;
+    }
+
+    .produto-imagem {
+        height: 210px;
+    }
+
+    .produto-info h3 {
+        font-size: 13px;
+    }
+
+    .produto-preco strong {
+        font-size: 15px;
+    }
+
+    .produto-avaliacao {
         font-size: 10px;
     }
 }

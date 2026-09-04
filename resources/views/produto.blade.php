@@ -252,14 +252,27 @@
                     </div>
 
 
-                    <button
-                        type="button"
-                        class="btn-carrinho"
-                        onclick="adicionarCarrinho()">
-                        Adicionar ao
-                        <br>
-                        Carrinho
-                    </button>
+                    <form
+                        action="{{ route('carrinho.adicionar', $produto->id) }}"
+                        method="POST">
+                        @csrf
+
+                        <input
+                            type="hidden"
+                            name="quantidade"
+                            id="quantidadeCarrinho"
+                            value="1">
+
+                        <button
+                            type="submit"
+                            class="btn-carrinho"
+                            onclick="document.getElementById('quantidadeCarrinho').value = document.getElementById('quantidade').value"
+                            {{ $produto->quantidade <= 0 ? 'disabled' : '' }}>
+                            Adicionar ao
+                            <br>
+                            Carrinho
+                        </button>
+                    </form>
 
 
                     <button

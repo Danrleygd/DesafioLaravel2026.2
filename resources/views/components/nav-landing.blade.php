@@ -79,7 +79,7 @@
 
             {{-- CARRINHO --}}
             <a
-                href="#"
+                href="{{ route('carrinho.index') }}"
                 class="landing-nav-icon"
                 aria-label="Carrinho"
             >
