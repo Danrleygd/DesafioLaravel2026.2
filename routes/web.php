@@ -10,18 +10,80 @@ use App\Http\Controllers\AdminAdministratorController;
 use App\Http\Controllers\GerenciamentoProdutoController;
 use App\Http\Controllers\ViaCepController;
 use App\Http\Controllers\ProdutoIndexController;
+use App\Http\Controllers\VendasController;
+
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [LandingController::class, 'index'])
+
+/*
+|--------------------------------------------------------------------------
+| LANDING PAGE
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/',
+    [
+        LandingController::class,
+        'index'
+    ]
+)
     ->name('landing');
-Route::get('/produto/{id}', [ProdutoController::class, 'show'])
+
+
+/*
+|--------------------------------------------------------------------------
+| PÁGINA INDIVIDUAL DO PRODUTO
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/produto/{id}',
+    [
+        ProdutoController::class,
+        'show'
+    ]
+)
     ->name('produto.show');
 
-Route::get('/produtos', [ProdutoIndexController::class, 'index'])
+
+/*
+|--------------------------------------------------------------------------
+| LISTAGEM DE PRODUTOS
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/produtos',
+    [
+        ProdutoIndexController::class,
+        'index'
+    ]
+)
     ->name('produtos.index');
 
-Route::get('/posts', [LandingController::class, 'index'])
+
+/*
+|--------------------------------------------------------------------------
+| POSTS
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/posts',
+    [
+        LandingController::class,
+        'index'
+    ]
+)
     ->name('posts');
+
+
+/*
+|--------------------------------------------------------------------------
+| DASHBOARD
+|--------------------------------------------------------------------------
+*/
 
 Route::get(
     '/dashboard',
@@ -36,10 +98,28 @@ Route::get(
     ])
     ->name('dashboard');
 
-// rota api
 
-Route::get('/cep/{cep}', [ViaCepController::class, 'consultar'])
+/*
+|--------------------------------------------------------------------------
+| CEP
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/cep/{cep}',
+    [
+        ViaCepController::class,
+        'consultar'
+    ]
+)
     ->name('api.cep');
+
+
+/*
+|--------------------------------------------------------------------------
+| ROTAS ADMINISTRATIVAS
+|--------------------------------------------------------------------------
+*/
 
 Route::middleware([
     'auth',
@@ -49,7 +129,13 @@ Route::middleware([
     ->name('admin.')
     ->group(function () {
 
-        // Usuario
+
+        /*
+        |--------------------------------------------------------------------------
+        | USUÁRIOS
+        |--------------------------------------------------------------------------
+        */
+
         Route::resource(
             'usuarios',
             AdminUserController::class
@@ -59,7 +145,11 @@ Route::middleware([
             ]);
 
 
-        // Administrador
+        /*
+        |--------------------------------------------------------------------------
+        | ADMINISTRADORES
+        |--------------------------------------------------------------------------
+        */
 
         Route::resource(
             'administradores',
@@ -69,25 +159,128 @@ Route::middleware([
                 'administradores' => 'administrador',
             ]);
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | PRODUTOS - ADMIN
+        |--------------------------------------------------------------------------
+        */
+
         Route::get(
             '/produtos',
-            [GerenciamentoProdutoController::class, 'adminIndex']
-        )->name('produtos.index');
+            [
+                GerenciamentoProdutoController::class,
+                'adminIndex'
+            ]
+        )
+            ->name('produtos.index');
+
 
         Route::put(
             '/produtos/{produto}',
-            [GerenciamentoProdutoController::class, 'adminUpdate']
-        )->name('produtos.update');
+            [
+                GerenciamentoProdutoController::class,
+                'adminUpdate'
+            ]
+        )
+            ->name('produtos.update');
+
 
         Route::delete(
             '/produtos/{produto}',
-            [GerenciamentoProdutoController::class, 'adminDestroy']
-        )->name('produtos.destroy');
+            [
+                GerenciamentoProdutoController::class,
+                'adminDestroy'
+            ]
+        )
+            ->name('produtos.destroy');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | RF009 - VENDAS - ADMIN
+        |--------------------------------------------------------------------------
+        */
+
+        /*
+         * Histórico de todas as vendas.
+         *
+         * URL:
+         * /admin/vendas
+         *
+         * Nome:
+         * admin.vendas.index
+         */
+
+        Route::get(
+            '/vendas',
+            [
+                VendasController::class,
+                'adminIndex'
+            ]
+        )
+            ->name('vendas.index');
+
+
+        /*
+         * Relatório PDF.
+         *
+         * URL:
+         * /admin/vendas/relatorio/pdf
+         *
+         * Nome:
+         * admin.vendas.relatorio.pdf
+         */
+
+        Route::get(
+            '/vendas/relatorio/pdf',
+            [
+                VendasController::class,
+                'adminRelatorioPdf'
+            ]
+        )
+            ->name('vendas.relatorio.pdf');
+
+
+        /*
+         * Relatório XLSX.
+         *
+         * Exclusivo do administrador.
+         *
+         * URL:
+         * /admin/vendas/relatorio/xlsx
+         *
+         * Nome:
+         * admin.vendas.relatorio.xlsx
+         */
+
+        Route::get(
+            '/vendas/relatorio/xlsx',
+            [
+                VendasController::class,
+                'adminRelatorioXlsx'
+            ]
+        )
+            ->name('vendas.relatorio.xlsx');
+
     });
 
-//Produto Gerenciamento
+
+/*
+|--------------------------------------------------------------------------
+| GERENCIAMENTO DE PRODUTOS - USUÁRIO
+|--------------------------------------------------------------------------
+*/
+
 Route::middleware('auth')
     ->group(function () {
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | LISTAR MEUS PRODUTOS
+        |--------------------------------------------------------------------------
+        */
 
         Route::get(
             '/meus-produtos',
@@ -101,6 +294,12 @@ Route::middleware('auth')
             );
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | CADASTRAR PRODUTO
+        |--------------------------------------------------------------------------
+        */
+
         Route::get(
             '/meus-produtos/create',
             [
@@ -112,6 +311,12 @@ Route::middleware('auth')
                 'meus-produtos.create'
             );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | SALVAR PRODUTO
+        |--------------------------------------------------------------------------
+        */
 
         Route::post(
             '/meus-produtos',
@@ -125,6 +330,12 @@ Route::middleware('auth')
             );
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | EDITAR PRODUTO
+        |--------------------------------------------------------------------------
+        */
+
         Route::get(
             '/meus-produtos/{produto}/edit',
             [
@@ -136,6 +347,12 @@ Route::middleware('auth')
                 'meus-produtos.edit'
             );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | ATUALIZAR PRODUTO
+        |--------------------------------------------------------------------------
+        */
 
         Route::put(
             '/meus-produtos/{produto}',
@@ -149,6 +366,12 @@ Route::middleware('auth')
             );
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | EXCLUIR PRODUTO
+        |--------------------------------------------------------------------------
+        */
+
         Route::delete(
             '/meus-produtos/{produto}',
             [
@@ -159,64 +382,282 @@ Route::middleware('auth')
             ->name(
                 'meus-produtos.destroy'
             );
+
     });
 
+
 /*
-    |--------------------------------------------------------------------------
-    | CARRINHO
-    |--------------------------------------------------------------------------
-    */
+|--------------------------------------------------------------------------
+| RF009 - VENDAS - USUÁRIO
+|--------------------------------------------------------------------------
+*/
 
-Route::middleware('auth')->group(function () {
-    Route::get(
-        '/carrinho',
-        [CarrinhoController::class, 'index']
-    )->name('carrinho.index');
-
-    Route::post(
-        '/carrinho/adicionar/{produto}',
-        [CarrinhoController::class, 'adicionar']
-    )->name('carrinho.adicionar');
-
-    Route::patch(
-        '/carrinho/item/{item}',
-        [CarrinhoController::class, 'atualizar']
-    )->name('carrinho.atualizar');
-
-    Route::delete(
-        '/carrinho/item/{item}',
-        [CarrinhoController::class, 'remover']
-    )->name('carrinho.remover');
-
-    Route::delete(
-        '/carrinho',
-        [CarrinhoController::class, 'limpar']
-    )->name('carrinho.limpar');
-});
+Route::middleware('auth')
+    ->group(function () {
 
 
-Route::middleware('auth')->group(function () {
+        /*
+        |--------------------------------------------------------------------------
+        | HISTÓRICO DE VENDAS
+        |--------------------------------------------------------------------------
+        |
+        | Usuário normal vê somente os produtos que ele vendeu.
+        |
+        | URL:
+        | /vendas
+        |
+        | Nome:
+        | vendas.index
+        |
+        */
 
-    // Página do perfil
-    Route::get('/profile', [ProfileController::class, 'edit'])
-        ->name('profile.edit');
+        Route::get(
+            '/vendas',
+            [
+                VendasController::class,
+                'index'
+            ]
+        )
+            ->name(
+                'vendas.index'
+            );
 
-    // Atualizar informações pessoais
-    Route::patch('/profile', [ProfileController::class, 'update'])
-        ->name('profile.update');
 
-    // Adicionar endereço
-    Route::post('/profile/address', [ProfileController::class, 'storeAddress'])
-        ->name('profile.address.store');
+        /*
+        |--------------------------------------------------------------------------
+        | RELATÓRIO PDF
+        |--------------------------------------------------------------------------
+        |
+        | URL:
+        | /vendas/relatorio/pdf
+        |
+        | Nome:
+        | vendas.relatorio.pdf
+        |
+        */
 
-    // Alterar senha
-    Route::patch('/profile/password', [ProfileController::class, 'updatePassword'])
-        ->name('profile.password');
+        Route::get(
+            '/vendas/relatorio/pdf',
+            [
+                VendasController::class,
+                'relatorioPdf'
+            ]
+        )
+            ->name(
+                'vendas.relatorio.pdf'
+            );
 
-    // Excluir conta
-    Route::delete('/profile', [ProfileController::class, 'destroy'])
-        ->name('profile.destroy');
-});
+    });
 
+
+/*
+|--------------------------------------------------------------------------
+| CARRINHO
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('auth')
+    ->group(function () {
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | VISUALIZAR CARRINHO
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/carrinho',
+            [
+                CarrinhoController::class,
+                'index'
+            ]
+        )
+            ->name(
+                'carrinho.index'
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ADICIONAR ITEM
+        |--------------------------------------------------------------------------
+        */
+
+        Route::post(
+            '/carrinho/adicionar/{produto}',
+            [
+                CarrinhoController::class,
+                'adicionar'
+            ]
+        )
+            ->name(
+                'carrinho.adicionar'
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ATUALIZAR QUANTIDADE
+        |--------------------------------------------------------------------------
+        */
+
+        Route::patch(
+            '/carrinho/item/{item}',
+            [
+                CarrinhoController::class,
+                'atualizar'
+            ]
+        )
+            ->name(
+                'carrinho.atualizar'
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | REMOVER ITEM
+        |--------------------------------------------------------------------------
+        */
+
+        Route::delete(
+            '/carrinho/item/{item}',
+            [
+                CarrinhoController::class,
+                'remover'
+            ]
+        )
+            ->name(
+                'carrinho.remover'
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | LIMPAR CARRINHO
+        |--------------------------------------------------------------------------
+        */
+
+        Route::delete(
+            '/carrinho',
+            [
+                CarrinhoController::class,
+                'limpar'
+            ]
+        )
+            ->name(
+                'carrinho.limpar'
+            );
+
+    });
+
+
+/*
+|--------------------------------------------------------------------------
+| PERFIL
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('auth')
+    ->group(function () {
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PÁGINA DO PERFIL
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/profile',
+            [
+                ProfileController::class,
+                'edit'
+            ]
+        )
+            ->name(
+                'profile.edit'
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ATUALIZAR INFORMAÇÕES PESSOAIS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::patch(
+            '/profile',
+            [
+                ProfileController::class,
+                'update'
+            ]
+        )
+            ->name(
+                'profile.update'
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ADICIONAR ENDEREÇO
+        |--------------------------------------------------------------------------
+        */
+
+        Route::post(
+            '/profile/address',
+            [
+                ProfileController::class,
+                'storeAddress'
+            ]
+        )
+            ->name(
+                'profile.address.store'
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ALTERAR SENHA
+        |--------------------------------------------------------------------------
+        */
+
+        Route::patch(
+            '/profile/password',
+            [
+                ProfileController::class,
+                'updatePassword'
+            ]
+        )
+            ->name(
+                'profile.password'
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | EXCLUIR CONTA
+        |--------------------------------------------------------------------------
+        */
+
+        Route::delete(
+            '/profile',
+            [
+                ProfileController::class,
+                'destroy'
+            ]
+        )
+            ->name(
+                'profile.destroy'
+            );
+
+    });
+
+
+/*
+|--------------------------------------------------------------------------
+| ROTAS DO BREEZE
+|--------------------------------------------------------------------------
+*/
 
 require __DIR__ . '/auth.php';
