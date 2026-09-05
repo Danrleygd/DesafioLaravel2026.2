@@ -20,8 +20,15 @@ Route::get('/posts', [LandingController::class, 'index'])
     ->name('posts');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    return auth()->user()->tipo === 'administrador'
+        ? view('admin.dashboardAdmin')
+        : view('dashboard');
+})
+    ->middleware([
+        'auth',
+        'verified'
+    ])
+    ->name('dashboard');
 
 // rota api
 
@@ -34,30 +41,32 @@ Route::get('/cep/{cep}', [ViaCepController::class, 'consultar'])
     |--------------------------------------------------------------------------
     */
 
-Route::get(
-    '/carrinho',
-    [CarrinhoController::class, 'index']
-)->name('carrinho.index');
+Route::middleware('auth')->group(function () {
+    Route::get(
+        '/carrinho',
+        [CarrinhoController::class, 'index']
+    )->name('carrinho.index');
 
-Route::post(
-    '/carrinho/adicionar/{produto}',
-    [CarrinhoController::class, 'adicionar']
-)->name('carrinho.adicionar');
+    Route::post(
+        '/carrinho/adicionar/{produto}',
+        [CarrinhoController::class, 'adicionar']
+    )->name('carrinho.adicionar');
 
-Route::patch(
-    '/carrinho/item/{item}',
-    [CarrinhoController::class, 'atualizar']
-)->name('carrinho.atualizar');
+    Route::patch(
+        '/carrinho/item/{item}',
+        [CarrinhoController::class, 'atualizar']
+    )->name('carrinho.atualizar');
 
-Route::delete(
-    '/carrinho/item/{item}',
-    [CarrinhoController::class, 'remover']
-)->name('carrinho.remover');
+    Route::delete(
+        '/carrinho/item/{item}',
+        [CarrinhoController::class, 'remover']
+    )->name('carrinho.remover');
 
-Route::delete(
-    '/carrinho',
-    [CarrinhoController::class, 'limpar']
-)->name('carrinho.limpar');
+    Route::delete(
+        '/carrinho',
+        [CarrinhoController::class, 'limpar']
+    )->name('carrinho.limpar');
+});
 
 
 Route::middleware('auth')->group(function () {

@@ -13,6 +13,9 @@ export default defineConfig({
                 'resources/css/navLanding.css',
                 'resources/css/footer.css',
                 'resources/css/dashboard.css',
+                'resources/css/dashboardAdmin.css',
+                'resources/css/sidebarAdmin.css',
+                'resources/js/sidebarAdmin.js',
                 'resources/js/app.js',
             ],
 

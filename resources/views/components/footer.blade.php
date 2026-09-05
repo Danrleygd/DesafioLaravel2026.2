@@ -74,6 +74,7 @@
             <h3>Minha Conta</h3>
 
             <a href="{{ route('profile.edit') }}">Minha Conta</a>
+            <a href="{{ route('dashboard') }}">Gerenciar</a>
             <a href="#">Meus Pedidos</a>
             <a href="#">Favoritos</a>
             <a href="#">Endereços</a>

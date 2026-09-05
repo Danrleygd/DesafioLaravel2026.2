@@ -1,0 +1,989 @@
+/* =========================================================
+   D-TECH - SIDEBAR ADMIN
+========================================================= */
+
+:root {
+    --admin-sidebar-width: 250px;
+    --admin-sidebar-collapsed: 76px;
+
+    --admin-purple: #56318b;
+    --admin-purple-dark: #45226f;
+    --admin-purple-light: #c9ade8;
+
+    --admin-white: #ffffff;
+
+    --admin-text: #ffffff;
+    --admin-text-soft: #ded0ef;
+
+    --admin-transition: 0.28s ease;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.admin-sidebar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    z-index: 1000;
+
+    width: var(--admin-sidebar-width);
+    height: 100vh;
+    height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            #56318b 0%,
+            #522e85 100%
+        );
+
+    color: var(--admin-text);
+
+    box-shadow:
+        3px 0 18px
+        rgba(38, 20, 55, 0.12);
+
+    transition:
+        width var(--admin-transition),
+        transform var(--admin-transition);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.admin-sidebar-header {
+    width: 100%;
+    height: 82px;
+
+    flex-shrink: 0;
+
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.50);
+
+    transition:
+        padding var(--admin-transition),
+        height var(--admin-transition);
+}
+
+
+/* =========================================================
+   LINK DA LOGO
+========================================================= */
+
+.admin-sidebar-logo {
+    position: relative;
+
+    width: 155px;
+    height: 58px;
+
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    overflow: hidden;
+
+    text-decoration: none;
+
+    transition:
+        width var(--admin-transition),
+        height var(--admin-transition);
+}
+
+
+/* =========================================================
+   LOGO COMPLETA
+========================================================= */
+
+.admin-logo-full {
+    width: 145px;
+    max-width: 145px;
+
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
+
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+        opacity 0.18s ease,
+        transform 0.28s ease;
+}
+
+
+/* =========================================================
+   LOGO PEQUENA
+========================================================= */
+
+.admin-logo-small {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 48px;
+    height: 48px;
+
+    object-fit: contain;
+
+    transform:
+        translate(-50%, -50%)
+        scale(0.85);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.18s ease,
+        transform 0.28s ease;
+}
+
+
+/* =========================================================
+   BOTÃO RECOLHER
+========================================================= */
+
+.admin-sidebar-toggle {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 8px;
+
+    background:
+        rgba(255, 255, 255, 0.08);
+
+    color: #d5bbea;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.admin-sidebar-toggle:hover {
+    background:
+        rgba(255, 255, 255, 0.16);
+
+    color: #ffffff;
+}
+
+.admin-sidebar-toggle svg {
+    width: 19px;
+    height: 19px;
+}
+
+
+/* =========================================================
+   CONTEÚDO
+========================================================= */
+
+.admin-sidebar-content {
+    width: 100%;
+
+    flex: 1;
+
+    padding:
+        15px
+        0
+        20px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    scrollbar-width: none;
+}
+
+.admin-sidebar-content::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* =========================================================
+   GRUPOS
+========================================================= */
+
+.admin-menu-group {
+    width: 100%;
+
+    margin-bottom: 17px;
+}
+
+
+/* =========================================================
+   TÍTULOS
+========================================================= */
+
+.admin-menu-title {
+    height: 20px;
+
+    margin:
+        0
+        0
+        6px;
+
+    padding:
+        0
+        39px;
+
+    display: flex;
+    align-items: center;
+
+    color: #ffffff;
+
+    font-size: 13px;
+    line-height: 1;
+
+    font-weight: 400;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+    opacity: 1;
+
+    transition:
+        opacity 0.15s ease,
+        height var(--admin-transition),
+        margin var(--admin-transition);
+}
+
+
+/* =========================================================
+   MENU
+========================================================= */
+
+.admin-menu {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+/* =========================================================
+   ITEM
+========================================================= */
+
+.admin-menu-item {
+    position: relative;
+
+    width:
+        calc(
+            100% - 44px
+        );
+
+    min-height: 38px;
+
+    margin:
+        0
+        0
+        0
+        35px;
+
+    padding:
+        0
+        13px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    overflow: hidden;
+
+    border: none;
+
+    border-radius:
+        999px
+        0
+        0
+        999px;
+
+    background: transparent;
+
+    color: var(--admin-text-soft);
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 400;
+
+    text-align: left;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        width var(--admin-transition),
+        margin var(--admin-transition),
+        padding var(--admin-transition);
+}
+
+.admin-menu-item:hover {
+    color: #ffffff;
+
+    background:
+        rgba(255, 255, 255, 0.10);
+}
+
+
+/* =========================================================
+   ITEM ATIVO
+========================================================= */
+
+.admin-menu-item.active {
+    background: #ffffff;
+
+    color: #332143;
+
+    box-shadow:
+        0 3px 10px
+        rgba(31, 16, 46, 0.08);
+}
+
+.admin-menu-item.active
+.admin-menu-icon {
+    color: #ad73d9;
+}
+
+
+/* =========================================================
+   ÍCONE
+========================================================= */
+
+.admin-menu-icon {
+    width: 23px;
+    height: 23px;
+
+    min-width: 23px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #c9a9e3;
+
+    transition:
+        color 0.2s ease;
+}
+
+.admin-menu-item:hover
+.admin-menu-icon {
+    color: #ffffff;
+}
+
+.admin-menu-item.active:hover
+.admin-menu-icon {
+    color: #ad73d9;
+}
+
+.admin-menu-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* =========================================================
+   TEXTO
+========================================================= */
+
+.admin-menu-text {
+    display: block;
+
+    white-space: nowrap;
+
+    opacity: 1;
+
+    transform: translateX(0);
+
+    transition:
+        opacity 0.15s ease,
+        transform var(--admin-transition);
+}
+
+
+/* =========================================================
+   RODAPÉ
+========================================================= */
+
+.admin-sidebar-footer {
+    width: 100%;
+
+    flex-shrink: 0;
+
+    padding:
+        14px
+        0
+        20px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    background:
+        rgba(52, 21, 84, 0.08);
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.admin-logout-form {
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+}
+
+.admin-logout {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.admin-layout {
+    width: 100%;
+    min-height: 100vh;
+
+    background: #f5f3f7;
+}
+
+.admin-main {
+    min-height: 100vh;
+
+    margin-left:
+        var(--admin-sidebar-width);
+
+    transition:
+        margin-left var(--admin-transition);
+
+    background: #f5f3f7;
+}
+
+
+/* =========================================================
+   SIDEBAR FECHADA
+========================================================= */
+
+.admin-layout.sidebar-collapsed
+.admin-sidebar {
+    width:
+        var(--admin-sidebar-collapsed);
+}
+
+
+/* =========================================================
+   HEADER FECHADO
+========================================================= */
+
+.admin-layout.sidebar-collapsed
+.admin-sidebar-header {
+    height: 100px;
+
+    padding:
+        10px
+        0;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+}
+
+
+/* =========================================================
+   ÁREA DA LOGO FECHADA
+========================================================= */
+
+.admin-layout.sidebar-collapsed
+.admin-sidebar-logo {
+    width: 64px;
+    height: 58px;
+
+    justify-content: center;
+}
+
+
+/* =========================================================
+   ESCONDE LOGO GRANDE
+========================================================= */
+
+.admin-layout.sidebar-collapsed
+.admin-logo-full {
+    position: absolute;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: scale(0.8);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   MOSTRA LOGO PEQUENA
+========================================================= */
+
+.admin-layout.sidebar-collapsed
+.admin-logo-small {
+    width: 50px;
+    height: 50px;
+
+    opacity: 1;
+    visibility: visible;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+}
+
+
+/* =========================================================
+   BOTÃO FECHADO
+========================================================= */
+
+.admin-layout.sidebar-collapsed
+.admin-sidebar-toggle {
+    width: 31px;
+    height: 27px;
+}
+
+
+/* =========================================================
+   ESCONDE TÍTULOS
+========================================================= */
+
+.admin-layout.sidebar-collapsed
+.admin-menu-title {
+    height: 0;
+
+    margin: 0;
+    padding: 0;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   GRUPOS FECHADOS
+========================================================= */
+
+.admin-layout.sidebar-collapsed
+.admin-menu-group {
+    margin-bottom: 10px;
+}
+
+
+/* =========================================================
+   ITENS FECHADOS
+========================================================= */
+
+.admin-layout.sidebar-collapsed
+.admin-menu-item {
+    width: 46px;
+    height: 42px;
+
+    min-height: 42px;
+
+    margin:
+        0
+        auto;
+
+    padding: 0;
+
+    justify-content: center;
+
+    border-radius: 12px;
+}
+
+
+/* =========================================================
+   TEXTO FECHADO
+========================================================= */
+
+.admin-layout.sidebar-collapsed
+.admin-menu-text {
+    position: absolute;
+
+    opacity: 0;
+
+    transform: translateX(-10px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   ÍCONE FECHADO
+========================================================= */
+
+.admin-layout.sidebar-collapsed
+.admin-menu-icon {
+    width: 24px;
+    min-width: 24px;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   ITEM ATIVO FECHADO
+========================================================= */
+
+.admin-layout.sidebar-collapsed
+.admin-menu-item.active {
+    background: #ffffff;
+
+    color: #ad73d9;
+
+    border-radius: 12px;
+}
+
+
+/* =========================================================
+   MAIN QUANDO FECHADO
+========================================================= */
+
+.admin-layout.sidebar-collapsed
+.admin-main {
+    margin-left:
+        var(--admin-sidebar-collapsed);
+}
+
+
+/* =========================================================
+   BOTÃO MOBILE
+========================================================= */
+
+.admin-mobile-menu-button {
+    position: fixed;
+
+    top: 14px;
+    left: 14px;
+
+    z-index: 1100;
+
+    width: 42px;
+    height: 42px;
+
+    padding: 0;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 11px;
+
+    background: #56318b;
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 16px
+        rgba(54, 25, 79, 0.20);
+}
+
+.admin-mobile-menu-button svg {
+    width: 22px;
+    height: 22px;
+}
+
+
+/* =========================================================
+   OVERLAY MOBILE
+========================================================= */
+
+.admin-sidebar-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 900;
+
+    display: none;
+
+    background:
+        rgba(21, 12, 28, 0.45);
+
+    backdrop-filter: blur(2px);
+
+    opacity: 0;
+
+    transition:
+        opacity 0.25s ease;
+}
+
+
+/* =========================================================
+   NOTEBOOK
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    :root {
+        --admin-sidebar-width: 230px;
+    }
+
+    .admin-menu-title {
+        padding-left: 31px;
+    }
+
+    .admin-menu-item {
+        width:
+            calc(
+                100% - 35px
+            );
+
+        margin-left: 27px;
+    }
+}
+
+
+/* =========================================================
+   TABLET / MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .admin-sidebar {
+        width: 250px;
+
+        transform:
+            translateX(-100%);
+    }
+
+    .admin-main,
+    .admin-layout.sidebar-collapsed
+    .admin-main {
+        margin-left: 0;
+    }
+
+    .admin-mobile-menu-button {
+        display: flex;
+    }
+
+    .admin-layout.sidebar-mobile-open
+    .admin-sidebar {
+        transform:
+            translateX(0);
+    }
+
+    .admin-layout.sidebar-mobile-open
+    .admin-sidebar-overlay {
+        display: block;
+
+        opacity: 1;
+    }
+
+    .admin-layout.sidebar-mobile-open
+    .admin-mobile-menu-button {
+        opacity: 0;
+
+        pointer-events: none;
+    }
+
+
+    /* =====================================================
+       NO MOBILE A SIDEBAR SEMPRE ABRE COMPLETA
+    ====================================================== */
+
+    .admin-layout.sidebar-collapsed
+    .admin-sidebar {
+        width: 250px;
+    }
+
+    .admin-layout.sidebar-collapsed
+    .admin-sidebar-header {
+        height: 82px;
+
+        padding:
+            0
+            20px;
+
+        flex-direction: row;
+
+        justify-content: space-between;
+
+        gap: 15px;
+    }
+
+    .admin-layout.sidebar-collapsed
+    .admin-sidebar-logo {
+        width: 155px;
+        height: 58px;
+
+        justify-content: flex-start;
+    }
+
+    .admin-layout.sidebar-collapsed
+    .admin-logo-full {
+        position: static;
+
+        opacity: 1;
+        visibility: visible;
+
+        transform: none;
+
+        pointer-events: auto;
+    }
+
+    .admin-layout.sidebar-collapsed
+    .admin-logo-small {
+        opacity: 0;
+        visibility: hidden;
+
+        transform:
+            translate(-50%, -50%)
+            scale(0.8);
+    }
+
+    .admin-layout.sidebar-collapsed
+    .admin-sidebar-toggle {
+        width: 34px;
+        height: 34px;
+    }
+
+    .admin-layout.sidebar-collapsed
+    .admin-menu-title {
+        height: 20px;
+
+        margin:
+            0
+            0
+            6px;
+
+        padding:
+            0
+            39px;
+
+        opacity: 1;
+
+        pointer-events: auto;
+    }
+
+    .admin-layout.sidebar-collapsed
+    .admin-menu-group {
+        margin-bottom: 17px;
+    }
+
+    .admin-layout.sidebar-collapsed
+    .admin-menu-item {
+        width:
+            calc(
+                100% - 44px
+            );
+
+        height: auto;
+
+        min-height: 38px;
+
+        margin:
+            0
+            0
+            0
+            35px;
+
+        padding:
+            0
+            13px;
+
+        justify-content: flex-start;
+
+        border-radius:
+            999px
+            0
+            0
+            999px;
+    }
+
+    .admin-layout.sidebar-collapsed
+    .admin-menu-text {
+        position: static;
+
+        opacity: 1;
+
+        transform: none;
+
+        pointer-events: auto;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE PEQUENO
+========================================================= */
+
+@media (max-width: 430px) {
+
+    .admin-sidebar {
+        width:
+            min(
+                82vw,
+                275px
+            );
+    }
+
+    .admin-layout.sidebar-collapsed
+    .admin-sidebar {
+        width:
+            min(
+                82vw,
+                275px
+            );
+    }
+}

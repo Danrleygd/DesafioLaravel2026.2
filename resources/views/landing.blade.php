@@ -13,7 +13,8 @@
     'resources/css/navLanding.css',
     'resources/css/footer.css',
     'resources/js/app.js',
-    'resources/js/landingBanners.js'
+    'resources/js/landingBanners.js',
+    'resources/js/landingProducts.js',
     ])
 </head>
 

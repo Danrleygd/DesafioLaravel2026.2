@@ -1,0 +1,595 @@
+/* =========================================================
+   D-TECH - DASHBOARD ADMIN
+========================================================= */
+
+:root {
+    --dashboard-purple: #56318b;
+    --dashboard-purple-dark: #45226f;
+    --dashboard-purple-light: #b98be3;
+
+    --dashboard-bg: #f5f3f7;
+    --dashboard-card: #ffffff;
+
+    --dashboard-text: #211829;
+    --dashboard-text-soft: #82788a;
+
+    --dashboard-border:
+        rgba(75, 45, 91, 0.09);
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+.dashboard-admin {
+    width: 100%;
+    min-height: 100vh;
+
+    padding:
+        32px
+        38px
+        50px;
+
+    background: var(--dashboard-bg);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.dashboard-header {
+    width: 100%;
+
+    margin-bottom: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+.dashboard-header h1 {
+    margin:
+        0
+        0
+        5px;
+
+    color: var(--dashboard-text);
+
+    font-size: 30px;
+    line-height: 1.2;
+
+    font-weight: 800;
+}
+
+.dashboard-header p {
+    margin: 0;
+
+    color: var(--dashboard-text-soft);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   USUÁRIO
+========================================================= */
+
+.dashboard-user {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.dashboard-user-info {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: 2px;
+}
+
+.dashboard-user-info strong {
+    color: #31253a;
+
+    font-size: 13px;
+}
+
+.dashboard-user-info span {
+    color: #94899b;
+
+    font-size: 10px;
+}
+
+.dashboard-user-avatar {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #68409d,
+            #4d287a
+        );
+
+    color: #ffffff;
+}
+
+.dashboard-user-avatar img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+.dashboard-user-avatar svg {
+    width: 24px;
+    height: 24px;
+}
+
+
+/* =========================================================
+   CARDS RESUMO
+========================================================= */
+
+.dashboard-cards {
+    width: 100%;
+
+    margin-bottom: 25px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
+
+    gap: 18px;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.dashboard-card {
+    min-height: 115px;
+
+    padding:
+        20px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    border:
+        1px solid
+        var(--dashboard-border);
+
+    border-radius: 15px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 5px 16px
+        rgba(49, 27, 63, 0.05);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(49, 27, 63, 0.08);
+}
+
+
+/* =========================================================
+   ÍCONE
+========================================================= */
+
+.dashboard-card-icon {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background:
+        rgba(86, 49, 139, 0.10);
+
+    color: #633899;
+}
+
+.dashboard-card-icon svg {
+    width: 25px;
+    height: 25px;
+}
+
+
+/* =========================================================
+   INFO
+========================================================= */
+
+.dashboard-card-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.dashboard-card-info span {
+    color: #817687;
+
+    font-size: 11px;
+}
+
+.dashboard-card-info strong {
+    color: #261b2e;
+
+    font-size: 21px;
+    line-height: 1;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   GRID PRINCIPAL
+========================================================= */
+
+.dashboard-grid {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.7fr)
+        minmax(280px, 0.8fr);
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   PAINEL
+========================================================= */
+
+.dashboard-panel {
+    min-height: 380px;
+
+    padding:
+        22px;
+
+    border:
+        1px solid
+        var(--dashboard-border);
+
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 5px 18px
+        rgba(49, 27, 63, 0.05);
+}
+
+
+/* =========================================================
+   CABEÇALHO PAINEL
+========================================================= */
+
+.dashboard-panel-header {
+    width: 100%;
+
+    padding-bottom: 17px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom:
+        1px solid
+        #eeeaf1;
+}
+
+.dashboard-panel-header h2 {
+    margin:
+        0
+        0
+        4px;
+
+    color: #281d30;
+
+    font-size: 16px;
+
+    font-weight: 800;
+}
+
+.dashboard-panel-header p {
+    margin: 0;
+
+    color: #928998;
+
+    font-size: 10px;
+}
+
+.dashboard-panel-header a {
+    color: #633899;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.dashboard-panel-header a:hover {
+    color: #45226f;
+}
+
+
+/* =========================================================
+   ESTADO VAZIO
+========================================================= */
+
+.dashboard-empty {
+    min-height: 285px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    color: #aca3b1;
+}
+
+.dashboard-empty svg {
+    width: 54px;
+    height: 54px;
+
+    color: #c7b6d7;
+}
+
+.dashboard-empty span {
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   ATALHOS
+========================================================= */
+
+.dashboard-shortcuts {
+    width: 100%;
+
+    padding-top: 12px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+/* =========================================================
+   ATALHO
+========================================================= */
+
+.dashboard-shortcut {
+    width: 100%;
+    min-height: 60px;
+
+    padding:
+        8px
+        10px;
+
+    display: grid;
+
+    grid-template-columns:
+        38px
+        1fr
+        20px;
+
+    align-items: center;
+
+    gap: 11px;
+
+    border-radius: 10px;
+
+    color: #302538;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.dashboard-shortcut:hover {
+    background:
+        rgba(86, 49, 139, 0.07);
+
+    transform: translateX(2px);
+}
+
+
+/* =========================================================
+   ÍCONE ATALHO
+========================================================= */
+
+.dashboard-shortcut-icon {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background:
+        rgba(86, 49, 139, 0.09);
+
+    color: #633899;
+}
+
+.dashboard-shortcut-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.dashboard-shortcut span {
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+.dashboard-shortcut > strong {
+    color: #aa9cb2;
+
+    font-size: 20px;
+    font-weight: 400;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   NOTEBOOK
+========================================================= */
+
+@media (max-width: 1150px) {
+
+    .dashboard-cards {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .dashboard-grid {
+        grid-template-columns:
+            minmax(0, 1.4fr)
+            minmax(260px, 0.8fr);
+    }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .dashboard-admin {
+        padding:
+            30px
+            25px
+            45px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-panel {
+        min-height: auto;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .dashboard-admin {
+        padding:
+            75px
+            18px
+            35px;
+    }
+
+    .dashboard-header {
+        align-items: flex-start;
+    }
+
+    .dashboard-user-info {
+        display: none;
+    }
+}
+
+
+/* =========================================================
+   MOBILE PEQUENO
+========================================================= */
+
+@media (max-width: 550px) {
+
+    .dashboard-header h1 {
+        font-size: 24px;
+    }
+
+    .dashboard-header p {
+        font-size: 11px;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+
+        gap: 11px;
+    }
+
+    .dashboard-card {
+        min-height: 90px;
+
+        padding: 15px;
+    }
+
+    .dashboard-card-icon {
+        width: 43px;
+        height: 43px;
+    }
+
+    .dashboard-card-info strong {
+        font-size: 19px;
+    }
+
+    .dashboard-panel {
+        padding: 17px;
+    }
+}
