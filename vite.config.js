@@ -15,7 +15,9 @@ export default defineConfig({
                 'resources/css/dashboard.css',
                 'resources/css/dashboardAdmin.css',
                 'resources/css/sidebarAdmin.css',
+                'resources/css/adminUsers.css',
                 'resources/js/sidebarAdmin.js',
+                'resources/js/adminUsers.js',
                 'resources/js/app.js',
             ],
 

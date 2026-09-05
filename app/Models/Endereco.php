@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Endereco extends Model
 {
-    protected $table = 'Enderecos';
+    protected $table =
+        'Enderecos';
+
 
     protected $fillable = [
         'cep',
@@ -18,7 +21,8 @@ class Endereco extends Model
         'estado',
     ];
 
-    public function users()
+
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(
             User::class,

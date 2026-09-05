@@ -87,10 +87,15 @@ class User extends Authenticatable
         return $this->hasMany(self::class, 'criador_id');
     }
 
-    public function enderecos(): BelongsToMany
-    {
-        return $this->belongsToMany(Endereco::class, 'Usuarios_Enderecos', 'UsuarioId', 'EnderecoId');
-    }
+    public function enderecos()
+{
+    return $this->belongsToMany(
+        Endereco::class,
+        'Usuarios_Enderecos',
+        'UsuarioId',
+        'EnderecoId'
+    );
+}
 
     public function produtos(): HasMany
     {

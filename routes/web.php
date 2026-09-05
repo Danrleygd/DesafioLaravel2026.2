@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\CarrinhoController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ViaCepController;
 use App\Http\Controllers\ProdutoIndexController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,25 @@ Route::get('/dashboard', function () {
 
 Route::get('/cep/{cep}', [ViaCepController::class, 'consultar'])
     ->name('api.cep');
+
+Route::middleware([
+    'auth',
+    'admin',
+])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        Route::resource(
+            'usuarios',
+            AdminUserController::class
+        )
+            ->parameters([
+                'usuarios' => 'usuario',
+            ]);
+    });
+
+
 
 /*
     |--------------------------------------------------------------------------
