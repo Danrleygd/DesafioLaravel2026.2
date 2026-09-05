@@ -5,6 +5,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AdminAdministratorController;
 use App\Http\Controllers\ViaCepController;
 use App\Http\Controllers\ProdutoIndexController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,7 @@ Route::middleware([
     ->name('admin.')
     ->group(function () {
 
+        // Usuario
         Route::resource(
             'usuarios',
             AdminUserController::class
@@ -51,6 +53,18 @@ Route::middleware([
             ->parameters([
                 'usuarios' => 'usuario',
             ]);
+
+
+        // Administrador
+
+        Route::resource(
+            'administradores',
+            AdminAdministratorController::class
+        )
+            ->parameters([
+                'administradores' => 'administrador',
+            ]);
+
     });
 
 
