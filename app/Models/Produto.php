@@ -2,17 +2,27 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Produto extends Model
 {
-    use HasFactory;
+    /*
+    |--------------------------------------------------------------------------
+    | TABELA
+    |--------------------------------------------------------------------------
+    */
 
-    protected $table = 'Produtos';
+    protected $table =
+        'Produtos';
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CAMPOS
+    |--------------------------------------------------------------------------
+    */
 
     protected $fillable = [
         'nome',
@@ -24,55 +34,63 @@ class Produto extends Model
         'categoria_id',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'preco' => 'decimal:2',
-            'quantidade' => 'integer',
-        ];
-    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | CASTS
+    |--------------------------------------------------------------------------
+    */
+
+    protected $casts = [
+        'preco' =>
+            'decimal:2',
+
+        'quantidade' =>
+            'integer',
+    ];
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | VENDEDOR
+    |--------------------------------------------------------------------------
+    */
 
     public function vendedor(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'UsuarioId', 'id');
+        return $this->belongsTo(
+            User::class,
+            'UsuarioId'
+        );
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CATEGORIA
+    |--------------------------------------------------------------------------
+    */
 
     public function categoria(): BelongsTo
     {
-        return $this->belongsTo(Categoria::class, 'categoria_id', 'id');
+        return $this->belongsTo(
+            Categoria::class,
+            'categoria_id'
+        );
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | FOTOS
+    |--------------------------------------------------------------------------
+    */
 
     public function fotos(): HasMany
     {
-        return $this->hasMany(ProdutoFoto::class, 'ProdutoId', 'id');
-    }
-
-    public function carrinhos(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            Carrinho::class,
-            'ItensCarrinho',
-            'ProdutoId',
-            'CarrinhoId'
-        )
-        ->withPivot('quantidade')
-        ->withTimestamps();
-    }
-
-    public function vendas(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            Venda::class,
-            'ItensVendas',
-            'ProdutoId',
-            'VendasId'
-        )
-        ->withPivot([
-            'VendedorId',
-            'quantidade',
-            'ValorUnitario',
-            'subtotal'
-        ])
-        ->withTimestamps();
+        return $this->hasMany(
+            ProdutoFoto::class,
+            'ProdutoId'
+        );
     }
 }

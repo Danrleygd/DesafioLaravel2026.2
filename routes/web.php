@@ -5,7 +5,9 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminAdministratorController;
+use App\Http\Controllers\GerenciamentoProdutoController;
 use App\Http\Controllers\ViaCepController;
 use App\Http\Controllers\ProdutoIndexController;
 use Illuminate\Support\Facades\Route;
@@ -21,11 +23,13 @@ Route::get('/produtos', [ProdutoIndexController::class, 'index'])
 Route::get('/posts', [LandingController::class, 'index'])
     ->name('posts');
 
-Route::get('/dashboard', function () {
-    return auth()->user()->tipo === 'administrador'
-        ? view('admin.dashboardAdmin')
-        : view('dashboard');
-})
+Route::get(
+    '/dashboard',
+    [
+        DashboardController::class,
+        'index'
+    ]
+)
     ->middleware([
         'auth',
         'verified'
@@ -65,9 +69,97 @@ Route::middleware([
                 'administradores' => 'administrador',
             ]);
 
+        Route::get(
+            '/produtos',
+            [GerenciamentoProdutoController::class, 'adminIndex']
+        )->name('produtos.index');
+
+        Route::put(
+            '/produtos/{produto}',
+            [GerenciamentoProdutoController::class, 'adminUpdate']
+        )->name('produtos.update');
+
+        Route::delete(
+            '/produtos/{produto}',
+            [GerenciamentoProdutoController::class, 'adminDestroy']
+        )->name('produtos.destroy');
     });
 
+//Produto Gerenciamento
+Route::middleware('auth')
+    ->group(function () {
 
+        Route::get(
+            '/meus-produtos',
+            [
+                GerenciamentoProdutoController::class,
+                'index'
+            ]
+        )
+            ->name(
+                'meus-produtos.index'
+            );
+
+
+        Route::get(
+            '/meus-produtos/create',
+            [
+                GerenciamentoProdutoController::class,
+                'create'
+            ]
+        )
+            ->name(
+                'meus-produtos.create'
+            );
+
+
+        Route::post(
+            '/meus-produtos',
+            [
+                GerenciamentoProdutoController::class,
+                'store'
+            ]
+        )
+            ->name(
+                'meus-produtos.store'
+            );
+
+
+        Route::get(
+            '/meus-produtos/{produto}/edit',
+            [
+                GerenciamentoProdutoController::class,
+                'edit'
+            ]
+        )
+            ->name(
+                'meus-produtos.edit'
+            );
+
+
+        Route::put(
+            '/meus-produtos/{produto}',
+            [
+                GerenciamentoProdutoController::class,
+                'update'
+            ]
+        )
+            ->name(
+                'meus-produtos.update'
+            );
+
+
+        Route::delete(
+            '/meus-produtos/{produto}',
+            [
+                GerenciamentoProdutoController::class,
+                'destroy'
+            ]
+        )
+            ->name(
+                'meus-produtos.destroy'
+            );
+    });
 
 /*
     |--------------------------------------------------------------------------

@@ -225,9 +225,9 @@
                 {{-- PRODUTOS --}}
 
                 <a
-                    href="{{ url('/admin/produtos') }}"
+                    href="{{ route('admin.produtos.index') }}"
                     class="admin-menu-item
-                    {{ request()->is('admin/produtos*') ? 'active' : '' }}"
+    {{ request()->routeIs('admin.produtos.*') ? 'active' : '' }}"
                     title="Produtos">
 
                     <span class="admin-menu-icon">
@@ -250,6 +250,7 @@
                         </svg>
 
                     </span>
+
 
                     <span class="admin-menu-text">
                         Produtos

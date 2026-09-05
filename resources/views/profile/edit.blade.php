@@ -1,94 +1,338 @@
-<x-app-layout>
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-    {{-- Bootstrap Icons --}}
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="csrf-token"
+        content="{{ csrf_token() }}">
+
+    <title>Meu Perfil - D-tech</title>
+
 
     @vite([
+    'resources/css/app.css',
+    'resources/css/navLanding.css',
     'resources/css/profile.css'
     ])
 
-    <div class="profile-page">
+</head>
+
+
+@php
+
+$user = $user ?? auth()->user();
+
+$endereco = $user
+->enderecos
+->first();
+
+
+/*
+|--------------------------------------------------------------------------
+| FOTO
+|--------------------------------------------------------------------------
+*/
+
+$fotoPerfil = null;
+
+
+if ($user->foto) {
+
+if (
+str_starts_with(
+$user->foto,
+'http://'
+)
+||
+str_starts_with(
+$user->foto,
+'https://'
+)
+) {
+
+$fotoPerfil =
+$user->foto;
+
+} else {
+
+$fotoPerfil =
+asset(
+'storage/' .
+ltrim(
+$user->foto,
+'/'
+)
+);
+}
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| INICIAIS
+|--------------------------------------------------------------------------
+*/
+
+$partesNome =
+preg_split(
+'/\s+/',
+trim($user->nome)
+);
+
+
+$iniciais =
+strtoupper(
+substr(
+$partesNome[0] ?? 'U',
+0,
+1
+)
+);
+
+
+if (
+count($partesNome) > 1
+) {
+
+$iniciais .=
+strtoupper(
+substr(
+end($partesNome),
+0,
+1
+)
+);
+}
+
+@endphp
+
+
+<body class="profile-body">
+
+    {{-- =========================================================
+        NAVBAR NORMAL
+    ========================================================== --}}
+
+    <x-nav-landing />
+
+
+    {{-- =========================================================
+        CONTEÚDO
+    ========================================================== --}}
+
+    <main class="profile-page">
 
         <div class="profile-container">
 
+
             {{-- =====================================================
-                 CABEÇALHO
+                CABEÇALHO
             ====================================================== --}}
 
-            <div class="profile-header">
+            <header class="profile-header">
 
-                <div class="profile-header-left">
+                <div>
 
+                    <span class="profile-header-label">
+                        MINHA CONTA
+                    </span>
+
+                    <h1>
+                        Meu Perfil
+                    </h1>
+
+                    <p>
+                        Gerencie suas informações pessoais e configurações da conta.
+                    </p>
+
+                </div>
+
+
+                <div class="profile-header-actions">
+
+                    {{-- VOLTAR PARA HOME --}}
                     <a
-                        href="{{ route('landing') }}"
-                        class="profile-back-button"
-                        title="Voltar para a página inicial">
-                        <i class="bi bi-arrow-left"></i>
+                        href="{{ url('/') }}"
+                        class="profile-button profile-button-secondary">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M3 11.5 12 4l9 7.5"></path>
+                            <path d="M5 10v10h14V10"></path>
+                            <path d="M9 20v-6h6v6"></path>
+                        </svg>
+
+                        Página inicial
+
                     </a>
 
-                    <div>
-                        <h1>Meu Perfil</h1>
 
-                        <p>
-                            Gerencie suas informações pessoais e configurações.
-                        </p>
-                    </div>
+                    {{-- MEUS PRODUTOS --}}
+                    @if(
+                    auth()->user()->tipo !== 'administrador'
+                    )
+
+                    <a
+                        href="{{ route('meus-produtos.index') }}"
+                        class="profile-button profile-button-secondary">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8">
+                            <path d="M3 7l9-4 9 4-9 4-9-4Z"></path>
+                            <path d="M3 7v10l9 4 9-4V7"></path>
+                            <path d="M12 11v10"></path>
+                        </svg>
+
+                        Meus Produtos
+
+                    </a>
+
+
+                    <a
+                        href="{{ route('meus-produtos.create') }}"
+                        class="pm-primary-button">
+                        + Novo produto
+                    </a>
+
+                    @endif
 
                 </div>
 
-            </div>
+            </header>
 
 
             {{-- =====================================================
-                 MENSAGEM DE SUCESSO
+                MENSAGENS
             ====================================================== --}}
 
-            @if (session('success'))
+            @if(session('status'))
 
-            <div class="profile-success">
+            <div class="profile-alert profile-alert-success">
 
-                <i class="bi bi-check-circle"></i>
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2">
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="9"></circle>
 
-                <span>
-                    {{ session('success') }}
-                </span>
+                    <path
+                        d="m8 12 3 3 5-6"></path>
+                </svg>
+
+                {{ session('status') }}
 
             </div>
 
             @endif
 
 
-            {{-- =====================================================
-                 ERROS
-            ====================================================== --}}
+            @if(session('success'))
 
-            @if ($errors->any())
+            <div class="profile-alert profile-alert-success">
 
-            <div class="profile-errors">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2">
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="9"></circle>
 
-                <div class="profile-errors-title">
+                    <path
+                        d="m8 12 3 3 5-6"></path>
+                </svg>
 
-                    <i class="bi bi-exclamation-circle"></i>
+                {{ session('success') }}
+
+            </div>
+
+            @endif
+
+
+            @if(session('error'))
+
+            <div class="profile-alert profile-alert-error">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2">
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="9"></circle>
+
+                    <path d="M12 8v5"></path>
+                    <path d="M12 16h.01"></path>
+                </svg>
+
+                {{ session('error') }}
+
+            </div>
+
+            @endif
+
+
+            @if($errors->any())
+
+            <div class="profile-alert profile-alert-error">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2">
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="9"></circle>
+
+                    <path d="M12 8v5"></path>
+                    <path d="M12 16h.01"></path>
+                </svg>
+
+
+                <div>
 
                     <strong>
-                        Verifique os seguintes erros:
+                        Existem campos que precisam ser corrigidos.
                     </strong>
 
+                    <ul>
+
+                        @foreach($errors->all() as $error)
+
+                        <li>
+                            {{ $error }}
+                        </li>
+
+                        @endforeach
+
+                    </ul>
+
                 </div>
-
-                <ul>
-
-                    @foreach ($errors->all() as $error)
-
-                    <li>
-                        {{ $error }}
-                    </li>
-
-                    @endforeach
-
-                </ul>
 
             </div>
 
@@ -96,146 +340,328 @@
 
 
             {{-- =====================================================
-                 LAYOUT PRINCIPAL
+                GRID PRINCIPAL
             ====================================================== --}}
 
             <div class="profile-layout">
 
 
                 {{-- =================================================
-                     SIDEBAR
+                    COLUNA ESQUERDA
                 ================================================== --}}
 
-                <aside class="profile-sidebar">
+                <aside class="profile-sidebar-card">
 
+                    {{-- FOTO --}}
+                    <div class="profile-avatar-wrapper">
 
-                    {{-- USUÁRIO --}}
-                    <div class="profile-user">
+                        <div
+                            class="profile-avatar"
+                            id="profileAvatar">
 
-                        <div class="profile-user-photo">
-
-                            @if ($user->foto)
-
-                            @php
-
-                            $fotoPerfil =
-                            str_starts_with($user->foto, 'http://')
-                            || str_starts_with($user->foto, 'https://')
-                            ? $user->foto
-                            : asset(
-                            'storage/' .
-                            ltrim($user->foto, '/')
-                            );
-
-                            @endphp
+                            @if($fotoPerfil)
 
                             <img
                                 src="{{ $fotoPerfil }}"
-                                alt="Foto de perfil de {{ $user->nome }}">
+                                alt="{{ $user->nome }}"
+                                id="profileAvatarImage">
+
+                            <span
+                                id="profileAvatarInitials"
+                                hidden>
+                                {{ $iniciais }}
+                            </span>
 
                             @else
 
-                            <div class="profile-user-photo-placeholder">
+                            <span
+                                id="profileAvatarInitials">
+                                {{ $iniciais }}
+                            </span>
 
-                                <i class="bi bi-person-fill"></i>
-
-                            </div>
+                            <img
+                                src=""
+                                alt=""
+                                id="profileAvatarImage"
+                                hidden>
 
                             @endif
 
                         </div>
 
 
-                        <div class="profile-user-info">
+                        <div class="profile-avatar-status"></div>
 
-                            <h2>
-                                {{ $user->nome }}
-                            </h2>
+                    </div>
 
-                            <span>
-                                {{ $user->email }}
-                            </span>
+
+                    <h2>
+                        {{ $user->nome }}
+                    </h2>
+
+
+                    <span class="profile-user-type">
+
+                        {{ $user->tipo === 'administrador'
+                            ? 'Administrador'
+                            : 'Usuário'
+                        }}
+
+                    </span>
+
+
+                    <p class="profile-user-email">
+                        {{ $user->email }}
+                    </p>
+
+
+                    <div class="profile-divider"></div>
+
+
+                    {{-- INFORMAÇÕES --}}
+                    <div class="profile-summary-list">
+
+
+                        <div class="profile-summary-item">
+
+                            <div class="profile-summary-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8">
+                                    <path d="M4 4h16v16H4z"></path>
+                                    <path d="m4 7 8 6 8-6"></path>
+                                </svg>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    E-mail
+                                </span>
+
+                                <strong>
+                                    {{ $user->email }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-summary-item">
+
+                            <div class="profile-summary-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8">
+                                    <path
+                                        d="M22 16.9v3a2 2 0 0 1-2.18 2
+                                        19.79 19.79 0 0 1-8.63-3.07
+                                        19.5 19.5 0 0 1-6-6
+                                        A19.79 19.79 0 0 1
+                                        2.12 4.18 2 2 0 0 1
+                                        4.11 2h3a2 2 0 0 1
+                                        2 1.72c.12.9.33 1.78.62 2.63
+                                        a2 2 0 0 1-.45 2.11L8
+                                        9.73a16 16 0 0 0 6 6l1.27-1.27
+                                        a2 2 0 0 1 2.11-.45
+                                        c.85.29 1.73.5 2.63.62
+                                        A2 2 0 0 1 22 16.9z"></path>
+                                </svg>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Telefone
+                                </span>
+
+                                <strong>
+
+                                    {{ $user->telefone
+                                        ?: 'Não informado'
+                                    }}
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-summary-item">
+
+                            <div class="profile-summary-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8">
+                                    <path
+                                        d="M20 10c0 5-8 11-8 11S4 15 4 10
+                                        a8 8 0 1 1 16 0Z"></path>
+
+                                    <circle
+                                        cx="12"
+                                        cy="10"
+                                        r="2.5"></circle>
+                                </svg>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Localização
+                                </span>
+
+                                <strong>
+
+                                    @if($endereco)
+
+                                    {{ $endereco->cidade }}
+                                    /
+                                    {{ $endereco->estado }}
+
+                                    @else
+
+                                    Não informada
+
+                                    @endif
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-summary-item">
+
+                            <div class="profile-summary-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8">
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="9"></circle>
+
+                                    <path d="M8 12h8"></path>
+                                    <path d="M12 8v8"></path>
+                                </svg>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Saldo
+                                </span>
+
+                                <strong>
+
+                                    R$
+                                    {{ number_format(
+                                        $user->saldo ?? 0,
+                                        2,
+                                        ',',
+                                        '.'
+                                    ) }}
+
+                                </strong>
+
+                            </div>
 
                         </div>
 
                     </div>
 
 
-                    {{-- MENU --}}
-                    <nav class="profile-menu">
+                    @if(
+                    Route::has(
+                    'meus-produtos.index'
+                    )
+                    &&
+                    $user->tipo !== 'administrador'
+                    )
 
-                        <a
-                            href="#informacoes"
-                            class="profile-menu-item active">
+                    <a
+                        href="{{ route('meus-produtos.index') }}"
+                        class="profile-products-card-button">
 
-                            <i class="bi bi-person"></i>
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8">
+                            <path d="M3 7l9-4 9 4-9 4-9-4Z"></path>
+                            <path d="M3 7v10l9 4 9-4V7"></path>
+                            <path d="M12 11v10"></path>
+                        </svg>
 
-                            <span>
-                                Informações pessoais
-                            </span>
+                        Gerenciar meus produtos
 
-                        </a>
+                        <span>
+                            →
+                        </span>
 
+                    </a>
 
-                        <a
-                            href="#enderecos"
-                            class="profile-menu-item">
-
-                            <i class="bi bi-geo-alt"></i>
-
-                            <span>
-                                Endereços
-                            </span>
-
-                        </a>
-
-
-                        <a
-                            href="#cartoes"
-                            class="profile-menu-item">
-
-                            <i class="bi bi-credit-card"></i>
-
-                            <span>
-                                Cartões
-                            </span>
-
-                        </a>
-
-
-                        <a
-                            href="#seguranca"
-                            class="profile-menu-item">
-
-                            <i class="bi bi-shield-lock"></i>
-
-                            <span>
-                                Segurança
-                            </span>
-
-                        </a>
-
-                    </nav>
+                    @endif
 
                 </aside>
 
 
                 {{-- =================================================
-                     CONTEÚDO
+                    COLUNA DIREITA
                 ================================================== --}}
 
-                <main class="profile-content">
+                <div class="profile-content">
 
 
-                    {{-- =================================================
-                         INFORMAÇÕES PESSOAIS
-                    ================================================== --}}
+                    {{-- =============================================
+                        DADOS PESSOAIS
+                    ============================================== --}}
 
-                    <section
-                        id="informacoes"
-                        class="profile-card">
+                    <section class="profile-card">
 
                         <div class="profile-card-header">
+
+                            <div class="profile-card-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8">
+                                    <circle
+                                        cx="12"
+                                        cy="8"
+                                        r="4"></circle>
+
+                                    <path
+                                        d="M4 21a8 8 0 0 1 16 0"></path>
+                                </svg>
+
+                            </div>
+
 
                             <div>
 
@@ -244,7 +670,7 @@
                                 </h2>
 
                                 <p>
-                                    Atualize seus dados pessoais.
+                                    Atualize seus dados pessoais e sua foto.
                                 </p>
 
                             </div>
@@ -253,69 +679,68 @@
 
 
                         <form
-                            method="POST"
                             action="{{ route('profile.update') }}"
-                            enctype="multipart/form-data">
+                            method="POST"
+                            enctype="multipart/form-data"
+                            class="profile-form">
 
                             @csrf
-
                             @method('PATCH')
 
 
-                            {{-- FOTO DE PERFIL --}}
-                            <div class="profile-photo-section">
+                            {{-- FOTO --}}
+                            <div class="profile-photo-edit">
 
-                                <div class="profile-photo-wrapper">
+                                <div
+                                    class="profile-photo-preview"
+                                    id="photoPreview">
 
-                                    @if ($user->foto)
-
-                                    @php
-
-                                    $fotoPerfil =
-                                    str_starts_with($user->foto, 'http://')
-                                    || str_starts_with($user->foto, 'https://')
-                                    ? $user->foto
-                                    : asset(
-                                    'storage/' .
-                                    ltrim($user->foto, '/')
-                                    );
-
-                                    @endphp
+                                    @if($fotoPerfil)
 
                                     <img
                                         src="{{ $fotoPerfil }}"
-                                        alt="Foto de perfil de {{ $user->nome }}"
-                                        class="profile-photo">
+                                        alt="{{ $user->nome }}"
+                                        id="photoPreviewImage">
+
+                                    <span
+                                        id="photoPreviewPlaceholder"
+                                        hidden>
+                                        {{ $iniciais }}
+                                    </span>
 
                                     @else
 
-                                    <div class="profile-photo-placeholder">
+                                    <span
+                                        id="photoPreviewPlaceholder">
+                                        {{ $iniciais }}
+                                    </span>
 
-                                        <i class="bi bi-person-fill"></i>
-
-                                    </div>
+                                    <img
+                                        src=""
+                                        alt=""
+                                        id="photoPreviewImage"
+                                        hidden>
 
                                     @endif
 
                                 </div>
 
 
-                                <div class="profile-photo-info">
-
-                                    <h3>
-                                        Foto de perfil
-                                    </h3>
-
-                                    <p>
-                                        Sua foto será exibida no seu perfil.
-                                    </p>
-
+                                <div class="profile-photo-actions">
 
                                     <label
                                         for="foto"
-                                        class="profile-photo-button">
+                                        class="profile-upload-button">
 
-                                        <i class="bi bi-camera"></i>
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.8">
+                                            <path d="M12 16V4"></path>
+                                            <path d="m7 9 5-5 5 5"></path>
+                                            <path d="M5 20h14"></path>
+                                        </svg>
 
                                         Alterar foto
 
@@ -324,17 +749,21 @@
 
                                     <input
                                         type="file"
-                                        id="foto"
                                         name="foto"
-                                        accept="image/jpeg,image/png,image/jpg,image/webp"
+                                        id="foto"
+                                        accept=".jpg,.jpeg,.png,.webp"
                                         hidden>
 
 
+                                    <span>
+                                        JPG, PNG ou WEBP. Máximo de 2 MB.
+                                    </span>
+
                                     @error('foto')
 
-                                    <span class="profile-field-error">
+                                    <small class="profile-field-error">
                                         {{ $message }}
-                                    </span>
+                                    </small>
 
                                     @enderror
 
@@ -343,37 +772,39 @@
                             </div>
 
 
-                            {{-- CAMPOS --}}
                             <div class="profile-form-grid">
 
 
                                 {{-- NOME --}}
-                                <div class="profile-field">
+                                <div class="profile-form-group profile-form-full">
 
                                     <label for="nome">
-                                        Nome
+                                        Nome completo
                                     </label>
 
                                     <input
                                         type="text"
-                                        id="nome"
                                         name="nome"
-                                        value="{{ old('nome', $user->nome) }}"
+                                        id="nome"
+                                        value="{{ old(
+                                            'nome',
+                                            $user->nome
+                                        ) }}"
                                         required>
 
                                     @error('nome')
 
-                                    <span class="profile-field-error">
+                                    <small class="profile-field-error">
                                         {{ $message }}
-                                    </span>
+                                    </small>
 
                                     @enderror
 
                                 </div>
 
 
-                                {{-- E-MAIL --}}
-                                <div class="profile-field">
+                                {{-- EMAIL --}}
+                                <div class="profile-form-group">
 
                                     <label for="email">
                                         E-mail
@@ -381,16 +812,19 @@
 
                                     <input
                                         type="email"
-                                        id="email"
                                         name="email"
-                                        value="{{ old('email', $user->email) }}"
+                                        id="email"
+                                        value="{{ old(
+                                            'email',
+                                            $user->email
+                                        ) }}"
                                         required>
 
                                     @error('email')
 
-                                    <span class="profile-field-error">
+                                    <small class="profile-field-error">
                                         {{ $message }}
-                                    </span>
+                                    </small>
 
                                     @enderror
 
@@ -398,7 +832,7 @@
 
 
                                 {{-- CPF --}}
-                                <div class="profile-field">
+                                <div class="profile-form-group">
 
                                     <label for="cpf">
                                         CPF
@@ -406,44 +840,19 @@
 
                                     <input
                                         type="text"
-                                        id="cpf"
                                         name="cpf"
-                                        value="{{ old('cpf', $user->cpf) }}">
+                                        id="cpf"
+                                        maxlength="14"
+                                        value="{{ old(
+                                            'cpf',
+                                            $user->cpf
+                                        ) }}">
 
                                     @error('cpf')
 
-                                    <span class="profile-field-error">
+                                    <small class="profile-field-error">
                                         {{ $message }}
-                                    </span>
-
-                                    @enderror
-
-                                </div>
-
-
-                                {{-- DATA DE NASCIMENTO --}}
-                                <div class="profile-field">
-
-                                    <label for="data_nascimento">
-                                        Data de nascimento
-                                    </label>
-
-                                    <input
-                                        type="date"
-                                        id="data_nascimento"
-                                        name="data_nascimento"
-                                        value="{{ old(
-                                            'data_nascimento',
-                                            $user->data_nascimento
-                                                ? $user->data_nascimento->format('Y-m-d')
-                                                : ''
-                                        ) }}">
-
-                                    @error('data_nascimento')
-
-                                    <span class="profile-field-error">
-                                        {{ $message }}
-                                    </span>
+                                    </small>
 
                                     @enderror
 
@@ -451,7 +860,7 @@
 
 
                                 {{-- TELEFONE --}}
-                                <div class="profile-field">
+                                <div class="profile-form-group">
 
                                     <label for="telefone">
                                         Telefone
@@ -459,47 +868,72 @@
 
                                     <input
                                         type="text"
-                                        id="telefone"
                                         name="telefone"
-                                        value="{{ old('telefone', $user->telefone) }}">
+                                        id="telefone"
+                                        maxlength="15"
+                                        value="{{ old(
+                                            'telefone',
+                                            $user->telefone
+                                        ) }}">
 
                                     @error('telefone')
 
-                                    <span class="profile-field-error">
+                                    <small class="profile-field-error">
                                         {{ $message }}
-                                    </span>
+                                    </small>
 
                                     @enderror
 
                                 </div>
 
 
-                                {{-- SALDO --}}
-                                <div class="profile-field">
+                                {{-- DATA --}}
+                                <div class="profile-form-group">
 
-                                    <label for="saldo">
-                                        Saldo
+                                    <label for="data_nascimento">
+                                        Data de nascimento
                                     </label>
 
                                     <input
-                                        type="text"
-                                        id="saldo"
-                                        value="R$ {{ number_format($user->saldo ?? 0, 2, ',', '.') }}"
-                                        readonly>
+                                        type="date"
+                                        name="data_nascimento"
+                                        id="data_nascimento"
+                                        value="{{ old(
+                                            'data_nascimento',
+                                            $user->data_nascimento
+                                                ? $user
+                                                    ->data_nascimento
+                                                    ->format('Y-m-d')
+                                                : ''
+                                        ) }}">
+
+                                    @error('data_nascimento')
+
+                                    <small class="profile-field-error">
+                                        {{ $message }}
+                                    </small>
+
+                                    @enderror
 
                                 </div>
 
                             </div>
 
 
-                            {{-- BOTÃO --}}
-                            <div class="profile-form-actions">
+                            <div class="profile-form-footer">
 
                                 <button
                                     type="submit"
                                     class="profile-save-button">
 
-                                    <i class="bi bi-check-lg"></i>
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2">
+                                        <path
+                                            d="M20 6 9 17l-5-5"></path>
+                                    </svg>
 
                                     Salvar alterações
 
@@ -512,105 +946,42 @@
                     </section>
 
 
-                    {{-- =================================================
-                         RESUMO
-                    ================================================== --}}
+                    {{-- =============================================
+                        ENDEREÇO
+                    ============================================== --}}
 
-                    <section class="profile-summary-grid">
-
-
-                        {{-- PEDIDOS --}}
-                        <div class="profile-summary-card">
-
-                            <div class="profile-summary-icon">
-
-                                <i class="bi bi-bag-check"></i>
-
-                            </div>
-
-                            <div>
-
-                                <strong>
-                                    {{ $totalPedidos }}
-                                </strong>
-
-                                <span>
-                                    Pedidos
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        {{-- ENDEREÇOS --}}
-                        <div class="profile-summary-card">
-
-                            <div class="profile-summary-icon">
-
-                                <i class="bi bi-geo-alt"></i>
-
-                            </div>
-
-                            <div>
-
-                                <strong>
-                                    {{ $enderecos->count() }}
-                                </strong>
-
-                                <span>
-                                    Endereços
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        {{-- CARTÕES --}}
-                        <div class="profile-summary-card">
-
-                            <div class="profile-summary-icon">
-
-                                <i class="bi bi-credit-card"></i>
-
-                            </div>
-
-                            <div>
-
-                                <strong>
-                                    {{ $cartoes->count() }}
-                                </strong>
-
-                                <span>
-                                    Cartões
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </section>
-
-
-                    {{-- =================================================
-                         ENDEREÇOS
-                    ================================================== --}}
-
-                    <section
-                        id="enderecos"
-                        class="profile-card">
+                    <section class="profile-card">
 
                         <div class="profile-card-header">
+
+                            <div class="profile-card-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8">
+                                    <path
+                                        d="M20 10c0 5-8 11-8 11S4 15 4 10
+                                        a8 8 0 1 1 16 0Z"></path>
+
+                                    <circle
+                                        cx="12"
+                                        cy="10"
+                                        r="2.5"></circle>
+                                </svg>
+
+                            </div>
+
 
                             <div>
 
                                 <h2>
-                                    Endereços cadastrados
+                                    Endereço
                                 </h2>
 
                                 <p>
-                                    Gerencie seus endereços de entrega.
+                                    Digite o CEP para preencher o endereço automaticamente.
                                 </p>
 
                             </div>
@@ -618,410 +989,293 @@
                         </div>
 
 
-                        {{-- ENDEREÇOS EXISTENTES --}}
-                        @if ($enderecos->count() > 0)
+                        <form
+                            action="{{ route('profile.address.store') }}"
+                            method="POST"
+                            class="profile-form"
+                            id="addressForm"
+                            data-cep-url="{{ url('/api/cep') }}">
 
-                        <div class="profile-address-list">
-
-                            @foreach ($enderecos as $endereco)
-
-                            <div class="profile-address-card">
-
-                                <div class="profile-address-icon">
-
-                                    <i class="bi bi-house"></i>
-
-                                </div>
+                            @csrf
 
 
-                                <div class="profile-address-info">
-
-                                    <strong>
-                                        {{ $endereco->logradouro }},
-                                        {{ $endereco->numero }}
-                                    </strong>
+                            <div class="profile-form-grid">
 
 
-                                    @if ($endereco->complemento)
+                                {{-- CEP --}}
+                                <div class="profile-form-group">
 
-                                    <span>
-                                        {{ $endereco->complemento }}
-                                    </span>
-
-                                    @endif
-
-
-                                    <span>
-                                        {{ $endereco->bairro }}
-                                        -
-                                        {{ $endereco->cidade }}/{{ $endereco->estado }}
-                                    </span>
+                                    <label for="cep">
+                                        CEP
+                                    </label>
 
 
-                                    <span>
-                                        CEP:
-
-                                        {{ substr($endereco->cep, 0, 5) }}-{{ substr($endereco->cep, 5) }}
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                            @endforeach
-
-                        </div>
-
-                        @else
-
-                        <div class="profile-empty">
-
-                            <i class="bi bi-geo-alt"></i>
-
-                            <p>
-                                Nenhum endereço cadastrado.
-                            </p>
-
-                        </div>
-
-                        @endif
-
-
-                        {{-- =================================================
-                             CADASTRAR NOVO ENDEREÇO
-                        ================================================== --}}
-
-                        <div class="profile-new-address">
-
-                            <div class="profile-new-address-header">
-
-                                <h3>
-                                    Cadastrar novo endereço
-                                </h3>
-
-                                <p>
-                                    Digite o CEP para preencher automaticamente
-                                    os dados do endereço.
-                                </p>
-
-                            </div>
-
-
-                            <form
-                                method="POST"
-                                action="{{ route('profile.address.store') }}"
-                                id="form-endereco">
-
-                                @csrf
-
-
-                                <div class="profile-form-grid">
-
-
-                                    {{-- CEP --}}
-                                    <div class="profile-field">
-
-                                        <label for="cep">
-                                            CEP
-                                        </label>
+                                    <div class="profile-cep-wrapper">
 
                                         <input
                                             type="text"
-                                            id="cep"
                                             name="cep"
-                                            placeholder="00000-000"
+                                            id="cep"
                                             maxlength="9"
-                                            value="{{ old('cep') }}"
-                                            autocomplete="postal-code"
+                                            value="{{ old(
+                                                'cep',
+                                                $endereco?->cep
+                                            ) }}"
+                                            placeholder="00000-000"
                                             required>
+
 
                                         <span
-                                            id="cep-status"
-                                            class="profile-cep-status"></span>
-
-
-                                        @error('cep')
-
-                                        <span class="profile-field-error">
-                                            {{ $message }}
+                                            class="profile-cep-loading"
+                                            id="cepLoading"
+                                            hidden>
+                                            Buscando...
                                         </span>
-
-                                        @enderror
 
                                     </div>
 
 
-                                    {{-- NÚMERO --}}
-                                    <div class="profile-field">
-
-                                        <label for="numero">
-                                            Número
-                                        </label>
-
-                                        <input
-                                            type="text"
-                                            id="numero"
-                                            name="numero"
-                                            placeholder="Número"
-                                            value="{{ old('numero') }}"
-                                            required>
-
-                                        @error('numero')
-
-                                        <span class="profile-field-error">
-                                            {{ $message }}
-                                        </span>
-
-                                        @enderror
-
-                                    </div>
+                                    <span
+                                        id="cepMessage"
+                                        class="profile-cep-message"></span>
 
 
-                                    {{-- LOGRADOURO --}}
-                                    <div class="profile-field profile-field-wide">
+                                    @error('cep')
 
-                                        <label for="logradouro">
-                                            Logradouro
-                                        </label>
+                                    <small class="profile-field-error">
+                                        {{ $message }}
+                                    </small>
 
-                                        <input
-                                            type="text"
-                                            id="logradouro"
-                                            name="logradouro"
-                                            placeholder="Rua, Avenida..."
-                                            value="{{ old('logradouro') }}"
-                                            autocomplete="street-address"
-                                            required>
-
-                                        @error('logradouro')
-
-                                        <span class="profile-field-error">
-                                            {{ $message }}
-                                        </span>
-
-                                        @enderror
-
-                                    </div>
-
-
-                                    {{-- COMPLEMENTO --}}
-                                    <div class="profile-field">
-
-                                        <label for="complemento">
-                                            Complemento
-                                        </label>
-
-                                        <input
-                                            type="text"
-                                            id="complemento"
-                                            name="complemento"
-                                            placeholder="Apartamento, bloco..."
-                                            value="{{ old('complemento') }}">
-
-                                        @error('complemento')
-
-                                        <span class="profile-field-error">
-                                            {{ $message }}
-                                        </span>
-
-                                        @enderror
-
-                                    </div>
-
-
-                                    {{-- BAIRRO --}}
-                                    <div class="profile-field">
-
-                                        <label for="bairro">
-                                            Bairro
-                                        </label>
-
-                                        <input
-                                            type="text"
-                                            id="bairro"
-                                            name="bairro"
-                                            placeholder="Bairro"
-                                            value="{{ old('bairro') }}"
-                                            autocomplete="address-level3"
-                                            required>
-
-                                        @error('bairro')
-
-                                        <span class="profile-field-error">
-                                            {{ $message }}
-                                        </span>
-
-                                        @enderror
-
-                                    </div>
-
-
-                                    {{-- CIDADE --}}
-                                    <div class="profile-field">
-
-                                        <label for="cidade">
-                                            Cidade
-                                        </label>
-
-                                        <input
-                                            type="text"
-                                            id="cidade"
-                                            name="cidade"
-                                            placeholder="Cidade"
-                                            value="{{ old('cidade') }}"
-                                            autocomplete="address-level2"
-                                            required>
-
-                                        @error('cidade')
-
-                                        <span class="profile-field-error">
-                                            {{ $message }}
-                                        </span>
-
-                                        @enderror
-
-                                    </div>
-
-
-                                    {{-- ESTADO --}}
-                                    <div class="profile-field">
-
-                                        <label for="estado">
-                                            Estado
-                                        </label>
-
-                                        <input
-                                            type="text"
-                                            id="estado"
-                                            name="estado"
-                                            placeholder="MG"
-                                            maxlength="2"
-                                            value="{{ old('estado') }}"
-                                            autocomplete="address-level1"
-                                            required>
-
-                                        @error('estado')
-
-                                        <span class="profile-field-error">
-                                            {{ $message }}
-                                        </span>
-
-                                        @enderror
-
-                                    </div>
+                                    @enderror
 
                                 </div>
 
 
-                                {{-- BOTÃO --}}
-                                <div class="profile-form-actions">
+                                {{-- NÚMERO --}}
+                                <div class="profile-form-group">
 
-                                    <button
-                                        type="submit"
-                                        class="profile-save-button">
+                                    <label for="numero">
+                                        Número
+                                    </label>
 
-                                        <i class="bi bi-plus-lg"></i>
+                                    <input
+                                        type="text"
+                                        name="numero"
+                                        id="numero"
+                                        value="{{ old(
+                                            'numero',
+                                            $endereco?->numero
+                                        ) }}"
+                                        required>
 
-                                        Cadastrar endereço
+                                    @error('numero')
 
-                                    </button>
+                                    <small class="profile-field-error">
+                                        {{ $message }}
+                                    </small>
 
-                                </div>
-
-                            </form>
-
-                        </div>
-
-                    </section>
-
-
-                    {{-- =================================================
-                         CARTÕES
-                    ================================================== --}}
-
-                    <section
-                        id="cartoes"
-                        class="profile-card">
-
-                        <div class="profile-card-header">
-
-                            <div>
-
-                                <h2>
-                                    Cartões cadastrados
-                                </h2>
-
-                                <p>
-                                    Seus cartões salvos para pagamentos.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-
-                        @if ($cartoes->count() > 0)
-
-                        <div class="profile-card-list">
-
-                            @foreach ($cartoes as $cartao)
-
-                            <div class="profile-payment-card">
-
-                                <div class="profile-payment-icon">
-
-                                    <i class="bi bi-credit-card"></i>
+                                    @enderror
 
                                 </div>
 
-                                <div>
 
-                                    <strong>
-                                        Cartão
-                                    </strong>
+                                {{-- LOGRADOURO --}}
+                                <div class="profile-form-group profile-form-full">
 
-                                    <span>
+                                    <label for="logradouro">
+                                        Logradouro
+                                    </label>
 
-                                        **** **** ****
+                                    <input
+                                        type="text"
+                                        name="logradouro"
+                                        id="logradouro"
+                                        value="{{ old(
+                                            'logradouro',
+                                            $endereco?->logradouro
+                                        ) }}"
+                                        required>
 
-                                        {{ substr($cartao->numero ?? '', -4) }}
+                                    @error('logradouro')
 
-                                    </span>
+                                    <small class="profile-field-error">
+                                        {{ $message }}
+                                    </small>
+
+                                    @enderror
+
+                                </div>
+
+
+                                {{-- BAIRRO --}}
+                                <div class="profile-form-group">
+
+                                    <label for="bairro">
+                                        Bairro
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="bairro"
+                                        id="bairro"
+                                        value="{{ old(
+                                            'bairro',
+                                            $endereco?->bairro
+                                        ) }}"
+                                        required>
+
+                                    @error('bairro')
+
+                                    <small class="profile-field-error">
+                                        {{ $message }}
+                                    </small>
+
+                                    @enderror
+
+                                </div>
+
+
+                                {{-- CIDADE --}}
+                                <div class="profile-form-group">
+
+                                    <label for="cidade">
+                                        Cidade
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="cidade"
+                                        id="cidade"
+                                        value="{{ old(
+                                            'cidade',
+                                            $endereco?->cidade
+                                        ) }}"
+                                        required>
+
+                                    @error('cidade')
+
+                                    <small class="profile-field-error">
+                                        {{ $message }}
+                                    </small>
+
+                                    @enderror
+
+                                </div>
+
+
+                                {{-- ESTADO --}}
+                                <div class="profile-form-group">
+
+                                    <label for="estado">
+                                        Estado
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="estado"
+                                        id="estado"
+                                        maxlength="2"
+                                        value="{{ old(
+                                            'estado',
+                                            $endereco?->estado
+                                        ) }}"
+                                        required>
+
+                                    @error('estado')
+
+                                    <small class="profile-field-error">
+                                        {{ $message }}
+                                    </small>
+
+                                    @enderror
+
+                                </div>
+
+
+                                {{-- COMPLEMENTO --}}
+                                <div class="profile-form-group">
+
+                                    <label for="complemento">
+                                        Complemento
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="complemento"
+                                        id="complemento"
+                                        value="{{ old(
+                                            'complemento',
+                                            $endereco?->complemento
+                                        ) }}"
+                                        placeholder="Opcional">
+
+                                    @error('complemento')
+
+                                    <small class="profile-field-error">
+                                        {{ $message }}
+                                    </small>
+
+                                    @enderror
 
                                 </div>
 
                             </div>
 
-                            @endforeach
 
-                        </div>
+                            <div class="profile-form-footer">
 
-                        @else
+                                <button
+                                    type="submit"
+                                    class="profile-save-button">
 
-                        <div class="profile-empty">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2">
+                                        <path
+                                            d="M20 6 9 17l-5-5"></path>
+                                    </svg>
 
-                            <i class="bi bi-credit-card"></i>
+                                    Salvar endereço
 
-                            <p>
-                                Nenhum cartão cadastrado.
-                            </p>
+                                </button>
 
-                        </div>
+                            </div>
 
-                        @endif
+                        </form>
 
                     </section>
 
 
-                    {{-- =================================================
-                         SEGURANÇA
-                    ================================================== --}}
+                    {{-- =============================================
+                        SENHA
+                    ============================================== --}}
 
-                    <section
-                        id="seguranca"
-                        class="profile-card">
+                    <section class="profile-card">
 
                         <div class="profile-card-header">
+
+                            <div class="profile-card-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8">
+                                    <rect
+                                        x="4"
+                                        y="10"
+                                        width="16"
+                                        height="11"
+                                        rx="2"></rect>
+
+                                    <path
+                                        d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                                </svg>
+
+                            </div>
+
 
                             <div>
 
@@ -1039,11 +1293,11 @@
 
 
                         <form
+                            action="{{ route('profile.password') }}"
                             method="POST"
-                            action="{{ route('profile.password') }}">
+                            class="profile-form">
 
                             @csrf
-
                             @method('PATCH')
 
 
@@ -1051,23 +1305,24 @@
 
 
                                 {{-- SENHA ATUAL --}}
-                                <div class="profile-field profile-field-wide">
+                                <div class="profile-form-group profile-form-full">
 
-                                    <label for="senha_atual">
+                                    <label for="current_password">
                                         Senha atual
                                     </label>
 
                                     <input
                                         type="password"
-                                        id="senha_atual"
-                                        name="senha_atual"
+                                        name="current_password"
+                                        id="current_password"
+                                        autocomplete="current-password"
                                         required>
 
-                                    @error('senha_atual')
+                                    @error('current_password')
 
-                                    <span class="profile-field-error">
+                                    <small class="profile-field-error">
                                         {{ $message }}
-                                    </span>
+                                    </small>
 
                                     @enderror
 
@@ -1075,23 +1330,24 @@
 
 
                                 {{-- NOVA SENHA --}}
-                                <div class="profile-field">
+                                <div class="profile-form-group">
 
-                                    <label for="nova_senha">
+                                    <label for="password">
                                         Nova senha
                                     </label>
 
                                     <input
                                         type="password"
-                                        id="nova_senha"
-                                        name="nova_senha"
+                                        name="password"
+                                        id="password"
+                                        autocomplete="new-password"
                                         required>
 
-                                    @error('nova_senha')
+                                    @error('password')
 
-                                    <span class="profile-field-error">
+                                    <small class="profile-field-error">
                                         {{ $message }}
-                                    </span>
+                                    </small>
 
                                     @enderror
 
@@ -1099,16 +1355,17 @@
 
 
                                 {{-- CONFIRMAÇÃO --}}
-                                <div class="profile-field">
+                                <div class="profile-form-group">
 
-                                    <label for="nova_senha_confirmation">
+                                    <label for="password_confirmation">
                                         Confirmar nova senha
                                     </label>
 
                                     <input
                                         type="password"
-                                        id="nova_senha_confirmation"
-                                        name="nova_senha_confirmation"
+                                        name="password_confirmation"
+                                        id="password_confirmation"
+                                        autocomplete="new-password"
                                         required>
 
                                 </div>
@@ -1116,13 +1373,21 @@
                             </div>
 
 
-                            <div class="profile-form-actions">
+                            <div class="profile-form-footer">
 
                                 <button
                                     type="submit"
                                     class="profile-save-button">
 
-                                    <i class="bi bi-lock"></i>
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M12 20h9"></path>
+                                        <path
+                                            d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"></path>
+                                    </svg>
 
                                     Alterar senha
 
@@ -1134,256 +1399,816 @@
 
                     </section>
 
-                </main>
+
+                    {{-- =============================================
+                        EXCLUIR CONTA
+                    ============================================== --}}
+
+                    <section class="profile-card profile-danger-card">
+
+                        <div class="profile-card-header">
+
+                            <div class="profile-card-icon profile-danger-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8">
+                                    <path d="M3 6h18"></path>
+                                    <path d="M8 6V4h8v2"></path>
+                                    <path d="M19 6l-1 14H6L5 6"></path>
+                                    <path d="M10 11v5"></path>
+                                    <path d="M14 11v5"></path>
+                                </svg>
+
+                            </div>
+
+
+                            <div>
+
+                                <h2>
+                                    Excluir conta
+                                </h2>
+
+                                <p>
+                                    Essa ação remove permanentemente sua conta.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-danger-content">
+
+                            <div>
+
+                                <strong>
+                                    Tem certeza que deseja excluir sua conta?
+                                </strong>
+
+                                <p>
+                                    Após a exclusão, seus dados não poderão ser recuperados.
+                                </p>
+
+                            </div>
+
+
+                            <form
+                                action="{{ route('profile.destroy') }}"
+                                method="POST"
+                                id="deleteAccountForm">
+
+                                @csrf
+                                @method('DELETE')
+
+
+                                <button
+                                    type="submit"
+                                    class="profile-delete-button">
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M3 6h18"></path>
+                                        <path d="M8 6V4h8v2"></path>
+                                        <path d="M19 6l-1 14H6L5 6"></path>
+                                    </svg>
+
+                                    Excluir minha conta
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </section>
+
+                </div>
 
             </div>
 
         </div>
 
-    </div>
+    </main>
 
 
-    {{-- =============================================================
-         JAVASCRIPT - VIACEP
-    ============================================================== --}}
+    {{-- =========================================================
+        JAVASCRIPT
+    ========================================================== --}}
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-
-            const cepInput = document.getElementById('cep');
-            const logradouroInput = document.getElementById('logradouro');
-            const bairroInput = document.getElementById('bairro');
-            const cidadeInput = document.getElementById('cidade');
-            const estadoInput = document.getElementById('estado');
-            const cepStatus = document.getElementById('cep-status');
-
-
-            if (!cepInput) {
-                return;
-            }
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | Formatação do CEP
-            |--------------------------------------------------------------------------
-            */
-
-            cepInput.addEventListener('input', function() {
-
-                let cep = this.value.replace(/\D/g, '');
-
-                cep = cep.substring(0, 8);
-
-                if (cep.length > 5) {
-
-                    this.value =
-                        cep.substring(0, 5) +
-                        '-' +
-                        cep.substring(5);
-
-                } else {
-
-                    this.value = cep;
-
-                }
-
-            });
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | Consulta ViaCEP
-            |--------------------------------------------------------------------------
-            */
-
-            cepInput.addEventListener('blur', async function() {
-
-                const cep = this.value.replace(/\D/g, '');
-
+        document.addEventListener(
+            'DOMContentLoaded',
+            function() {
 
                 /*
                 |--------------------------------------------------------------------------
-                | CEP vazio
+                | PREVIEW DA FOTO
                 |--------------------------------------------------------------------------
                 */
 
-                if (cep.length === 0) {
-
-                    cepStatus.textContent = '';
-
-                    cepStatus.className =
-                        'profile-cep-status';
-
-                    return;
-
-                }
+                const fotoInput =
+                    document.getElementById(
+                        'foto'
+                    );
 
 
-                /*
-                |--------------------------------------------------------------------------
-                | CEP inválido
-                |--------------------------------------------------------------------------
-                */
-
-                if (cep.length !== 8) {
-
-                    cepStatus.textContent =
-                        'Digite um CEP válido com 8 dígitos.';
-
-                    cepStatus.className =
-                        'profile-cep-status error';
-
-                    return;
-
-                }
+                const previewImage =
+                    document.getElementById(
+                        'photoPreviewImage'
+                    );
 
 
-                /*
-                |--------------------------------------------------------------------------
-                | Carregando
-                |--------------------------------------------------------------------------
-                */
-
-                cepStatus.textContent =
-                    'Consultando CEP...';
-
-                cepStatus.className =
-                    'profile-cep-status loading';
+                const previewPlaceholder =
+                    document.getElementById(
+                        'photoPreviewPlaceholder'
+                    );
 
 
-                try {
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | URL da API
-                    |--------------------------------------------------------------------------
-                    */
-
-                    const url =
-                        "{{ url('/api/cep') }}/" + cep;
+                const avatarImage =
+                    document.getElementById(
+                        'profileAvatarImage'
+                    );
 
 
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Requisição
-                    |--------------------------------------------------------------------------
-                    */
+                const avatarInitials =
+                    document.getElementById(
+                        'profileAvatarInitials'
+                    );
 
-                    const response = await fetch(url, {
-                        method: 'GET',
 
-                        headers: {
-                            'Accept': 'application/json'
+                if (
+                    fotoInput &&
+                    previewImage
+                ) {
+
+                    fotoInput.addEventListener(
+                        'change',
+                        function() {
+
+                            const file =
+                                this.files[0];
+
+
+                            if (!file) {
+                                return;
+                            }
+
+
+                            const reader =
+                                new FileReader();
+
+
+                            reader.onload =
+                                function(event) {
+
+                                    const url =
+                                        event.target.result;
+
+
+                                    /*
+                                    |--------------------------------------------------------------------------
+                                    | PREVIEW DO FORM
+                                    |--------------------------------------------------------------------------
+                                    */
+
+                                    previewImage.src =
+                                        url;
+
+                                    previewImage.hidden =
+                                        false;
+
+
+                                    if (
+                                        previewPlaceholder
+                                    ) {
+
+                                        previewPlaceholder.hidden =
+                                            true;
+                                    }
+
+
+                                    /*
+                                    |--------------------------------------------------------------------------
+                                    | FOTO DA COLUNA ESQUERDA
+                                    |--------------------------------------------------------------------------
+                                    */
+
+                                    if (
+                                        avatarImage
+                                    ) {
+
+                                        avatarImage.src =
+                                            url;
+
+                                        avatarImage.hidden =
+                                            false;
+                                    }
+
+
+                                    if (
+                                        avatarInitials
+                                    ) {
+
+                                        avatarInitials.hidden =
+                                            true;
+                                    }
+                                };
+
+
+                            reader.readAsDataURL(
+                                file
+                            );
                         }
-                    });
+                    );
+                }
 
 
-                    /*
-                    |--------------------------------------------------------------------------
-                    | JSON
-                    |--------------------------------------------------------------------------
-                    */
+                /*
+                |--------------------------------------------------------------------------
+                | CPF
+                |--------------------------------------------------------------------------
+                */
 
-                    const dados = await response.json();
+                const cpf =
+                    document.getElementById(
+                        'cpf'
+                    );
 
 
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Erro
-                    |--------------------------------------------------------------------------
-                    */
+                function formatarCpf(
+                    valor
+                ) {
 
-                    if (!response.ok) {
-
-                        throw new Error(
-                            dados.erro ||
-                            'Não foi possível consultar o CEP.'
+                    valor =
+                        valor
+                        .replace(
+                            /\D/g,
+                            ''
+                        )
+                        .substring(
+                            0,
+                            11
                         );
 
+
+                    valor =
+                        valor.replace(
+                            /(\d{3})(\d)/,
+                            '$1.$2'
+                        );
+
+
+                    valor =
+                        valor.replace(
+                            /(\d{3})(\d)/,
+                            '$1.$2'
+                        );
+
+
+                    valor =
+                        valor.replace(
+                            /(\d{3})(\d{1,2})$/,
+                            '$1-$2'
+                        );
+
+
+                    return valor;
+                }
+
+
+                if (cpf) {
+
+                    cpf.value =
+                        formatarCpf(
+                            cpf.value
+                        );
+
+
+                    cpf.addEventListener(
+                        'input',
+                        function() {
+
+                            this.value =
+                                formatarCpf(
+                                    this.value
+                                );
+                        }
+                    );
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | TELEFONE
+                |--------------------------------------------------------------------------
+                */
+
+                const telefone =
+                    document.getElementById(
+                        'telefone'
+                    );
+
+
+                function formatarTelefone(
+                    valor
+                ) {
+
+                    valor =
+                        valor
+                        .replace(
+                            /\D/g,
+                            ''
+                        )
+                        .substring(
+                            0,
+                            11
+                        );
+
+
+                    if (
+                        valor.length <= 10
+                    ) {
+
+                        return valor
+                            .replace(
+                                /^(\d{2})(\d)/,
+                                '($1) $2'
+                            )
+                            .replace(
+                                /(\d{4})(\d)/,
+                                '$1-$2'
+                            );
+                    }
+
+
+                    return valor
+                        .replace(
+                            /^(\d{2})(\d)/,
+                            '($1) $2'
+                        )
+                        .replace(
+                            /(\d{5})(\d)/,
+                            '$1-$2'
+                        );
+                }
+
+
+                if (telefone) {
+
+                    telefone.value =
+                        formatarTelefone(
+                            telefone.value
+                        );
+
+
+                    telefone.addEventListener(
+                        'input',
+                        function() {
+
+                            this.value =
+                                formatarTelefone(
+                                    this.value
+                                );
+                        }
+                    );
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | CEP
+                |--------------------------------------------------------------------------
+                */
+
+                const addressForm =
+                    document.getElementById(
+                        'addressForm'
+                    );
+
+
+                const cep =
+                    document.getElementById(
+                        'cep'
+                    );
+
+
+                const logradouro =
+                    document.getElementById(
+                        'logradouro'
+                    );
+
+
+                const bairro =
+                    document.getElementById(
+                        'bairro'
+                    );
+
+
+                const cidade =
+                    document.getElementById(
+                        'cidade'
+                    );
+
+
+                const estado =
+                    document.getElementById(
+                        'estado'
+                    );
+
+
+                const numero =
+                    document.getElementById(
+                        'numero'
+                    );
+
+
+                const cepLoading =
+                    document.getElementById(
+                        'cepLoading'
+                    );
+
+
+                const cepMessage =
+                    document.getElementById(
+                        'cepMessage'
+                    );
+
+
+                let ultimoCepConsultado =
+                    null;
+
+
+                function formatarCep(
+                    valor
+                ) {
+
+                    valor =
+                        valor
+                        .replace(
+                            /\D/g,
+                            ''
+                        )
+                        .substring(
+                            0,
+                            8
+                        );
+
+
+                    if (
+                        valor.length > 5
+                    ) {
+
+                        valor =
+                            valor.replace(
+                                /^(\d{5})(\d)/,
+                                '$1-$2'
+                            );
+                    }
+
+
+                    return valor;
+                }
+
+
+                function limparMensagemCep() {
+
+                    if (!cepMessage) {
+                        return;
+                    }
+
+
+                    cepMessage.textContent =
+                        '';
+
+
+                    cepMessage.classList.remove(
+                        'success',
+                        'error'
+                    );
+                }
+
+
+                function mostrarMensagemCep(
+                    mensagem,
+                    tipo
+                ) {
+
+                    if (!cepMessage) {
+                        return;
+                    }
+
+
+                    cepMessage.textContent =
+                        mensagem;
+
+
+                    cepMessage.classList.remove(
+                        'success',
+                        'error'
+                    );
+
+
+                    if (tipo) {
+
+                        cepMessage.classList.add(
+                            tipo
+                        );
+                    }
+                }
+
+
+                async function consultarCep() {
+
+                    if (
+                        !cep ||
+                        !addressForm
+                    ) {
+
+                        return;
+                    }
+
+
+                    const cepNumerico =
+                        cep.value.replace(
+                            /\D/g,
+                            ''
+                        );
+
+
+                    if (
+                        cepNumerico.length !== 8
+                    ) {
+
+                        ultimoCepConsultado =
+                            null;
+
+                        limparMensagemCep();
+
+                        return;
                     }
 
 
                     /*
-                    |--------------------------------------------------------------------------
-                    | Preenche os campos
-                    |--------------------------------------------------------------------------
-                    */
+                     * Evita fazer duas consultas seguidas
+                     * para o mesmo CEP no input + blur.
+                     */
 
-                    logradouroInput.value =
-                        dados.logradouro || '';
+                    if (
+                        cepNumerico ===
+                        ultimoCepConsultado
+                    ) {
 
-                    bairroInput.value =
-                        dados.bairro || '';
-
-                    cidadeInput.value =
-                        dados.localidade || '';
-
-                    estadoInput.value =
-                        dados.uf || '';
+                        return;
+                    }
 
 
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Sucesso
-                    |--------------------------------------------------------------------------
-                    */
-
-                    cepStatus.textContent =
-                        'Endereço encontrado.';
-
-                    cepStatus.className =
-                        'profile-cep-status success';
+                    ultimoCepConsultado =
+                        cepNumerico;
 
 
-                } catch (error) {
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Limpa os campos
-                    |--------------------------------------------------------------------------
-                    */
-
-                    logradouroInput.value = '';
-                    bairroInput.value = '';
-                    cidadeInput.value = '';
-                    estadoInput.value = '';
+                    const baseUrl =
+                        addressForm.dataset
+                        .cepUrl;
 
 
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Exibe erro
-                    |--------------------------------------------------------------------------
-                    */
+                    if (!baseUrl) {
+                        return;
+                    }
 
-                    cepStatus.textContent =
-                        error.message ||
-                        'Erro ao consultar o CEP.';
 
-                    cepStatus.className =
-                        'profile-cep-status error';
+                    limparMensagemCep();
 
+
+                    if (cepLoading) {
+
+                        cepLoading.hidden =
+                            false;
+                    }
+
+
+                    try {
+
+                        const response =
+                            await fetch(
+                                `${baseUrl}/${cepNumerico}`, {
+                                    headers: {
+                                        'Accept': 'application/json'
+                                    }
+                                }
+                            );
+
+
+                        const dados =
+                            await response.json();
+
+
+                        if (
+                            !response.ok ||
+                            dados.erro
+                        ) {
+
+                            throw new Error(
+                                dados.message ??
+                                'CEP não encontrado.'
+                            );
+                        }
+
+
+                        if (logradouro) {
+
+                            logradouro.value =
+                                dados.logradouro ??
+                                '';
+                        }
+
+
+                        if (bairro) {
+
+                            bairro.value =
+                                dados.bairro ??
+                                '';
+                        }
+
+
+                        if (cidade) {
+
+                            cidade.value =
+                                dados.localidade ??
+                                dados.cidade ??
+                                '';
+                        }
+
+
+                        if (estado) {
+
+                            estado.value =
+                                dados.uf ??
+                                dados.estado ??
+                                '';
+                        }
+
+
+                        mostrarMensagemCep(
+                            'CEP encontrado.',
+                            'success'
+                        );
+
+
+                        if (numero) {
+
+                            numero.focus();
+                        }
+
+                    } catch (error) {
+
+                        ultimoCepConsultado =
+                            null;
+
+
+                        mostrarMensagemCep(
+                            error.message ??
+                            'Não foi possível consultar o CEP.',
+                            'error'
+                        );
+
+                    } finally {
+
+                        if (cepLoading) {
+
+                            cepLoading.hidden =
+                                true;
+                        }
+                    }
                 }
 
-            });
+
+                if (cep) {
+
+                    cep.value =
+                        formatarCep(
+                            cep.value
+                        );
 
 
-            /*
-            |--------------------------------------------------------------------------
-            | Estado em maiúsculo
-            |--------------------------------------------------------------------------
-            */
+                    cep.addEventListener(
+                        'input',
+                        function() {
 
-            estadoInput.addEventListener('input', function() {
+                            this.value =
+                                formatarCep(
+                                    this.value
+                                );
 
-                this.value = this.value
-                    .replace(/[^a-zA-Z]/g, '')
-                    .substring(0, 2)
-                    .toUpperCase();
 
-            });
+                            const numeros =
+                                this.value.replace(
+                                    /\D/g,
+                                    ''
+                                );
 
-        });
+
+                            /*
+                             * Caso usuário comece
+                             * a alterar o CEP novamente.
+                             */
+
+                            if (
+                                numeros !==
+                                ultimoCepConsultado
+                            ) {
+
+                                ultimoCepConsultado =
+                                    null;
+                            }
+
+
+                            if (
+                                numeros.length === 8
+                            ) {
+
+                                consultarCep();
+                            }
+                        }
+                    );
+
+
+                    cep.addEventListener(
+                        'blur',
+                        consultarCep
+                    );
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | ESTADO EM MAIÚSCULO
+                |--------------------------------------------------------------------------
+                */
+
+                if (estado) {
+
+                    estado.addEventListener(
+                        'input',
+                        function() {
+
+                            this.value =
+                                this.value
+                                .replace(
+                                    /[^a-zA-Z]/g,
+                                    ''
+                                )
+                                .substring(
+                                    0,
+                                    2
+                                )
+                                .toUpperCase();
+                        }
+                    );
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | EXCLUIR CONTA
+                |--------------------------------------------------------------------------
+                */
+
+                const deleteAccountForm =
+                    document.getElementById(
+                        'deleteAccountForm'
+                    );
+
+
+                if (deleteAccountForm) {
+
+                    deleteAccountForm.addEventListener(
+                        'submit',
+                        function(event) {
+
+                            const confirmado =
+                                window.confirm(
+                                    'Tem certeza que deseja excluir permanentemente sua conta?'
+                                );
+
+
+                            if (!confirmado) {
+
+                                event.preventDefault();
+                            }
+                        }
+                    );
+                }
+
+            }
+        );
     </script>
 
-</x-app-layout>
+</body>
+
+</html>

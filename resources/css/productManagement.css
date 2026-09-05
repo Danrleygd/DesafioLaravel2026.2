@@ -1,0 +1,2260 @@
+/* =========================================================
+   D-TECH - GERENCIAMENTO DE PRODUTOS
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --pm-purple-dark: #4d1672;
+    --pm-purple: #67289a;
+    --pm-purple-medium: #7a3caf;
+    --pm-purple-light: #aa73d3;
+
+    --pm-background: #f6f4f8;
+    --pm-card: #ffffff;
+
+    --pm-text: #2d2035;
+    --pm-text-secondary: #7d7282;
+    --pm-text-light: #9b919f;
+
+    --pm-border: #e7e0ea;
+
+    --pm-success: #158254;
+    --pm-success-bg: #e8f6ef;
+
+    --pm-danger: #c83a3a;
+    --pm-danger-bg: #fdeaea;
+
+    --pm-warning: #ae7417;
+    --pm-warning-bg: #fff2dd;
+}
+
+
+/* =========================================================
+   BODY PÚBLICO
+========================================================= */
+
+.pm-public-body {
+    margin: 0;
+
+    min-height: 100vh;
+
+    background:
+        var(--pm-background);
+
+    color:
+        var(--pm-text);
+}
+
+
+/* =========================================================
+   MAIN PÚBLICO
+========================================================= */
+
+.pm-public-main {
+    width: 100%;
+
+    min-height:
+        calc(100vh - 80px);
+}
+
+
+/* =========================================================
+   PÁGINA
+========================================================= */
+
+.pm-page {
+    width: 100%;
+
+    min-height: 100vh;
+
+    padding:
+        34px
+        38px
+        55px;
+
+    background:
+        var(--pm-background);
+
+    color:
+        var(--pm-text);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.pm-header {
+    width: 100%;
+
+    margin-bottom:
+        24px;
+
+    display:
+        flex;
+
+    align-items:
+        flex-end;
+
+    justify-content:
+        space-between;
+
+    gap:
+        22px;
+}
+
+
+.pm-header > div:first-child {
+    min-width: 0;
+}
+
+
+.pm-header-label {
+    display:
+        block;
+
+    margin-bottom:
+        5px;
+
+    color:
+        var(--pm-purple);
+
+    font-size:
+        9px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        1.4px;
+}
+
+
+.pm-header h1 {
+    margin:
+        0
+        0
+        6px;
+
+    color:
+        #281831;
+
+    font-size:
+        clamp(
+            27px,
+            3vw,
+            34px
+        );
+
+    font-weight:
+        800;
+
+    line-height:
+        1.1;
+}
+
+
+.pm-header p {
+    margin: 0;
+
+    color:
+        var(--pm-text-secondary);
+
+    font-size:
+        11px;
+
+    line-height:
+        1.5;
+}
+
+
+/* =========================================================
+   BOTÕES BASE
+========================================================= */
+
+.pm-primary-button,
+.pm-secondary-button,
+.pm-filter-button,
+.pm-clear-button {
+    min-height:
+        42px;
+
+    padding:
+        0
+        18px;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        7px;
+
+    border-radius:
+        8px;
+
+    font-family:
+        inherit;
+
+    font-size:
+        10px;
+
+    font-weight:
+        700;
+
+    line-height:
+        1;
+
+    text-decoration:
+        none;
+
+    cursor:
+        pointer;
+
+    transition:
+        background
+        .2s ease,
+        border-color
+        .2s ease,
+        color
+        .2s ease,
+        transform
+        .2s ease,
+        box-shadow
+        .2s ease;
+}
+
+
+/* =========================================================
+   BOTÃO PRINCIPAL
+========================================================= */
+
+.pm-primary-button,
+.pm-filter-button {
+    border:
+        none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7939b2,
+            #5c208b
+        );
+
+    color:
+        #ffffff;
+
+    box-shadow:
+        0
+        5px
+        14px
+        rgba(
+            88,
+            29,
+            128,
+            .12
+        );
+}
+
+
+.pm-primary-button:hover,
+.pm-filter-button:hover {
+    transform:
+        translateY(-1px);
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d2fa5,
+            #50177c
+        );
+
+    box-shadow:
+        0
+        7px
+        17px
+        rgba(
+            88,
+            29,
+            128,
+            .18
+        );
+}
+
+
+/* =========================================================
+   NOVO PRODUTO
+========================================================= */
+
+.pm-new-product-button {
+    flex-shrink: 0;
+
+    min-width:
+        145px;
+}
+
+
+.pm-new-product-button svg {
+    width:
+        16px;
+
+    height:
+        16px;
+}
+
+
+/* =========================================================
+   BOTÃO SECUNDÁRIO
+========================================================= */
+
+.pm-secondary-button {
+    border:
+        1px solid
+        #ddd5e1;
+
+    background:
+        #ffffff;
+
+    color:
+        #5f5265;
+}
+
+
+.pm-secondary-button:hover {
+    border-color:
+        #c9b8d3;
+
+    background:
+        #f8f4fa;
+}
+
+
+/* =========================================================
+   ALERTAS
+========================================================= */
+
+.pm-alert {
+    width: 100%;
+
+    margin-bottom:
+        18px;
+
+    padding:
+        13px
+        16px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+    border-radius:
+        9px;
+
+    font-size:
+        10px;
+
+    line-height:
+        1.5;
+}
+
+
+.pm-alert svg {
+    width:
+        17px;
+
+    height:
+        17px;
+
+    flex-shrink:
+        0;
+}
+
+
+.pm-alert-success {
+    border:
+        1px solid
+        #bee5d2;
+
+    background:
+        var(--pm-success-bg);
+
+    color:
+        var(--pm-success);
+}
+
+
+.pm-alert-error {
+    border:
+        1px solid
+        #efc8c8;
+
+    background:
+        #fff1f1;
+
+    color:
+        var(--pm-danger);
+}
+
+
+/* =========================================================
+   ESTATÍSTICAS
+========================================================= */
+
+.pm-stats {
+    width: 100%;
+
+    margin-bottom:
+        20px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap:
+        14px;
+}
+
+
+.pm-stat {
+    min-width: 0;
+
+    min-height:
+        104px;
+
+    padding:
+        17px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        13px;
+
+    border:
+        1px solid
+        rgba(
+            85,
+            51,
+            103,
+            .08
+        );
+
+    border-radius:
+        13px;
+
+    background:
+        var(--pm-card);
+
+    box-shadow:
+        0
+        5px
+        18px
+        rgba(
+            48,
+            27,
+            59,
+            .04
+        );
+}
+
+
+.pm-stat-icon {
+    width:
+        46px;
+
+    height:
+        46px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        11px;
+
+    background:
+        #f0e5f7;
+
+    color:
+        #6d319e;
+}
+
+
+.pm-stat-icon svg {
+    width:
+        22px;
+
+    height:
+        22px;
+}
+
+
+.pm-stat > div:last-child {
+    min-width: 0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        3px;
+}
+
+
+.pm-stat small {
+    color:
+        #887c8c;
+
+    font-size:
+        8px;
+}
+
+
+.pm-stat strong {
+    color:
+        #2c1b35;
+
+    font-size:
+        23px;
+
+    font-weight:
+        800;
+
+    line-height:
+        1.1;
+}
+
+
+.pm-stat span {
+    color:
+        #9c929f;
+
+    font-size:
+        7px;
+}
+
+
+/* =========================================================
+   CARD PRINCIPAL
+========================================================= */
+
+.pm-card {
+    width: 100%;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        rgba(
+            85,
+            51,
+            103,
+            .08
+        );
+
+    border-radius:
+        14px;
+
+    background:
+        var(--pm-card);
+
+    box-shadow:
+        0
+        6px
+        22px
+        rgba(
+            48,
+            27,
+            59,
+            .04
+        );
+}
+
+
+/* =========================================================
+   FILTROS
+========================================================= */
+
+.pm-filters {
+    width: 100%;
+
+    padding:
+        17px
+        19px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+    border-bottom:
+        1px solid
+        #eee9f0;
+
+    background:
+        #ffffff;
+}
+
+
+/* =========================================================
+   PESQUISA
+========================================================= */
+
+.pm-search {
+    width: 100%;
+
+    max-width:
+        420px;
+
+    height:
+        42px;
+
+    padding:
+        0
+        12px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    border:
+        1px solid
+        #ddd5e1;
+
+    border-radius:
+        8px;
+
+    background:
+        #ffffff;
+
+    transition:
+        border-color
+        .2s ease,
+        box-shadow
+        .2s ease;
+}
+
+
+.pm-search:focus-within {
+    border-color:
+        #9361b7;
+
+    box-shadow:
+        0
+        0
+        0
+        3px
+        rgba(
+            112,
+            51,
+            159,
+            .07
+        );
+}
+
+
+.pm-search svg {
+    width:
+        16px;
+
+    height:
+        16px;
+
+    flex-shrink:
+        0;
+
+    color:
+        #8c7e92;
+}
+
+
+.pm-search input {
+    width: 100%;
+
+    min-width: 0;
+
+    border:
+        none;
+
+    outline:
+        none;
+
+    background:
+        transparent;
+
+    color:
+        #382b3e;
+
+    font-family:
+        inherit;
+
+    font-size:
+        10px;
+}
+
+
+.pm-search input::placeholder {
+    color:
+        #aaa1ae;
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+.pm-filter-select {
+    min-width:
+        190px;
+
+    height:
+        42px;
+
+    padding:
+        0
+        12px;
+
+    border:
+        1px solid
+        #ddd5e1;
+
+    border-radius:
+        8px;
+
+    outline:
+        none;
+
+    background:
+        #ffffff;
+
+    color:
+        #574b5d;
+
+    font-family:
+        inherit;
+
+    font-size:
+        10px;
+
+    cursor:
+        pointer;
+}
+
+
+.pm-filter-select:focus {
+    border-color:
+        #9361b7;
+
+    box-shadow:
+        0
+        0
+        0
+        3px
+        rgba(
+            112,
+            51,
+            159,
+            .07
+        );
+}
+
+
+/* =========================================================
+   LIMPAR
+========================================================= */
+
+.pm-clear-button {
+    min-height:
+        auto;
+
+    padding:
+        0
+        4px;
+
+    border:
+        none;
+
+    background:
+        transparent;
+
+    color:
+        #74687a;
+
+    font-size:
+        9px;
+
+    box-shadow:
+        none;
+}
+
+
+.pm-clear-button:hover {
+    color:
+        var(--pm-purple);
+}
+
+
+/* =========================================================
+   WRAPPER DA TABELA
+========================================================= */
+
+.pm-table-wrapper {
+    width: 100%;
+
+    overflow-x:
+        auto;
+
+    background:
+        #ffffff;
+}
+
+
+/* =========================================================
+   TABELA
+========================================================= */
+
+.pm-table {
+    width: 100%;
+
+    min-width:
+        900px;
+
+    border-collapse:
+        collapse;
+
+    border-spacing:
+        0;
+}
+
+
+.pm-table thead {
+    background:
+        #f8f5fa;
+}
+
+
+.pm-table th {
+    padding:
+        13px
+        15px;
+
+    color:
+        #45354c;
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .2px;
+
+    text-align:
+        left;
+
+    white-space:
+        nowrap;
+}
+
+
+.pm-table td {
+    padding:
+        12px
+        15px;
+
+    border-top:
+        1px solid
+        #eee9f0;
+
+    color:
+        #4d4052;
+
+    font-size:
+        9px;
+
+    vertical-align:
+        middle;
+}
+
+
+.pm-table tbody tr {
+    transition:
+        background
+        .15s ease;
+}
+
+
+.pm-table tbody tr:hover {
+    background:
+        #fcfafd;
+}
+
+
+/* =========================================================
+   PRODUTO NA TABELA
+========================================================= */
+
+.pm-product {
+    min-width:
+        205px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+}
+
+
+.pm-product-image {
+    width:
+        52px;
+
+    height:
+        52px;
+
+    flex-shrink:
+        0;
+
+    overflow:
+        hidden;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f1e7f7,
+            #e5d5ef
+        );
+
+    color:
+        #74429d;
+
+    text-decoration:
+        none;
+}
+
+
+.pm-product-image img {
+    width:
+        100%;
+
+    height:
+        100%;
+
+    padding:
+        4px;
+
+    object-fit:
+        contain;
+
+    background:
+        transparent;
+}
+
+
+.pm-product-image svg {
+    width:
+        24px;
+
+    height:
+        24px;
+}
+
+
+.pm-product > div:last-child {
+    min-width: 0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        3px;
+}
+
+
+.pm-product strong {
+    max-width:
+        170px;
+
+    overflow:
+        hidden;
+
+    color:
+        #33253a;
+
+    font-size:
+        9px;
+
+    font-weight:
+        700;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+}
+
+
+.pm-product small {
+    color:
+        #998f9d;
+
+    font-size:
+        7px;
+}
+
+
+/* =========================================================
+   CATEGORIA
+========================================================= */
+
+.pm-category-badge {
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        6px
+        9px;
+
+    border-radius:
+        999px;
+
+    background:
+        #eee3f6;
+
+    color:
+        #672c96;
+
+    font-size:
+        7px;
+
+    font-weight:
+        700;
+
+    white-space:
+        nowrap;
+}
+
+
+/* =========================================================
+   VENDEDOR
+========================================================= */
+
+.pm-seller {
+    max-width:
+        170px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        3px;
+}
+
+
+.pm-seller strong {
+    overflow:
+        hidden;
+
+    color:
+        #3f3145;
+
+    font-size:
+        9px;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+}
+
+
+.pm-seller small {
+    overflow:
+        hidden;
+
+    color:
+        #998f9d;
+
+    font-size:
+        7px;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+}
+
+
+/* =========================================================
+   PREÇO
+========================================================= */
+
+.pm-price {
+    color:
+        #51246f;
+
+    font-size:
+        10px;
+
+    font-weight:
+        800;
+
+    white-space:
+        nowrap;
+}
+
+
+/* =========================================================
+   ESTOQUE
+========================================================= */
+
+.pm-stock {
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        6px
+        9px;
+
+    border-radius:
+        999px;
+
+    font-size:
+        7px;
+
+    font-weight:
+        700;
+
+    white-space:
+        nowrap;
+}
+
+
+.pm-stock-ok {
+    background:
+        var(--pm-success-bg);
+
+    color:
+        var(--pm-success);
+}
+
+
+.pm-stock-empty {
+    background:
+        var(--pm-danger-bg);
+
+    color:
+        var(--pm-danger);
+}
+
+
+/* =========================================================
+   AÇÕES
+========================================================= */
+
+.pm-actions {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        5px;
+}
+
+
+.pm-delete-form {
+    margin: 0;
+
+    padding: 0;
+}
+
+
+.pm-action-button {
+    width:
+        31px;
+
+    height:
+        31px;
+
+    padding: 0;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        transparent;
+
+    border-radius:
+        7px;
+
+    background:
+        #f3eef6;
+
+    color:
+        #5f3c72;
+
+    text-decoration:
+        none;
+
+    cursor:
+        pointer;
+
+    transition:
+        background
+        .2s ease,
+        color
+        .2s ease,
+        border-color
+        .2s ease,
+        transform
+        .2s ease;
+}
+
+
+.pm-action-button:hover {
+    border-color:
+        #d8c7e2;
+
+    background:
+        #ebe1f1;
+
+    color:
+        #5b2583;
+
+    transform:
+        translateY(-1px);
+}
+
+
+.pm-action-button svg {
+    width:
+        15px;
+
+    height:
+        15px;
+}
+
+
+.pm-action-delete {
+    background:
+        #fff0f0;
+
+    color:
+        #c43b3b;
+}
+
+
+.pm-action-delete:hover {
+    border-color:
+        #ecc3c3;
+
+    background:
+        #c43b3b;
+
+    color:
+        #ffffff;
+}
+
+
+/* =========================================================
+   VAZIO
+========================================================= */
+
+.pm-empty {
+    padding:
+        0 !important;
+
+    color:
+        #918794 !important;
+
+    text-align:
+        center;
+}
+
+
+.pm-empty-content {
+    min-height:
+        190px;
+
+    padding:
+        30px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        8px;
+}
+
+
+.pm-empty-content svg {
+    width:
+        40px;
+
+    height:
+        40px;
+
+    margin-bottom:
+        3px;
+
+    color:
+        #916eaa;
+}
+
+
+.pm-empty-content strong {
+    color:
+        #716476;
+
+    font-size:
+        10px;
+}
+
+
+.pm-empty-content a {
+    color:
+        #692d98;
+
+    font-size:
+        9px;
+
+    font-weight:
+        700;
+
+    text-decoration:
+        none;
+}
+
+
+.pm-empty-content a:hover {
+    text-decoration:
+        underline;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.pm-footer {
+    min-height:
+        63px;
+
+    padding:
+        13px
+        19px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    border-top:
+        1px solid
+        #eee9f0;
+
+    background:
+        #ffffff;
+
+    color:
+        #776b7b;
+
+    font-size:
+        8px;
+}
+
+
+/* =========================================================
+   PAGINAÇÃO
+========================================================= */
+
+.pm-pagination {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        5px;
+}
+
+
+.pm-page-link {
+    width:
+        32px;
+
+    height:
+        32px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        #e0d8e4;
+
+    border-radius:
+        7px;
+
+    background:
+        #ffffff;
+
+    color:
+        #493552;
+
+    font-size:
+        9px;
+
+    font-weight:
+        600;
+
+    text-decoration:
+        none;
+
+    transition:
+        background
+        .2s ease,
+        color
+        .2s ease,
+        border-color
+        .2s ease;
+}
+
+
+.pm-page-link:hover:not(.disabled):not(.active) {
+    border-color:
+        #cbb6d8;
+
+    background:
+        #f6f0f9;
+}
+
+
+.pm-page-link.active {
+    border-color:
+        var(--pm-purple);
+
+    background:
+        var(--pm-purple);
+
+    color:
+        #ffffff;
+}
+
+
+.pm-page-link.disabled {
+    opacity:
+        .4;
+
+    cursor:
+        default;
+}
+
+
+/* =========================================================
+   MODAL
+   Mantido para compatibilidade com edições antigas
+========================================================= */
+
+.pm-modal {
+    position:
+        fixed;
+
+    inset: 0;
+
+    z-index:
+        5000;
+
+    display:
+        none;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        24px;
+}
+
+
+.pm-modal.open {
+    display:
+        flex;
+}
+
+
+.pm-modal-backdrop {
+    position:
+        absolute;
+
+    inset: 0;
+
+    background:
+        rgba(
+            24,
+            14,
+            31,
+            .56
+        );
+
+    backdrop-filter:
+        blur(2px);
+}
+
+
+.pm-modal-content {
+    position:
+        relative;
+
+    z-index:
+        1;
+
+    width:
+        min(
+            720px,
+            100%
+        );
+
+    max-height:
+        90vh;
+
+    overflow-y:
+        auto;
+
+    border-radius:
+        15px;
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0
+        22px
+        65px
+        rgba(
+            27,
+            14,
+            38,
+            .25
+        );
+}
+
+
+.pm-modal-header {
+    padding:
+        19px
+        23px;
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    justify-content:
+        space-between;
+
+    gap:
+        15px;
+
+    border-bottom:
+        1px solid
+        #eee9f0;
+}
+
+
+.pm-modal-header h2 {
+    margin:
+        0
+        0
+        4px;
+
+    color:
+        #2e1d38;
+
+    font-size:
+        17px;
+}
+
+
+.pm-modal-header p {
+    margin: 0;
+
+    color:
+        #8d8192;
+
+    font-size:
+        9px;
+}
+
+
+.pm-modal-close {
+    width:
+        31px;
+
+    height:
+        31px;
+
+    padding: 0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        none;
+
+    border-radius:
+        7px;
+
+    background:
+        transparent;
+
+    color:
+        #756779;
+
+    font-size:
+        23px;
+
+    cursor:
+        pointer;
+}
+
+
+.pm-modal-close:hover {
+    background:
+        #f1ebf4;
+}
+
+
+.pm-modal-body {
+    padding:
+        23px;
+}
+
+
+.pm-modal-footer {
+    padding:
+        16px
+        23px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        flex-end;
+
+    gap:
+        9px;
+
+    border-top:
+        1px solid
+        #eee9f0;
+}
+
+
+/* =========================================================
+   FORM DE MODAL
+========================================================= */
+
+.pm-form-grid {
+    width: 100%;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap:
+        16px;
+}
+
+
+.pm-form-full {
+    grid-column:
+        1 / -1;
+}
+
+
+.pm-form-group {
+    min-width: 0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        7px;
+}
+
+
+.pm-form-group label {
+    color:
+        #4e4055;
+
+    font-size:
+        9px;
+
+    font-weight:
+        700;
+}
+
+
+.pm-form-group input,
+.pm-form-group select,
+.pm-form-group textarea {
+    width: 100%;
+
+    min-height:
+        42px;
+
+    padding:
+        0
+        12px;
+
+    border:
+        1px solid
+        #ddd5e1;
+
+    border-radius:
+        8px;
+
+    outline:
+        none;
+
+    background:
+        #ffffff;
+
+    color:
+        #33263a;
+
+    font-family:
+        inherit;
+
+    font-size:
+        10px;
+
+    transition:
+        border-color
+        .2s ease,
+        box-shadow
+        .2s ease;
+}
+
+
+.pm-form-group textarea {
+    min-height:
+        120px;
+
+    padding:
+        11px
+        12px;
+
+    resize:
+        vertical;
+}
+
+
+.pm-form-group input:focus,
+.pm-form-group select:focus,
+.pm-form-group textarea:focus {
+    border-color:
+        #915cc0;
+
+    box-shadow:
+        0
+        0
+        0
+        3px
+        rgba(
+            112,
+            53,
+            163,
+            .08
+        );
+}
+
+
+/* =========================================================
+   FOTO NO FORM
+========================================================= */
+
+.pm-photo-area {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        17px;
+}
+
+
+.pm-photo-preview {
+    width:
+        95px;
+
+    height:
+        95px;
+
+    flex-shrink:
+        0;
+
+    overflow:
+        hidden;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        2px dashed
+        #d9cce2;
+
+    border-radius:
+        11px;
+
+    background:
+        #f7f2fa;
+
+    color:
+        #9b8aa5;
+
+    font-size:
+        8px;
+}
+
+
+.pm-photo-preview img {
+    width:
+        100%;
+
+    height:
+        100%;
+
+    object-fit:
+        contain;
+}
+
+
+.pm-select-photo {
+    display:
+        inline-flex;
+
+    padding:
+        9px
+        13px;
+
+    border-radius:
+        7px;
+
+    background:
+        #eee5f6;
+
+    color:
+        #633095 !important;
+
+    font-size:
+        8px;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+}
+
+
+.pm-photo-area small {
+    display:
+        block;
+
+    margin-top:
+        6px;
+
+    color:
+        #94899a;
+
+    font-size:
+        7px;
+}
+
+
+/* =========================================================
+   RESPONSIVO - NOTEBOOK
+========================================================= */
+
+@media (
+    max-width: 1100px
+) {
+
+    .pm-page {
+        padding:
+            30px
+            25px
+            50px;
+    }
+
+
+    .pm-stats {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
+    }
+
+
+    .pm-filters {
+        flex-wrap:
+            wrap;
+    }
+
+
+    .pm-search {
+        max-width:
+            none;
+
+        flex:
+            1 1
+            350px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVO - TABLET
+========================================================= */
+
+@media (
+    max-width: 800px
+) {
+
+    .pm-page {
+        padding:
+            28px
+            17px
+            45px;
+    }
+
+
+    .pm-header {
+        align-items:
+            flex-start;
+    }
+
+
+    .pm-filter-select {
+        flex:
+            1;
+
+        min-width:
+            170px;
+    }
+
+
+    .pm-form-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .pm-form-full {
+        grid-column:
+            auto;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVO - MOBILE
+========================================================= */
+
+@media (
+    max-width: 620px
+) {
+
+    .pm-page {
+        padding:
+            23px
+            11px
+            40px;
+    }
+
+
+    .pm-header {
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+        gap:
+            15px;
+    }
+
+
+    .pm-new-product-button {
+        width: 100%;
+
+        min-width: 0;
+    }
+
+
+    .pm-stats {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .pm-filters {
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+    }
+
+
+    .pm-search,
+    .pm-filter-select,
+    .pm-filter-button {
+        width: 100%;
+
+        max-width: none;
+
+        min-width: 0;
+    }
+
+
+    .pm-clear-button {
+        align-self:
+            flex-start;
+    }
+
+
+    .pm-footer {
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+    }
+
+
+    .pm-photo-area {
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+    }
+
+
+    .pm-modal {
+        padding:
+            10px;
+    }
+
+
+    .pm-modal-content {
+        max-height:
+            95vh;
+    }
+
+
+    .pm-modal-footer {
+        flex-direction:
+            column-reverse;
+    }
+
+
+    .pm-modal-footer
+    .pm-primary-button,
+    .pm-modal-footer
+    .pm-secondary-button {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE PEQUENO
+========================================================= */
+
+@media (
+    max-width: 390px
+) {
+
+    .pm-header h1 {
+        font-size:
+            25px;
+    }
+
+
+    .pm-stat {
+        min-height:
+            92px;
+    }
+
+
+    .pm-stat strong {
+        font-size:
+            20px;
+    }
+
+
+    .pm-pagination {
+        max-width:
+            100%;
+
+        overflow-x:
+            auto;
+    }
+
+}

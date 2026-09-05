@@ -2,15 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProdutoFoto extends Model
 {
-    use HasFactory;
+    /*
+    |--------------------------------------------------------------------------
+    | TABELA
+    |--------------------------------------------------------------------------
+    */
 
-    protected $table = 'Produtos_Fotos';
+    protected $table =
+        'Produtos_Fotos';
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CAMPOS
+    |--------------------------------------------------------------------------
+    */
 
     protected $fillable = [
         'ProdutoId',
@@ -18,15 +29,30 @@ class ProdutoFoto extends Model
         'principal',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'principal' => 'boolean',
-        ];
-    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | CASTS
+    |--------------------------------------------------------------------------
+    */
+
+    protected $casts = [
+        'principal' =>
+            'boolean',
+    ];
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | PRODUTO
+    |--------------------------------------------------------------------------
+    */
 
     public function produto(): BelongsTo
     {
-        return $this->belongsTo(Produto::class, 'ProdutoId');
+        return $this->belongsTo(
+            Produto::class,
+            'ProdutoId'
+        );
     }
 }
