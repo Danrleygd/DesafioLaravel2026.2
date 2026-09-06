@@ -6,15 +6,16 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+        content="width=device-width, initial-scale=1.0">
 
     <title>Sistema de E-mail | D-tech</title>
 
     @vite([
-        'resources/css/app.css',
-        'resources/css/adminEmail.css'
-    ])
+    'resources/css/app.css',
+    'resources/css/sidebarAdmin.css',
+    'resources/css/adminEmail.css',
+    'resources/js/sidebarAdmin.js'
+])
 </head>
 
 <body class="admin-email-body">
@@ -41,7 +42,7 @@
 
             <header class="admin-email-header">
 
-                <div>
+                <div class="admin-email-header-content">
 
                     <span class="admin-email-eyebrow">
                         COMUNICAÇÃO
@@ -65,15 +66,13 @@
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="1.8"
-                    >
+                        stroke-width="1.8">
                         <rect
                             x="3"
                             y="5"
                             width="18"
                             height="14"
-                            rx="2"
-                        />
+                            rx="2" />
 
                         <path d="m3 7 9 6 9-6" />
                     </svg>
@@ -89,22 +88,27 @@
 
             @if(session('success'))
 
-                <div class="admin-email-alert success">
+            <div class="admin-email-alert success">
 
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-                        <path d="M20 6 9 17l-5-5" />
-                    </svg>
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2">
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="9" />
 
-                    <span>
-                        {{ session('success') }}
-                    </span>
+                    <path
+                        d="m8 12 3 3 5-6" />
+                </svg>
 
-                </div>
+                <span>
+                    {{ session('success') }}
+                </span>
+
+            </div>
 
             @endif
 
@@ -115,28 +119,42 @@
 
             @if($errors->any())
 
-                <div class="admin-email-alert error">
+            <div class="admin-email-alert error">
 
-                    @foreach($errors->all() as $error)
+                @foreach($errors->all() as $error)
 
-                        <p>
-                            {{ $error }}
-                        </p>
+                <p>
+                    {{ $error }}
+                </p>
 
-                    @endforeach
+                @endforeach
 
-                </div>
+            </div>
 
             @endif
 
 
             {{-- =================================================
-                CARD
+                CARD PRINCIPAL
             ================================================== --}}
 
             <section class="admin-email-card">
 
                 <div class="admin-email-card-header">
+
+                    <div class="admin-email-card-header-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
+                        </svg>
+
+                    </div>
+
 
                     <div>
 
@@ -145,8 +163,8 @@
                         </h2>
 
                         <p>
-                            Selecione um usuário e escreva
-                            a mensagem que deseja enviar.
+                            Selecione um usuário e escreva a mensagem
+                            que deseja enviar.
                         </p>
 
                     </div>
@@ -155,204 +173,204 @@
 
 
                 {{-- =================================================
-                    CASO NÃO EXISTAM USUÁRIOS
+                    SEM USUÁRIOS
                 ================================================== --}}
 
                 @if($usuarios->isEmpty())
 
-                    <div class="admin-email-empty">
+                <div class="admin-email-empty">
 
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                        >
-                            <circle
-                                cx="12"
-                                cy="8"
-                                r="4"
-                            />
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2">
+                        <circle
+                            cx="12"
+                            cy="8"
+                            r="4" />
 
-                            <path
-                                d="M4 21a8 8 0 0 1 16 0"
-                            />
-                        </svg>
+                        <path
+                            d="M4 21a8 8 0 0 1 16 0" />
+                    </svg>
 
 
-                        <h3>
-                            Nenhum usuário encontrado
-                        </h3>
+                    <h3>
+                        Nenhum usuário encontrado
+                    </h3>
 
 
-                        <p>
-                            Cadastre um usuário comum para
-                            enviar uma mensagem.
-                        </p>
+                    <p>
+                        Cadastre um usuário comum para
+                        enviar uma mensagem.
+                    </p>
 
-                    </div>
+                </div>
 
                 @else
 
 
-                    {{-- =================================================
+                {{-- =================================================
                         FORMULÁRIO
                     ================================================== --}}
 
-                    <form
-                        method="POST"
-                        action="{{ route('admin.emails.send') }}"
-                        class="admin-email-form"
-                        id="adminEmailForm"
-                    >
+                <form
+                    method="POST"
+                    action="{{ route('admin.emails.send') }}"
+                    class="admin-email-form"
+                    id="adminEmailForm">
 
-                        @csrf
+                    @csrf
 
 
-                        {{-- =============================================
+                    {{-- =============================================
                             DESTINATÁRIO
                         ============================================== --}}
 
-                        <div class="admin-email-field">
+                    <div class="admin-email-field">
 
-                            <label for="usuario_id">
-                                Destinatário
-                            </label>
+                        <label for="usuario_id">
+                            Destinatário
+                        </label>
 
-
-                            <select
-                                id="usuario_id"
-                                name="usuario_id"
-                                required
-                            >
-
-                                <option
-                                    value=""
-                                    disabled
-                                    {{ old('usuario_id') ? '' : 'selected' }}
-                                >
-                                    Selecione um usuário
-                                </option>
+                        <p class="admin-email-field-description">
+                            Escolha o usuário que receberá a mensagem.
+                        </p>
 
 
-                                @foreach($usuarios as $usuario)
+                        <select
+                            id="usuario_id"
+                            name="usuario_id"
+                            required>
 
-                                    <option
-                                        value="{{ $usuario->id }}"
-                                        {{ old('usuario_id') == $usuario->id ? 'selected' : '' }}
-                                    >
-                                        {{ $usuario->nome }} — {{ $usuario->email }}
-                                    </option>
-
-                                @endforeach
-
-                            </select>
-
-                        </div>
+                            <option
+                                value=""
+                                disabled
+                                {{ old('usuario_id') ? '' : 'selected' }}>
+                                Selecione um usuário
+                            </option>
 
 
-                        {{-- =============================================
+                            @foreach($usuarios as $usuario)
+
+                            <option
+                                value="{{ $usuario->id }}"
+                                {{ old('usuario_id') == $usuario->id ? 'selected' : '' }}>
+                                {{ $usuario->nome }} — {{ $usuario->email }}
+                            </option>
+
+                            @endforeach
+
+                        </select>
+
+                    </div>
+
+
+                    {{-- =============================================
                             ASSUNTO
                         ============================================== --}}
 
-                        <div class="admin-email-field">
+                    <div class="admin-email-field">
 
-                            <label for="assunto">
-                                Assunto
-                            </label>
-
-
-                            <input
-                                type="text"
-                                id="assunto"
-                                name="assunto"
-                                value="{{ old('assunto') }}"
-                                maxlength="150"
-                                placeholder="Digite o assunto do e-mail"
-                                required
-                            >
-
-                        </div>
+                        <label for="assunto">
+                            Assunto
+                        </label>
 
 
-                        {{-- =============================================
+                        <input
+                            type="text"
+                            id="assunto"
+                            name="assunto"
+                            value="{{ old('assunto') }}"
+                            maxlength="150"
+                            placeholder="Digite o assunto do e-mail"
+                            required>
+
+                    </div>
+
+
+                    {{-- =============================================
                             CONTEÚDO
                         ============================================== --}}
 
-                        <div class="admin-email-field">
+                    <div class="admin-email-field">
 
-                            <div class="admin-email-label-row">
+                        <div class="admin-email-label-row">
 
-                                <label for="conteudo">
-                                    Conteúdo do e-mail
-                                </label>
-
-
-                                <span id="emailCharacterCounter">
-                                    0 / 10000
-                                </span>
-
-                            </div>
+                            <label for="conteudo">
+                                Conteúdo do e-mail
+                            </label>
 
 
-                            <textarea
-                                id="conteudo"
-                                name="conteudo"
-                                rows="12"
-                                maxlength="10000"
-                                placeholder="Digite a mensagem que será enviada ao usuário..."
-                                required
-                            >{{ old('conteudo') }}</textarea>
+                            <span id="emailCharacterCounter">
+                                0 / 10000
+                            </span>
 
                         </div>
 
 
-                        {{-- =============================================
+                        <textarea
+                            id="conteudo"
+                            name="conteudo"
+                            rows="12"
+                            maxlength="10000"
+                            placeholder="Digite a mensagem que será enviada ao usuário..."
+                            required>{{ old('conteudo') }}</textarea>
+
+                    </div>
+
+
+                    {{-- =============================================
                             AÇÕES
                         ============================================== --}}
 
-                        <div class="admin-email-actions">
+                    <div class="admin-email-actions">
+
+                        <a
+                            href="{{ route('admin.usuarios.index') }}"
+                            class="admin-email-button secondary">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2">
+                                <path
+                                    d="m15 18-6-6 6-6" />
+                            </svg>
+
+                            Voltar
+
+                        </a>
 
 
-                            <a
-                                href="{{ route('admin.usuarios.index') }}"
-                                class="admin-email-button secondary"
-                            >
-                                Voltar
-                            </a>
+                        <button
+                            type="submit"
+                            class="admin-email-button primary"
+                            id="sendEmailButton">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2">
+                                <path
+                                    d="m22 2-7 20-4-9-9-4Z" />
+
+                                <path
+                                    d="M22 2 11 13" />
+                            </svg>
 
 
-                            <button
-                                type="submit"
-                                class="admin-email-button primary"
-                                id="sendEmailButton"
-                            >
+                            <span id="sendEmailButtonText">
+                                Enviar e-mail
+                            </span>
 
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                >
-                                    <path
-                                        d="m22 2-7 20-4-9-9-4Z"
-                                    />
+                        </button>
 
-                                    <path
-                                        d="M22 2 11 13"
-                                    />
-                                </svg>
+                    </div>
 
-
-                                <span id="sendEmailButtonText">
-                                    Enviar e-mail
-                                </span>
-
-                            </button>
-
-                        </div>
-
-                    </form>
+                </form>
 
                 @endif
 
@@ -371,21 +389,17 @@
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="2"
-                    >
+                        stroke-width="2">
                         <circle
                             cx="12"
                             cy="12"
-                            r="9"
-                        />
+                            r="9" />
 
                         <path
-                            d="M12 11v5"
-                        />
+                            d="M12 11v5" />
 
                         <path
-                            d="M12 8h.01"
-                        />
+                            d="M12 8h.01" />
                     </svg>
 
                 </div>
@@ -399,8 +413,8 @@
 
 
                     <p>
-                        A mensagem será enviada utilizando
-                        o servidor SMTP configurado no projeto.
+                        A mensagem será enviada utilizando o servidor SMTP
+                        configurado no projeto.
                     </p>
 
                 </div>
@@ -417,105 +431,76 @@
     ========================================================== --}}
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
-        document.addEventListener(
-            'DOMContentLoaded',
-            function () {
+            const textarea =
+                document.getElementById('conteudo');
 
-                const textarea =
-                    document.getElementById(
-                        'conteudo'
-                    );
+            const contador =
+                document.getElementById('emailCharacterCounter');
 
-                const contador =
-                    document.getElementById(
-                        'emailCharacterCounter'
-                    );
+            const formulario =
+                document.getElementById('adminEmailForm');
 
-                const formulario =
-                    document.getElementById(
-                        'adminEmailForm'
-                    );
+            const botao =
+                document.getElementById('sendEmailButton');
 
-                const botao =
-                    document.getElementById(
-                        'sendEmailButton'
-                    );
-
-                const textoBotao =
-                    document.getElementById(
-                        'sendEmailButtonText'
-                    );
+            const textoBotao =
+                document.getElementById('sendEmailButtonText');
 
 
-                /*
-                |--------------------------------------------------------------------------
-                | CONTADOR DE CARACTERES
-                |--------------------------------------------------------------------------
-                */
+            /*
+            |--------------------------------------------------------------------------
+            | CONTADOR DE CARACTERES
+            |--------------------------------------------------------------------------
+            */
 
-                function atualizarContador() {
+            function atualizarContador() {
 
-                    if (
-                        !textarea
-                        ||
-                        !contador
-                    ) {
-                        return;
-                    }
-
-
-                    contador.textContent =
-                        textarea.value.length
-                        +
-                        ' / 10000';
+                if (!textarea || !contador) {
+                    return;
                 }
 
-
-                if (textarea) {
-
-                    atualizarContador();
-
-
-                    textarea.addEventListener(
-                        'input',
-                        atualizarContador
-                    );
-                }
-
-
-                /*
-                |--------------------------------------------------------------------------
-                | EVITA DUPLO ENVIO
-                |--------------------------------------------------------------------------
-                */
-
-                if (
-                    formulario
-                    &&
-                    botao
-                ) {
-
-                    formulario.addEventListener(
-                        'submit',
-                        function () {
-
-                            botao.disabled = true;
-
-
-                            if (textoBotao) {
-
-                                textoBotao.textContent =
-                                    'Enviando...';
-                            }
-
-                        }
-                    );
-                }
-
+                contador.textContent =
+                    textarea.value.length + ' / 10000';
             }
-        );
 
+
+            if (textarea) {
+
+                atualizarContador();
+
+                textarea.addEventListener(
+                    'input',
+                    atualizarContador
+                );
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | EVITA DUPLO ENVIO
+            |--------------------------------------------------------------------------
+            */
+
+            if (formulario && botao) {
+
+                formulario.addEventListener(
+                    'submit',
+                    function() {
+
+                        botao.disabled = true;
+
+                        if (textoBotao) {
+                            textoBotao.textContent =
+                                'Enviando...';
+                        }
+
+                    }
+                );
+            }
+
+        });
     </script>
 
 </body>

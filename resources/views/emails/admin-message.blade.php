@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -11,12 +9,8 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        {{ $assunto }}
-    </title>
-
+    <title>{{ $assunto }}</title>
 </head>
-
 
 <body
     style="
@@ -40,11 +34,9 @@
             padding: 36px 16px;
         "
     >
-
         <tr>
 
             <td align="center">
-
 
                 <table
                     role="presentation"
@@ -58,12 +50,8 @@
                         background: #ffffff;
                         border-radius: 16px;
                         overflow: hidden;
-                        box-shadow: 0 8px 28px rgba(49, 30, 69, .08);
                     "
                 >
-
-
-                    {{-- CABEÇALHO --}}
 
                     <tr>
 
@@ -79,7 +67,6 @@
                                 style="
                                     font-size: 25px;
                                     font-weight: 700;
-                                    letter-spacing: -.5px;
                                 "
                             >
                                 D-tech
@@ -100,8 +87,6 @@
                     </tr>
 
 
-                    {{-- CONTEÚDO --}}
-
                     <tr>
 
                         <td
@@ -118,6 +103,7 @@
                                 "
                             >
                                 Olá,
+
                                 <strong>
                                     {{ $destinatario->nome }}
                                 </strong>.
@@ -165,7 +151,11 @@
                                 "
                             >
                                 Mensagem enviada por
-                                {{ $administrador->nome }}
+
+                                <strong>
+                                    {{ $administrador->nome }}
+                                </strong>
+
                                 através do sistema administrativo da D-tech.
                             </p>
 
@@ -173,8 +163,6 @@
 
                     </tr>
 
-
-                    {{-- RODAPÉ --}}
 
                     <tr>
 

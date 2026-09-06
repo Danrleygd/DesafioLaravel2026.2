@@ -22,6 +22,7 @@ export default defineConfig({
                 "resources/css/userSidebar.css",
                 'resources/css/carrinho.css',
                 'resources/css/passwordReset.css',
+                'resources/css/adminEmail.css',
                 "resources/js/sidebarAdmin.js",
                 "resources/js/adminUsers.js",
                 "resources/js/productManagement.js",
