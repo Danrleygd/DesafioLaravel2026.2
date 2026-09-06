@@ -15,11 +15,12 @@ use App\Http\Controllers\ProdutoIndexController;
 use App\Http\Controllers\VendasController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ComprasController;
+use App\Http\Controllers\AdminEmailController;
 
 
 /*
 |--------------------------------------------------------------------------
-| LOJA
+| PÁGINA INICIAL
 |--------------------------------------------------------------------------
 */
 
@@ -32,6 +33,12 @@ Route::get(
 )->name('landing');
 
 
+/*
+|--------------------------------------------------------------------------
+| PRODUTO
+|--------------------------------------------------------------------------
+*/
+
 Route::get(
     '/produto/{id}',
     [
@@ -41,6 +48,12 @@ Route::get(
 )->name('produto.show');
 
 
+/*
+|--------------------------------------------------------------------------
+| LISTAGEM DE PRODUTOS
+|--------------------------------------------------------------------------
+*/
+
 Route::get(
     '/produtos',
     [
@@ -49,6 +62,12 @@ Route::get(
     ]
 )->name('produtos.index');
 
+
+/*
+|--------------------------------------------------------------------------
+| POSTS
+|--------------------------------------------------------------------------
+*/
 
 Route::get(
     '/posts',
@@ -83,10 +102,6 @@ Route::get(
 |--------------------------------------------------------------------------
 | VIA CEP
 |--------------------------------------------------------------------------
-|
-| Mantida esta rota para não quebrar partes antigas do projeto.
-| A rota oficial /api/cep/{cep} também ficará em routes/api.php.
-|
 */
 
 Route::get(
@@ -100,7 +115,7 @@ Route::get(
 
 /*
 |--------------------------------------------------------------------------
-| ADMIN
+| ÁREA ADMINISTRATIVA
 |--------------------------------------------------------------------------
 */
 
@@ -111,6 +126,7 @@ Route::middleware([
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
+
 
         /*
         |--------------------------------------------------------------------------
@@ -175,7 +191,7 @@ Route::middleware([
 
         /*
         |--------------------------------------------------------------------------
-        | HISTÓRICO DE VENDAS - ADMIN - RF009
+        | RF009 - HISTÓRICO DE VENDAS
         |--------------------------------------------------------------------------
         */
 
@@ -194,7 +210,9 @@ Route::middleware([
                 VendasController::class,
                 'adminPdf',
             ]
-        )->name('vendas.relatorio.pdf');
+        )->name(
+            'vendas.relatorio.pdf'
+        );
 
 
         Route::get(
@@ -203,18 +221,55 @@ Route::middleware([
                 VendasController::class,
                 'adminXlsx',
             ]
-        )->name('vendas.relatorio.xlsx');
+        )->name(
+            'vendas.relatorio.xlsx'
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | RF011 - SISTEMA DE E-MAIL
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/emails',
+            [
+                AdminEmailController::class,
+                'index',
+            ]
+        )->name(
+            'emails.index'
+        );
+
+
+        Route::post(
+            '/emails/enviar',
+            [
+                AdminEmailController::class,
+                'send',
+            ]
+        )->name(
+            'emails.send'
+        );
     });
 
 
 /*
 |--------------------------------------------------------------------------
-| PRODUTOS DO USUÁRIO
+| MEUS PRODUTOS
 |--------------------------------------------------------------------------
 */
 
 Route::middleware('auth')
     ->group(function () {
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | INDEX
+        |--------------------------------------------------------------------------
+        */
 
         Route::get(
             '/meus-produtos',
@@ -222,8 +277,16 @@ Route::middleware('auth')
                 GerenciamentoProdutoController::class,
                 'index',
             ]
-        )->name('meus-produtos.index');
+        )->name(
+            'meus-produtos.index'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | CREATE
+        |--------------------------------------------------------------------------
+        */
 
         Route::get(
             '/meus-produtos/create',
@@ -231,8 +294,16 @@ Route::middleware('auth')
                 GerenciamentoProdutoController::class,
                 'create',
             ]
-        )->name('meus-produtos.create');
+        )->name(
+            'meus-produtos.create'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | STORE
+        |--------------------------------------------------------------------------
+        */
 
         Route::post(
             '/meus-produtos',
@@ -240,8 +311,16 @@ Route::middleware('auth')
                 GerenciamentoProdutoController::class,
                 'store',
             ]
-        )->name('meus-produtos.store');
+        )->name(
+            'meus-produtos.store'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | EDIT
+        |--------------------------------------------------------------------------
+        */
 
         Route::get(
             '/meus-produtos/{produto}/edit',
@@ -249,8 +328,16 @@ Route::middleware('auth')
                 GerenciamentoProdutoController::class,
                 'edit',
             ]
-        )->name('meus-produtos.edit');
+        )->name(
+            'meus-produtos.edit'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | UPDATE
+        |--------------------------------------------------------------------------
+        */
 
         Route::put(
             '/meus-produtos/{produto}',
@@ -258,8 +345,16 @@ Route::middleware('auth')
                 GerenciamentoProdutoController::class,
                 'update',
             ]
-        )->name('meus-produtos.update');
+        )->name(
+            'meus-produtos.update'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | DELETE
+        |--------------------------------------------------------------------------
+        */
 
         Route::delete(
             '/meus-produtos/{produto}',
@@ -267,7 +362,9 @@ Route::middleware('auth')
                 GerenciamentoProdutoController::class,
                 'destroy',
             ]
-        )->name('meus-produtos.destroy');
+        )->name(
+            'meus-produtos.destroy'
+        );
     });
 
 
@@ -280,14 +377,29 @@ Route::middleware('auth')
 Route::middleware('auth')
     ->group(function () {
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | CARRINHO
+        |--------------------------------------------------------------------------
+        */
+
         Route::get(
             '/carrinho',
             [
                 CarrinhoController::class,
                 'index',
             ]
-        )->name('carrinho.index');
+        )->name(
+            'carrinho.index'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | ADICIONAR
+        |--------------------------------------------------------------------------
+        */
 
         Route::post(
             '/carrinho/adicionar/{produto}',
@@ -295,8 +407,16 @@ Route::middleware('auth')
                 CarrinhoController::class,
                 'adicionar',
             ]
-        )->name('carrinho.adicionar');
+        )->name(
+            'carrinho.adicionar'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | ATUALIZAR
+        |--------------------------------------------------------------------------
+        */
 
         Route::patch(
             '/carrinho/item/{item}',
@@ -304,8 +424,16 @@ Route::middleware('auth')
                 CarrinhoController::class,
                 'atualizar',
             ]
-        )->name('carrinho.atualizar');
+        )->name(
+            'carrinho.atualizar'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | REMOVER
+        |--------------------------------------------------------------------------
+        */
 
         Route::delete(
             '/carrinho/item/{item}',
@@ -313,8 +441,16 @@ Route::middleware('auth')
                 CarrinhoController::class,
                 'remover',
             ]
-        )->name('carrinho.remover');
+        )->name(
+            'carrinho.remover'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | LIMPAR
+        |--------------------------------------------------------------------------
+        */
 
         Route::delete(
             '/carrinho',
@@ -322,13 +458,15 @@ Route::middleware('auth')
                 CarrinhoController::class,
                 'limpar',
             ]
-        )->name('carrinho.limpar');
+        )->name(
+            'carrinho.limpar'
+        );
     });
 
 
 /*
 |--------------------------------------------------------------------------
-| CHECKOUT PAGBANK - RF004
+| RF004 - CHECKOUT PAGBANK
 |--------------------------------------------------------------------------
 */
 
@@ -337,9 +475,10 @@ Route::middleware('auth')
     ->name('checkout.')
     ->group(function () {
 
+
         /*
         |--------------------------------------------------------------------------
-        | SELEÇÃO DOS ITENS
+        | SELECIONAR PRODUTOS
         |--------------------------------------------------------------------------
         */
 
@@ -349,7 +488,9 @@ Route::middleware('auth')
                 CheckoutController::class,
                 'selecionarItens',
             ]
-        )->name('itens.selecionar');
+        )->name(
+            'itens.selecionar'
+        );
 
 
         /*
@@ -364,8 +505,16 @@ Route::middleware('auth')
                 CheckoutController::class,
                 'endereco',
             ]
-        )->name('endereco');
+        )->name(
+            'endereco'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | SELECIONAR ENDEREÇO
+        |--------------------------------------------------------------------------
+        */
 
         Route::post(
             '/endereco/selecionar',
@@ -373,8 +522,16 @@ Route::middleware('auth')
                 CheckoutController::class,
                 'selecionarEndereco',
             ]
-        )->name('endereco.selecionar');
+        )->name(
+            'endereco.selecionar'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | NOVO ENDEREÇO
+        |--------------------------------------------------------------------------
+        */
 
         Route::post(
             '/endereco/novo',
@@ -382,7 +539,9 @@ Route::middleware('auth')
                 CheckoutController::class,
                 'storeEndereco',
             ]
-        )->name('endereco.store');
+        )->name(
+            'endereco.store'
+        );
 
 
         /*
@@ -397,8 +556,16 @@ Route::middleware('auth')
                 CheckoutController::class,
                 'pagamento',
             ]
-        )->name('pagamento');
+        )->name(
+            'pagamento'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | PAGBANK
+        |--------------------------------------------------------------------------
+        */
 
         Route::post(
             '/pagamento/pagbank',
@@ -406,7 +573,9 @@ Route::middleware('auth')
                 CheckoutController::class,
                 'criarPagamentoPagBank',
             ]
-        )->name('pagamento.pagbank');
+        )->name(
+            'pagamento.pagbank'
+        );
 
 
         /*
@@ -421,8 +590,16 @@ Route::middleware('auth')
                 CheckoutController::class,
                 'retorno',
             ]
-        )->name('retorno');
+        )->name(
+            'retorno'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | VERIFICAR PAGAMENTO
+        |--------------------------------------------------------------------------
+        */
 
         Route::get(
             '/retorno/verificar',
@@ -430,7 +607,9 @@ Route::middleware('auth')
                 CheckoutController::class,
                 'verificarPagamento',
             ]
-        )->name('retorno.verificar');
+        )->name(
+            'retorno.verificar'
+        );
 
 
         /*
@@ -447,18 +626,27 @@ Route::middleware('auth')
             ]
         )
             ->whereNumber('venda')
-            ->name('confirmacao');
+            ->name(
+                'confirmacao'
+            );
     });
 
 
 /*
 |--------------------------------------------------------------------------
-| HISTÓRICO DE COMPRAS - RF008
+| RF008 - HISTÓRICO DE COMPRAS
 |--------------------------------------------------------------------------
 */
 
 Route::middleware('auth')
     ->group(function () {
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | COMPRAS
+        |--------------------------------------------------------------------------
+        */
 
         Route::get(
             '/compras',
@@ -466,8 +654,16 @@ Route::middleware('auth')
                 ComprasController::class,
                 'index',
             ]
-        )->name('compras.index');
+        )->name(
+            'compras.index'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | PDF DAS COMPRAS
+        |--------------------------------------------------------------------------
+        */
 
         Route::get(
             '/compras/relatorio/pdf',
@@ -475,18 +671,27 @@ Route::middleware('auth')
                 ComprasController::class,
                 'pdf',
             ]
-        )->name('compras.pdf');
+        )->name(
+            'compras.pdf'
+        );
     });
 
 
 /*
 |--------------------------------------------------------------------------
-| HISTÓRICO DE VENDAS - USUÁRIO - RF009
+| RF009 - HISTÓRICO DE VENDAS DO USUÁRIO
 |--------------------------------------------------------------------------
 */
 
 Route::middleware('auth')
     ->group(function () {
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | VENDAS
+        |--------------------------------------------------------------------------
+        */
 
         Route::get(
             '/vendas',
@@ -494,8 +699,16 @@ Route::middleware('auth')
                 VendasController::class,
                 'index',
             ]
-        )->name('vendas.index');
+        )->name(
+            'vendas.index'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | PDF
+        |--------------------------------------------------------------------------
+        */
 
         Route::get(
             '/vendas/relatorio/pdf',
@@ -503,7 +716,9 @@ Route::middleware('auth')
                 VendasController::class,
                 'pdf',
             ]
-        )->name('vendas.relatorio.pdf');
+        )->name(
+            'vendas.relatorio.pdf'
+        );
     });
 
 
@@ -516,14 +731,29 @@ Route::middleware('auth')
 Route::middleware('auth')
     ->group(function () {
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | EDITAR PERFIL
+        |--------------------------------------------------------------------------
+        */
+
         Route::get(
             '/profile',
             [
                 ProfileController::class,
                 'edit',
             ]
-        )->name('profile.edit');
+        )->name(
+            'profile.edit'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | ATUALIZAR PERFIL
+        |--------------------------------------------------------------------------
+        */
 
         Route::patch(
             '/profile',
@@ -531,8 +761,16 @@ Route::middleware('auth')
                 ProfileController::class,
                 'update',
             ]
-        )->name('profile.update');
+        )->name(
+            'profile.update'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | ENDEREÇO
+        |--------------------------------------------------------------------------
+        */
 
         Route::post(
             '/profile/address',
@@ -540,8 +778,16 @@ Route::middleware('auth')
                 ProfileController::class,
                 'storeAddress',
             ]
-        )->name('profile.address.store');
+        )->name(
+            'profile.address.store'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | SENHA
+        |--------------------------------------------------------------------------
+        */
 
         Route::patch(
             '/profile/password',
@@ -549,8 +795,16 @@ Route::middleware('auth')
                 ProfileController::class,
                 'updatePassword',
             ]
-        )->name('profile.password');
+        )->name(
+            'profile.password'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | EXCLUIR CONTA
+        |--------------------------------------------------------------------------
+        */
 
         Route::delete(
             '/profile',
@@ -558,13 +812,15 @@ Route::middleware('auth')
                 ProfileController::class,
                 'destroy',
             ]
-        )->name('profile.destroy');
+        )->name(
+            'profile.destroy'
+        );
     });
 
 
 /*
 |--------------------------------------------------------------------------
-| AUTENTICAÇÃO / BREEZE
+| BREEZE / RF010
 |--------------------------------------------------------------------------
 */
 
