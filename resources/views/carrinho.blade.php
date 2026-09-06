@@ -1508,6 +1508,17 @@
                 |--------------------------------------------------------------------------
                 */
 
+                /*
+                |--------------------------------------------------------------------------
+                | RF015 - CONTINUAR PARA O MERCADO PAGO
+                |--------------------------------------------------------------------------
+                |
+                | O carrinho envia somente os IDs dos itens selecionados.
+                | O backend consulta novamente preços, estoque e produtos,
+                | cria a preferência e retorna o init_point do Checkout Pro.
+                |
+                */
+
                 if (btnContinuar) {
 
                     btnContinuar.addEventListener(
@@ -1527,7 +1538,8 @@
                                             );
 
                                         return (
-                                            checkbox &&
+                                            checkbox
+                                            &&
                                             checkbox.checked
                                         );
                                     }
@@ -1543,25 +1555,50 @@
                                 .filter(
                                     function (itemId) {
 
-                                        return Number.isInteger(itemId);
+                                        return Number.isInteger(
+                                            itemId
+                                        );
                                     }
                                 );
 
+
                             if (
-                                selecionados.length === 0
+                                selecionados.length
+                                ===
+                                0
                             ) {
+                                alert(
+                                    'Selecione pelo menos um produto.'
+                                );
+
                                 return;
                             }
 
-                            btnContinuar.disabled = true;
+
+                            const textoOriginal =
+                                btnContinuar.innerHTML;
+
+
+                            btnContinuar.disabled =
+                                true;
+
+
+                            btnContinuar.innerHTML =
+                                `
+                                    <span>
+                                        Abrindo Mercado Pago...
+                                    </span>
+                                `;
+
 
                             try {
 
                                 const response =
                                     await fetch(
-                                        "{{ route('checkout.itens.selecionar') }}",
+                                        "{{ route('carrinho.checkout.mercadopago') }}",
                                         {
-                                            method: 'POST',
+                                            method:
+                                                'POST',
 
                                             headers: {
                                                 'Content-Type':
@@ -1582,36 +1619,55 @@
                                         }
                                     );
 
+
                                 const dados =
                                     await response.json();
+
 
                                 if (!response.ok) {
 
                                     alert(
                                         dados.message
                                         ??
-                                        'Não foi possível iniciar o checkout.'
+                                        'Não foi possível iniciar o pagamento.'
                                     );
 
                                     return;
                                 }
 
+
+                                if (!dados.redirect) {
+
+                                    alert(
+                                        'O Mercado Pago não retornou a URL de pagamento.'
+                                    );
+
+                                    return;
+                                }
+
+
                                 window.location.href =
-                                    dados.redirect
-                                    ??
-                                    "{{ route('checkout.endereco') }}";
+                                    dados.redirect;
+
 
                             } catch (erro) {
 
-                                console.error(erro);
+                                console.error(
+                                    erro
+                                );
 
                                 alert(
-                                    'Erro ao iniciar o checkout.'
+                                    'Não foi possível iniciar o checkout do Mercado Pago.'
                                 );
+
 
                             } finally {
 
-                                btnContinuar.disabled = false;
+                                btnContinuar.disabled =
+                                    false;
+
+                                btnContinuar.innerHTML =
+                                    textoOriginal;
                             }
                         }
                     );

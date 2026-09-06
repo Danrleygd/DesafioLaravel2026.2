@@ -14,6 +14,7 @@ use App\Http\Controllers\ViaCepController;
 use App\Http\Controllers\ProdutoIndexController;
 use App\Http\Controllers\VendasController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\MercadoPagoCheckoutController;
 
 
 /*
@@ -24,25 +25,37 @@ use App\Http\Controllers\CheckoutController;
 
 Route::get(
     '/',
-    [LandingController::class, 'index']
+    [
+        LandingController::class,
+        'index',
+    ]
 )->name('landing');
 
 
 Route::get(
     '/produto/{id}',
-    [ProdutoController::class, 'show']
+    [
+        ProdutoController::class,
+        'show',
+    ]
 )->name('produto.show');
 
 
 Route::get(
     '/produtos',
-    [ProdutoIndexController::class, 'index']
+    [
+        ProdutoIndexController::class,
+        'index',
+    ]
 )->name('produtos.index');
 
 
 Route::get(
     '/posts',
-    [LandingController::class, 'index']
+    [
+        LandingController::class,
+        'index',
+    ]
 )->name('posts');
 
 
@@ -54,7 +67,10 @@ Route::get(
 
 Route::get(
     '/dashboard',
-    [DashboardController::class, 'index']
+    [
+        DashboardController::class,
+        'index',
+    ]
 )
     ->middleware([
         'auth',
@@ -71,7 +87,10 @@ Route::get(
 
 Route::get(
     '/cep/{cep}',
-    [ViaCepController::class, 'consultar']
+    [
+        ViaCepController::class,
+        'consultar',
+    ]
 )->name('api.cep');
 
 
@@ -152,7 +171,7 @@ Route::middleware([
 
         /*
         |--------------------------------------------------------------------------
-        | VENDAS
+        | VENDAS - ADMIN
         |--------------------------------------------------------------------------
         */
 
@@ -171,7 +190,7 @@ Route::middleware([
                 VendasController::class,
                 'adminPdf',
             ]
-        )->name('vendas.pdf');
+        )->name('vendas.relatorio.pdf');
 
 
         Route::get(
@@ -180,7 +199,7 @@ Route::middleware([
                 VendasController::class,
                 'adminXlsx',
             ]
-        )->name('vendas.xlsx');
+        )->name('vendas.relatorio.xlsx');
     });
 
 
@@ -305,7 +324,7 @@ Route::middleware('auth')
 
 /*
 |--------------------------------------------------------------------------
-| CHECKOUT - RF004
+| CHECKOUT PAGBANK - RF004
 |--------------------------------------------------------------------------
 */
 
@@ -313,12 +332,6 @@ Route::middleware('auth')
     ->prefix('checkout')
     ->name('checkout.')
     ->group(function () {
-
-        /*
-        |--------------------------------------------------------------------------
-        | SELECIONA OS ITENS DO CARRINHO
-        |--------------------------------------------------------------------------
-        */
 
         Route::post(
             '/itens/selecionar',
@@ -328,12 +341,6 @@ Route::middleware('auth')
             ]
         )->name('itens.selecionar');
 
-
-        /*
-        |--------------------------------------------------------------------------
-        | ETAPA 2 - ENDEREÇO
-        |--------------------------------------------------------------------------
-        */
 
         Route::get(
             '/endereco',
@@ -361,12 +368,77 @@ Route::middleware('auth')
             ]
         )->name('endereco.store');
 
+
+        Route::get(
+            '/pagamento',
+            [
+                CheckoutController::class,
+                'pagamento',
+            ]
+        )->name('pagamento');
+
+
+        Route::post(
+            '/pagamento/pagbank',
+            [
+                CheckoutController::class,
+                'criarPagamentoPagBank',
+            ]
+        )->name('pagamento.pagbank');
+
+
+        Route::get(
+            '/retorno',
+            [
+                CheckoutController::class,
+                'retorno',
+            ]
+        )->name('retorno');
+
+
+        Route::get(
+            '/retorno/verificar',
+            [
+                CheckoutController::class,
+                'verificarPagamento',
+            ]
+        )->name('retorno.verificar');
+
+
+        Route::get(
+            '/confirmacao/{venda}',
+            [
+                CheckoutController::class,
+                'confirmacao',
+            ]
+        )
+            ->whereNumber('venda')
+            ->name('confirmacao');
     });
 
 
 /*
 |--------------------------------------------------------------------------
-| HISTÓRICO DE VENDAS - RF009
+| CHECKOUT MERCADO PAGO - RF015
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('auth')
+    ->post(
+        '/carrinho/checkout/mercadopago',
+        [
+            MercadoPagoCheckoutController::class,
+            'checkout',
+        ]
+    )
+    ->name(
+        'carrinho.checkout.mercadopago'
+    );
+
+
+/*
+|--------------------------------------------------------------------------
+| HISTÓRICO DE VENDAS - USUÁRIO
 |--------------------------------------------------------------------------
 */
 

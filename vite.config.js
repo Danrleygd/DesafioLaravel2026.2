@@ -26,6 +26,7 @@ export default defineConfig({
                 "resources/js/userSidebar.js",
                 "resources/css/checkout.css",
                 "resources/js/checkout.js",
+                'resources/css/checkoutPagamento.css',
                 "resources/js/app.js",
             ],
 
