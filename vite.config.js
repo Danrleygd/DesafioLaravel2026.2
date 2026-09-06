@@ -20,6 +20,8 @@ export default defineConfig({
                 "resources/css/createProduct.css",
                 "resources/css/vendas.css",
                 "resources/css/userSidebar.css",
+                'resources/css/carrinho.css',
+                'resources/css/passwordReset.css',
                 "resources/js/sidebarAdmin.js",
                 "resources/js/adminUsers.js",
                 "resources/js/productManagement.js",

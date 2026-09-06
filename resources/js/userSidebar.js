@@ -2,27 +2,14 @@ document.addEventListener(
     'DOMContentLoaded',
     function () {
 
-        const body =
-            document.body;
-
         const sidebar =
             document.getElementById(
                 'userSidebar'
             );
 
-        const collapseButton =
+        const toggle =
             document.getElementById(
-                'userSidebarCollapse'
-            );
-
-        const mobileButton =
-            document.getElementById(
-                'userSidebarMobileButton'
-            );
-
-        const overlay =
-            document.getElementById(
-                'userSidebarOverlay'
+                'userSidebarToggle'
             );
 
 
@@ -33,34 +20,40 @@ document.addEventListener(
 
         /*
         |--------------------------------------------------------------------------
-        | HABILITAR SIDEBAR
+        | MARCA O BODY
         |--------------------------------------------------------------------------
         */
 
-        body.classList.add(
-            'user-sidebar-enabled'
+        document.body.classList.add(
+            'has-user-sidebar'
         );
 
 
         /*
         |--------------------------------------------------------------------------
-        | ESTADO SALVO
+        | RESTAURA O ESTADO
         |--------------------------------------------------------------------------
         */
 
-        const savedState =
+        const collapsed =
             localStorage.getItem(
-                'dtech-user-sidebar'
-            );
+                'userSidebarCollapsed'
+            )
+            ===
+            'true';
 
 
         if (
-            savedState === 'collapsed'
+            collapsed
             &&
-            window.innerWidth > 800
+            window.innerWidth > 900
         ) {
 
-            body.classList.add(
+            sidebar.classList.add(
+                'collapsed'
+            );
+
+            document.body.classList.add(
                 'user-sidebar-collapsed'
             );
         }
@@ -68,33 +61,66 @@ document.addEventListener(
 
         /*
         |--------------------------------------------------------------------------
-        | RECOLHER
+        | ABRIR / FECHAR
         |--------------------------------------------------------------------------
         */
 
-        if (collapseButton) {
+        if (toggle) {
 
-            collapseButton.addEventListener(
+            toggle.addEventListener(
                 'click',
                 function () {
 
-                    body.classList.toggle(
-                        'user-sidebar-collapsed'
+                    /*
+                    |--------------------------------------------------------------------------
+                    | MOBILE
+                    |--------------------------------------------------------------------------
+                    */
+
+                    if (
+                        window.innerWidth
+                        <=
+                        900
+                    ) {
+
+                        sidebar.classList.toggle(
+                            'mobile-open'
+                        );
+
+                        return;
+                    }
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | DESKTOP
+                    |--------------------------------------------------------------------------
+                    */
+
+                    sidebar.classList.toggle(
+                        'collapsed'
                     );
 
 
-                    const collapsed =
-                        body.classList.contains(
-                            'user-sidebar-collapsed'
+                    const isCollapsed =
+                        sidebar.classList.contains(
+                            'collapsed'
                         );
 
 
+                    document.body.classList.toggle(
+                        'user-sidebar-collapsed',
+                        isCollapsed
+                    );
+
+
                     localStorage.setItem(
-                        'dtech-user-sidebar',
-                        collapsed
-                            ? 'collapsed'
-                            : 'expanded'
+                        'userSidebarCollapsed',
+                        isCollapsed
+                            ? 'true'
+                            : 'false'
                     );
+
                 }
             );
         }
@@ -102,103 +128,7 @@ document.addEventListener(
 
         /*
         |--------------------------------------------------------------------------
-        | MOBILE
-        |--------------------------------------------------------------------------
-        */
-
-        function abrirMobile() {
-
-            body.classList.add(
-                'user-sidebar-mobile-open'
-            );
-
-
-            document.body.style.overflow =
-                'hidden';
-        }
-
-
-        function fecharMobile() {
-
-            body.classList.remove(
-                'user-sidebar-mobile-open'
-            );
-
-
-            document.body.style.overflow =
-                '';
-        }
-
-
-        if (mobileButton) {
-
-            mobileButton.addEventListener(
-                'click',
-                abrirMobile
-            );
-        }
-
-
-        if (overlay) {
-
-            overlay.addEventListener(
-                'click',
-                fecharMobile
-            );
-        }
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | FECHA AO CLICAR EM LINK NO MOBILE
-        |--------------------------------------------------------------------------
-        */
-
-        sidebar
-            .querySelectorAll('a')
-            .forEach(
-                function (link) {
-
-                    link.addEventListener(
-                        'click',
-                        function () {
-
-                            if (
-                                window.innerWidth
-                                <= 800
-                            ) {
-
-                                fecharMobile();
-                            }
-                        }
-                    );
-                }
-            );
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | ESC
-        |--------------------------------------------------------------------------
-        */
-
-        document.addEventListener(
-            'keydown',
-            function (event) {
-
-                if (
-                    event.key === 'Escape'
-                ) {
-
-                    fecharMobile();
-                }
-            }
-        );
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | RESIZE
+        | REDIMENSIONAMENTO
         |--------------------------------------------------------------------------
         */
 
@@ -207,11 +137,44 @@ document.addEventListener(
             function () {
 
                 if (
-                    window.innerWidth > 800
+                    window.innerWidth > 900
                 ) {
 
-                    fecharMobile();
+                    sidebar.classList.remove(
+                        'mobile-open'
+                    );
+
+
+                    const salvo =
+                        localStorage.getItem(
+                            'userSidebarCollapsed'
+                        )
+                        ===
+                        'true';
+
+
+                    sidebar.classList.toggle(
+                        'collapsed',
+                        salvo
+                    );
+
+
+                    document.body.classList.toggle(
+                        'user-sidebar-collapsed',
+                        salvo
+                    );
+
+                } else {
+
+                    sidebar.classList.remove(
+                        'collapsed'
+                    );
+
+                    document.body.classList.remove(
+                        'user-sidebar-collapsed'
+                    );
                 }
+
             }
         );
 

@@ -2,13 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\PagBankWebhookController;
 use App\Http\Controllers\ViaCepController;
+use App\Http\Controllers\PagBankWebhookController;
 
 
 /*
 |--------------------------------------------------------------------------
-| VIA CEP
+| RF012 - VIA CEP
 |--------------------------------------------------------------------------
 */
 
@@ -23,6 +23,11 @@ Route::get(
 );
 
 
+/*
+|--------------------------------------------------------------------------
+| PAGBANK WEBHOOK
+|--------------------------------------------------------------------------
+*/
 
 Route::post(
     '/pagbank/webhook',

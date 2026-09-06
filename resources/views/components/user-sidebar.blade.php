@@ -1,198 +1,72 @@
-@php
-
-    $user = auth()->user();
-
-    /*
-    |--------------------------------------------------------------------------
-    | FOTO DO USUÁRIO
-    |--------------------------------------------------------------------------
-    */
-
-    $fotoUsuario = null;
-
-    if ($user && $user->foto) {
-
-        if (
-            str_starts_with($user->foto, 'http://')
-            ||
-            str_starts_with($user->foto, 'https://')
-        ) {
-
-            $fotoUsuario = $user->foto;
-
-        } else {
-
-            $fotoUsuario = asset(
-                'storage/' .
-                ltrim($user->foto, '/')
-            );
-        }
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | INICIAIS
-    |--------------------------------------------------------------------------
-    */
-
-    $iniciais = 'U';
-
-    if ($user && $user->nome) {
-
-        $partesNome = preg_split(
-            '/\s+/',
-            trim($user->nome)
-        );
-
-        $iniciais = strtoupper(
-            mb_substr(
-                $partesNome[0] ?? 'U',
-                0,
-                1
-            )
-        );
-
-        if (count($partesNome) > 1) {
-
-            $iniciais .= strtoupper(
-                mb_substr(
-                    end($partesNome),
-                    0,
-                    1
-                )
-            );
-        }
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | PRIMEIRO NOME
-    |--------------------------------------------------------------------------
-    */
-
-    $primeiroNome = $user
-        ? explode(
-            ' ',
-            trim($user->nome)
-        )[0]
-        : 'Usuário';
-
-@endphp
-
-
-{{-- =========================================================
-    BOTÃO MOBILE
-========================================================= --}}
-
-<button
-    type="button"
-    class="user-sidebar-mobile-button"
-    id="userSidebarMobileButton"
-    aria-label="Abrir menu"
->
-
-    <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-    >
-        <path d="M4 6h16"></path>
-        <path d="M4 12h16"></path>
-        <path d="M4 18h16"></path>
-    </svg>
-
-</button>
-
-
-{{-- =========================================================
-    OVERLAY MOBILE
-========================================================= --}}
-
-<div
-    class="user-sidebar-overlay"
-    id="userSidebarOverlay"
-></div>
-
-
-{{-- =========================================================
-    SIDEBAR
-========================================================= --}}
-
 <aside
     class="user-sidebar"
     id="userSidebar"
 >
 
-
-    {{-- =====================================================
-        LOGO
-    ====================================================== --}}
-
-    <div class="user-sidebar-logo-area">
+    {{-- =========================================================
+        CABEÇALHO
+    ========================================================== --}}
+    <div class="user-sidebar-header">
 
         <a
-            href="{{ route('landing') }}"
+            href="{{ route('dashboard') }}"
             class="user-sidebar-logo"
         >
-
-            {{-- LOGO GRANDE --}}
             <img
                 src="{{ asset('assets/images/Logo.png') }}"
                 alt="D-tech"
                 class="user-sidebar-logo-full"
             >
 
-
-            {{-- LOGO PEQUENA --}}
             <img
                 src="{{ asset('assets/images/LetraSozinha.png') }}"
                 alt="D-tech"
                 class="user-sidebar-logo-small"
-                onerror="this.src='{{ asset('assets/images/Logo.png') }}'"
             >
-
         </a>
 
 
-        {{-- RECOLHER --}}
         <button
             type="button"
-            class="user-sidebar-collapse"
-            id="userSidebarCollapse"
-            title="Recolher menu"
+            class="user-sidebar-toggle"
+            id="userSidebarToggle"
+            aria-label="Recolher menu"
         >
-
             <svg
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
             >
-                <path d="m15 18-6-6 6-6"></path>
-            </svg>
+                <rect
+                    x="3"
+                    y="4"
+                    width="18"
+                    height="16"
+                    rx="2"
+                />
 
+                <path d="M9 4v16" />
+            </svg>
         </button>
 
     </div>
 
 
-    {{-- =====================================================
-        MENU
-    ====================================================== --}}
+    {{-- =========================================================
+        NAVEGAÇÃO
+    ========================================================== --}}
+    <nav class="user-sidebar-nav">
 
-    <nav class="user-sidebar-menu">
 
-
-        {{-- =================================================
+        {{-- =====================================================
             PRINCIPAL
-        ================================================== --}}
+        ====================================================== --}}
+        <div class="user-sidebar-group">
 
-        <div class="user-sidebar-section">
-
-            <span class="user-sidebar-section-title">
+            <span class="user-sidebar-title">
                 PRINCIPAL
             </span>
 
@@ -201,56 +75,73 @@
             <a
                 href="{{ route('dashboard') }}"
                 class="
-                    user-sidebar-item
-                    {{ request()->routeIs('dashboard')
-                        ? 'active'
-                        : ''
+                    user-sidebar-link
+                    {{
+                        request()->routeIs('dashboard')
+                            ? 'active'
+                            : ''
                     }}
                 "
-                title="Início"
+                title="Dashboard"
             >
-
                 <span class="user-sidebar-icon">
 
                     <svg
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="1.8"
+                        stroke-width="2"
                     >
-                        <path
-                            d="M3 11.5 12 4l9 7.5"
-                        ></path>
+                        <rect
+                            x="3"
+                            y="3"
+                            width="7"
+                            height="7"
+                            rx="1"
+                        />
 
-                        <path
-                            d="M5 10v10h14V10"
-                        ></path>
+                        <rect
+                            x="14"
+                            y="3"
+                            width="7"
+                            height="7"
+                            rx="1"
+                        />
 
-                        <path
-                            d="M9 20v-6h6v6"
-                        ></path>
+                        <rect
+                            x="3"
+                            y="14"
+                            width="7"
+                            height="7"
+                            rx="1"
+                        />
+
+                        <rect
+                            x="14"
+                            y="14"
+                            width="7"
+                            height="7"
+                            rx="1"
+                        />
                     </svg>
 
                 </span>
 
-
                 <span class="user-sidebar-text">
-                    Início
+                    Dashboard
                 </span>
-
             </a>
 
         </div>
 
 
-        {{-- =================================================
-            MINHA CONTA
-        ================================================== --}}
+        {{-- =====================================================
+            GERENCIAMENTO
+        ====================================================== --}}
+        <div class="user-sidebar-group">
 
-        <div class="user-sidebar-section">
-
-            <span class="user-sidebar-section-title">
-                MINHA CONTA
+            <span class="user-sidebar-title">
+                GERENCIAMENTO
             </span>
 
 
@@ -258,41 +149,39 @@
             <a
                 href="{{ route('profile.edit') }}"
                 class="
-                    user-sidebar-item
-                    {{ request()->routeIs('profile.*')
-                        ? 'active'
-                        : ''
+                    user-sidebar-link
+                    {{
+                        request()->routeIs('profile.*')
+                            ? 'active'
+                            : ''
                     }}
                 "
                 title="Meu Perfil"
             >
-
                 <span class="user-sidebar-icon">
 
                     <svg
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="1.8"
+                        stroke-width="2"
                     >
                         <circle
                             cx="12"
                             cy="8"
                             r="4"
-                        ></circle>
+                        />
 
                         <path
                             d="M4 21a8 8 0 0 1 16 0"
-                        ></path>
+                        />
                     </svg>
 
                 </span>
 
-
                 <span class="user-sidebar-text">
                     Meu Perfil
                 </span>
-
             </a>
 
 
@@ -300,85 +189,154 @@
             <a
                 href="{{ route('meus-produtos.index') }}"
                 class="
-                    user-sidebar-item
-                    {{ request()->routeIs('meus-produtos.*')
-                        ? 'active'
-                        : ''
+                    user-sidebar-link
+                    {{
+                        request()->routeIs('meus-produtos.*')
+                            ? 'active'
+                            : ''
                     }}
                 "
                 title="Meus Produtos"
             >
-
                 <span class="user-sidebar-icon">
 
                     <svg
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="1.8"
+                        stroke-width="2"
                     >
                         <path
-                            d="M3 7l9-4 9 4-9 4-9-4Z"
-                        ></path>
+                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                        />
 
-                        <path
-                            d="M3 7v10l9 4 9-4V7"
-                        ></path>
+                        <polyline
+                            points="3.29 7 12 12 20.71 7"
+                        />
 
-                        <path
-                            d="M12 11v10"
-                        ></path>
+                        <line
+                            x1="12"
+                            y1="22"
+                            x2="12"
+                            y2="12"
+                        />
                     </svg>
 
                 </span>
 
-
                 <span class="user-sidebar-text">
                     Meus Produtos
                 </span>
-
             </a>
 
+        </div>
 
-            {{-- VENDAS --}}
-            @if(Route::has('vendas.index'))
+
+        {{-- =====================================================
+            MOVIMENTAÇÕES
+        ====================================================== --}}
+        <div class="user-sidebar-group">
+
+            <span class="user-sidebar-title">
+                MOVIMENTAÇÕES
+            </span>
+
+
+            {{-- COMPRAS --}}
+            @if(
+                \Illuminate\Support\Facades\Route::has(
+                    'compras.index'
+                )
+            )
 
                 <a
-                    href="{{ route('vendas.index') }}"
+                    href="{{ route('compras.index') }}"
                     class="
-                        user-sidebar-item
-                        {{ request()->routeIs('vendas.*')
-                            ? 'active'
-                            : ''
+                        user-sidebar-link
+                        {{
+                            request()->routeIs('compras.*')
+                                ? 'active'
+                                : ''
                         }}
                     "
-                    title="Minhas Vendas"
+                    title="Minhas Compras"
                 >
-
                     <span class="user-sidebar-icon">
 
                         <svg
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="1.8"
+                            stroke-width="2"
                         >
-                            <path d="M4 19V9"></path>
+                            <circle
+                                cx="9"
+                                cy="20"
+                                r="1"
+                            />
 
-                            <path d="M10 19V5"></path>
+                            <circle
+                                cx="19"
+                                cy="20"
+                                r="1"
+                            />
 
-                            <path d="M16 19v-7"></path>
-
-                            <path d="M22 19H2"></path>
+                            <path
+                                d="M3 4h2l2.4 10.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L21 7H6"
+                            />
                         </svg>
 
                     </span>
 
-
                     <span class="user-sidebar-text">
-                        Minhas Vendas
+                        Compras
+                    </span>
+                </a>
+
+            @endif
+
+
+            {{-- VENDAS --}}
+            @if(
+                \Illuminate\Support\Facades\Route::has(
+                    'vendas.index'
+                )
+            )
+
+                <a
+                    href="{{ route('vendas.index') }}"
+                    class="
+                        user-sidebar-link
+                        {{
+                            request()->routeIs('vendas.*')
+                                ? 'active'
+                                : ''
+                        }}
+                    "
+                    title="Minhas Vendas"
+                >
+                    <span class="user-sidebar-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <polyline
+                                points="3 17 9 11 13 15 21 7"
+                            />
+
+                            <polyline
+                                points="15 7 21 7 21 13"
+                            />
+                        </svg>
+
                     </span>
 
+                    <span class="user-sidebar-text">
+                        Vendas
+                    </span>
                 </a>
 
             @endif
@@ -388,116 +346,99 @@
             <a
                 href="{{ route('carrinho.index') }}"
                 class="
-                    user-sidebar-item
-                    {{ request()->routeIs('carrinho.*')
-                        ? 'active'
-                        : ''
+                    user-sidebar-link
+                    {{
+                        request()->routeIs('carrinho.*')
+                            ? 'active'
+                            : ''
                     }}
                 "
                 title="Carrinho"
             >
-
                 <span class="user-sidebar-icon">
 
                     <svg
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="1.8"
+                        stroke-width="2"
                     >
                         <circle
                             cx="9"
                             cy="20"
                             r="1"
-                        ></circle>
+                        />
 
                         <circle
                             cx="19"
                             cy="20"
                             r="1"
-                        ></circle>
+                        />
 
                         <path
-                            d="M3 4h2l2.5 11h11l2-7H7"
-                        ></path>
+                            d="M3 4h2l2.4 10.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L21 7H6"
+                        />
                     </svg>
 
                 </span>
 
-
                 <span class="user-sidebar-text">
                     Carrinho
                 </span>
-
             </a>
 
         </div>
 
 
-        {{-- =================================================
-            NAVEGAÇÃO
-        ================================================== --}}
+        {{-- =====================================================
+            LOJA
+        ====================================================== --}}
+        <div class="user-sidebar-group">
 
-        <div class="user-sidebar-section">
-
-            <span class="user-sidebar-section-title">
-                NAVEGAÇÃO
+            <span class="user-sidebar-title">
+                LOJA
             </span>
 
 
-            {{-- LOJA --}}
+            {{-- PÁGINA INICIAL --}}
             <a
                 href="{{ route('landing') }}"
                 class="
-                    user-sidebar-item
-                    {{ request()->routeIs('landing')
-                        ? 'active'
-                        : ''
+                    user-sidebar-link
+                    {{
+                        request()->routeIs('landing')
+                            ? 'active'
+                            : ''
                     }}
                 "
-                title="Voltar para a Loja"
+                title="Página Inicial"
             >
-
                 <span class="user-sidebar-icon">
 
                     <svg
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="1.8"
+                        stroke-width="2"
                     >
                         <path
-                            d="M3 9l2-5h14l2 5"
-                        ></path>
+                            d="M3 9l9-7 9 7"
+                        />
 
                         <path
-                            d="M5 13v7h14v-7"
-                        ></path>
+                            d="M5 10v11h14V10"
+                        />
 
                         <path
-                            d="M9 20v-5h6v5"
-                        ></path>
-
-                        <path
-                            d="M3 9a3 3 0 0 0 6 0"
-                        ></path>
-
-                        <path
-                            d="M9 9a3 3 0 0 0 6 0"
-                        ></path>
-
-                        <path
-                            d="M15 9a3 3 0 0 0 6 0"
-                        ></path>
+                            d="M9 21v-6h6v6"
+                        />
                     </svg>
 
                 </span>
 
-
                 <span class="user-sidebar-text">
-                    Voltar para a Loja
+                    Página Inicial
                 </span>
-
             </a>
 
         </div>
@@ -505,124 +446,88 @@
     </nav>
 
 
-    {{-- =====================================================
-        PARTE INFERIOR
-    ====================================================== --}}
+    {{-- =========================================================
+        RODAPÉ
+    ========================================================== --}}
+    <div class="user-sidebar-footer">
 
-    <div class="user-sidebar-bottom">
+
+        {{-- PERFIL --}}
+        <a
+            href="{{ route('profile.edit') }}"
+            class="user-sidebar-link"
+            title="Meu Perfil"
+        >
+            <span class="user-sidebar-icon">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <circle
+                        cx="12"
+                        cy="8"
+                        r="4"
+                    />
+
+                    <path
+                        d="M4 21a8 8 0 0 1 16 0"
+                    />
+                </svg>
+
+            </span>
+
+            <span class="user-sidebar-text">
+                Meu Perfil
+            </span>
+        </a>
 
 
-        {{-- LOGOUT --}}
+        {{-- SAIR --}}
         <form
             method="POST"
             action="{{ route('logout') }}"
-            class="user-sidebar-logout-form"
         >
-
             @csrf
-
 
             <button
                 type="submit"
-                class="user-sidebar-item user-sidebar-logout"
+                class="user-sidebar-link user-sidebar-logout"
                 title="Sair"
             >
-
                 <span class="user-sidebar-icon">
 
                     <svg
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="1.8"
+                        stroke-width="2"
                     >
                         <path
-                            d="M10 17l5-5-5-5"
-                        ></path>
+                            d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+                        />
 
-                        <path
-                            d="M15 12H3"
-                        ></path>
+                        <polyline
+                            points="16 17 21 12 16 7"
+                        />
 
-                        <path
-                            d="M15 3h5a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-5"
-                        ></path>
+                        <line
+                            x1="21"
+                            y1="12"
+                            x2="9"
+                            y2="12"
+                        />
                     </svg>
 
                 </span>
 
-
                 <span class="user-sidebar-text">
                     Sair
                 </span>
-
             </button>
-
         </form>
-
-
-        {{-- PERFIL --}}
-        <a
-            href="{{ route('profile.edit') }}"
-            class="user-sidebar-profile"
-        >
-
-            <div class="user-sidebar-avatar">
-
-                @if($fotoUsuario)
-
-                    <img
-                        src="{{ $fotoUsuario }}"
-                        alt="{{ $user->nome }}"
-                        class="user-sidebar-avatar-image"
-                        onerror="
-                            this.style.display='none';
-                            this.nextElementSibling.style.display='flex';
-                        "
-                    >
-
-                    <span
-                        class="user-sidebar-avatar-fallback"
-                        style="display: none;"
-                    >
-                        {{ $iniciais }}
-                    </span>
-
-                @else
-
-                    <span class="user-sidebar-avatar-fallback">
-                        {{ $iniciais }}
-                    </span>
-
-                @endif
-
-            </div>
-
-
-            <div class="user-sidebar-profile-info">
-
-                <strong>
-                    {{ $primeiroNome }}
-                </strong>
-
-                <span>
-                    Ver meu perfil
-                </span>
-
-            </div>
-
-
-            <svg
-                class="user-sidebar-profile-arrow"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-            >
-                <path d="m9 18 6-6-6-6"></path>
-            </svg>
-
-        </a>
 
     </div>
 

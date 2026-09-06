@@ -14,7 +14,7 @@ use App\Http\Controllers\ViaCepController;
 use App\Http\Controllers\ProdutoIndexController;
 use App\Http\Controllers\VendasController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\MercadoPagoCheckoutController;
+use App\Http\Controllers\ComprasController;
 
 
 /*
@@ -83,6 +83,10 @@ Route::get(
 |--------------------------------------------------------------------------
 | VIA CEP
 |--------------------------------------------------------------------------
+|
+| Mantida esta rota para não quebrar partes antigas do projeto.
+| A rota oficial /api/cep/{cep} também ficará em routes/api.php.
+|
 */
 
 Route::get(
@@ -171,7 +175,7 @@ Route::middleware([
 
         /*
         |--------------------------------------------------------------------------
-        | VENDAS - ADMIN
+        | HISTÓRICO DE VENDAS - ADMIN - RF009
         |--------------------------------------------------------------------------
         */
 
@@ -333,6 +337,12 @@ Route::middleware('auth')
     ->name('checkout.')
     ->group(function () {
 
+        /*
+        |--------------------------------------------------------------------------
+        | SELEÇÃO DOS ITENS
+        |--------------------------------------------------------------------------
+        */
+
         Route::post(
             '/itens/selecionar',
             [
@@ -341,6 +351,12 @@ Route::middleware('auth')
             ]
         )->name('itens.selecionar');
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | ENDEREÇO
+        |--------------------------------------------------------------------------
+        */
 
         Route::get(
             '/endereco',
@@ -369,6 +385,12 @@ Route::middleware('auth')
         )->name('endereco.store');
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | PAGAMENTO
+        |--------------------------------------------------------------------------
+        */
+
         Route::get(
             '/pagamento',
             [
@@ -386,6 +408,12 @@ Route::middleware('auth')
             ]
         )->name('pagamento.pagbank');
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | RETORNO
+        |--------------------------------------------------------------------------
+        */
 
         Route::get(
             '/retorno',
@@ -405,6 +433,12 @@ Route::middleware('auth')
         )->name('retorno.verificar');
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | CONFIRMAÇÃO
+        |--------------------------------------------------------------------------
+        */
+
         Route::get(
             '/confirmacao/{venda}',
             [
@@ -419,26 +453,35 @@ Route::middleware('auth')
 
 /*
 |--------------------------------------------------------------------------
-| CHECKOUT MERCADO PAGO - RF015
+| HISTÓRICO DE COMPRAS - RF008
 |--------------------------------------------------------------------------
 */
 
 Route::middleware('auth')
-    ->post(
-        '/carrinho/checkout/mercadopago',
-        [
-            MercadoPagoCheckoutController::class,
-            'checkout',
-        ]
-    )
-    ->name(
-        'carrinho.checkout.mercadopago'
-    );
+    ->group(function () {
+
+        Route::get(
+            '/compras',
+            [
+                ComprasController::class,
+                'index',
+            ]
+        )->name('compras.index');
+
+
+        Route::get(
+            '/compras/relatorio/pdf',
+            [
+                ComprasController::class,
+                'pdf',
+            ]
+        )->name('compras.pdf');
+    });
 
 
 /*
 |--------------------------------------------------------------------------
-| HISTÓRICO DE VENDAS - USUÁRIO
+| HISTÓRICO DE VENDAS - USUÁRIO - RF009
 |--------------------------------------------------------------------------
 */
 
@@ -460,7 +503,7 @@ Route::middleware('auth')
                 VendasController::class,
                 'pdf',
             ]
-        )->name('vendas.pdf');
+        )->name('vendas.relatorio.pdf');
     });
 
 
@@ -521,7 +564,7 @@ Route::middleware('auth')
 
 /*
 |--------------------------------------------------------------------------
-| AUTENTICAÇÃO
+| AUTENTICAÇÃO / BREEZE
 |--------------------------------------------------------------------------
 */
 

@@ -1,148 +1,262 @@
-<x-guest-layout>
+<!DOCTYPE html>
 
-    <div class="forgot-page">
+<html lang="pt-BR">
 
-        <div class="forgot-container">
+<head>
 
-            <div class="forgot-image">
+    <meta charset="UTF-8">
 
-                <div class="forgot-image-content">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-                    {{-- LOGIN ATIVO --}}
-                    <div class="forgot-side-button">
-                        Login
+    <title>
+        Recuperar senha - D-tech
+    </title>
+
+
+    @vite([
+        'resources/css/app.css',
+        'resources/css/passwordReset.css'
+    ])
+
+</head>
+
+
+<body class="password-reset-page">
+
+
+    <main class="password-reset-wrapper">
+
+
+        <section class="password-reset-brand">
+
+            <a
+                href="{{ route('landing') }}"
+                class="password-reset-logo"
+            >
+
+                <img
+                    src="{{ asset('assets/images/Logo.png') }}"
+                    alt="D-tech"
+                >
+
+            </a>
+
+
+            <div class="brand-content">
+
+                <span class="brand-tag">
+                    D-TECH
+                </span>
+
+
+                <h1>
+                    Recupere o acesso à sua conta.
+                </h1>
+
+
+                <p>
+                    Informe o e-mail cadastrado para receber
+                    um link seguro de redefinição de senha.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="password-reset-content">
+
+
+            <div class="password-reset-card">
+
+
+                <div class="password-reset-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    >
+
+                        <rect
+                            x="3"
+                            y="11"
+                            width="18"
+                            height="10"
+                            rx="2"
+                        />
+
+                        <path
+                            d="M7 11V7a5 5 0 0 1 10 0v4"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <span class="password-reset-eyebrow">
+                    RECUPERAÇÃO DE SENHA
+                </span>
+
+
+                <h2>
+                    Esqueceu sua senha?
+                </h2>
+
+
+                <p class="password-reset-description">
+                    Digite o e-mail vinculado à sua conta.
+                    Enviaremos as instruções para criar uma nova senha.
+                </p>
+
+
+                @if(session('status'))
+
+                    <div class="password-reset-success">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path
+                                d="M20 6 9 17l-5-5"
+                            />
+                        </svg>
+
+
+                        <span>
+                            {{ session('status') }}
+                        </span>
+
                     </div>
 
-                    {{-- CADASTRO --}}
-                    <a
-                        href="{{ route('register') }}"
-                        class="forgot-register-link">
-                        Cadastre-se
+                @endif
+
+
+                @if($errors->any())
+
+                    <div class="password-reset-error">
+
+                        @foreach($errors->all() as $error)
+
+                            <div>
+                                {{ $error }}
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
+                @endif
+
+
+                <form
+                    method="POST"
+                    action="{{ route('password.email') }}"
+                    class="password-reset-form"
+                >
+
+                    @csrf
+
+
+                    <div class="password-field">
+
+                        <label for="email">
+                            E-mail
+                        </label>
+
+
+                        <div class="password-input">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <path
+                                    d="M4 4h16v16H4z"
+                                />
+
+                                <path
+                                    d="m4 7 8 6 8-6"
+                                />
+                            </svg>
+
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value="{{ old('email') }}"
+                                placeholder="seuemail@exemplo.com"
+                                autocomplete="email"
+                                autofocus
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="password-reset-button"
+                    >
+
+                        Enviar link de redefinição
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path
+                                d="m9 18 6-6-6-6"
+                            />
+                        </svg>
+
+                    </button>
+
+                </form>
+
+
+                <div class="password-reset-footer">
+
+                    <a href="{{ route('login') }}">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path
+                                d="m15 18-6-6 6-6"
+                            />
+                        </svg>
+
+                        Voltar para o login
+
                     </a>
 
                 </div>
 
             </div>
 
+        </section>
 
-            <div class="forgot-form-container">
+    </main>
 
-                <div class="forgot-form">
+</body>
 
-
-                    <div class="forgot-user-icon">
-
-                        <div class="forgot-user-head"></div>
-
-                        <div class="forgot-user-body"></div>
-
-                    </div>
-
-
-                    <h1>Esqueceu a senha?</h1>
-
-
-
-                    <p class="forgot-description">
-                        Informe seu e-mail e enviaremos um
-                        link para redefinir sua senha.
-                    </p>
-
-
-
-                    @if (session('status'))
-
-                    <div class="forgot-status">
-                        {{ session('status') }}
-                    </div>
-
-                    @endif
-
-
-                    <form
-                        method="POST"
-                        action="{{ route('password.email') }}">
-
-                        @csrf
-
-
-
-                        <div class="forgot-input-group">
-
-                            <div class="forgot-input-icon">
-
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.8"
-                                    stroke="currentColor">
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M3 7.5 12 13l9-5.5M4.5 5.25h15A1.5 1.5 0 0 1 21 6.75v10.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.25V6.75a1.5 1.5 0 0 1 1.5-1.5Z" />
-                                </svg>
-
-                            </div>
-
-
-                            <div class="forgot-input-content">
-
-                                <label for="email">
-                                    Email
-                                </label>
-
-                                <input
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    value="{{ old('email') }}"
-                                    required
-                                    autofocus
-                                    autocomplete="email">
-
-                            </div>
-
-                        </div>
-
-
-
-                        @error('email')
-
-                        <div class="forgot-error">
-                            {{ $message }}
-                        </div>
-
-                        @enderror
-
-
-
-
-                        <div class="forgot-actions">
-
-                            <a
-                                href="{{ route('login') }}"
-                                class="forgot-back">
-                                Voltar para o login
-                            </a>
-
-
-                            <button
-                                type="submit"
-                                class="forgot-button">
-                                Enviar link
-                            </button>
-
-                        </div>
-
-                    </form>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</x-guest-layout>
+</html>
