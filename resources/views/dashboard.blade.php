@@ -21,10 +21,11 @@
 
 
     @vite([
-        'resources/css/app.css',
-        'resources/css/navLanding.css',
-        'resources/css/dashboard.css'
-    ])
+    'resources/css/app.css',
+    'resources/css/dashboard.css',
+    'resources/css/userSidebar.css',
+    'resources/js/userSidebar.js'
+])
 
 </head>
 
@@ -120,10 +121,10 @@
 <body class="user-dashboard-body">
 
     {{-- =========================================================
-        NAVBAR
+        SIDEBAR
     ========================================================== --}}
 
-    <x-nav-landing />
+    <x-user-sidebar />
 
 
     {{-- =========================================================

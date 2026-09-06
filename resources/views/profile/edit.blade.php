@@ -19,7 +19,9 @@
     @vite([
     'resources/css/app.css',
     'resources/css/navLanding.css',
-    'resources/css/profile.css'
+    'resources/css/profile.css',
+    'resources/css/userSidebar.css',
+    'resources/js/userSidebar.js'
     ])
 
 </head>
@@ -117,10 +119,10 @@ end($partesNome),
 <body class="profile-body">
 
     {{-- =========================================================
-        NAVBAR NORMAL
+        SIDEBAR
     ========================================================== --}}
 
-    <x-nav-landing />
+    <x-user-sidebar />
 
 
     {{-- =========================================================

@@ -22,9 +22,11 @@
 
     @vite([
         'resources/css/app.css',
-        'resources/css/navLanding.css',
         'resources/css/productManagement.css',
-        'resources/js/productManagement.js'
+        'resources/css/userSidebar.css',
+
+        'resources/js/productManagement.js',
+        'resources/js/userSidebar.js'
     ])
 
 </head>
@@ -32,8 +34,7 @@
 
 <body class="pm-public-body">
 
-    {{-- NAVBAR --}}
-    <x-nav-landing />
+    <x-user-sidebar />
 
 
     <main class="pm-public-main">

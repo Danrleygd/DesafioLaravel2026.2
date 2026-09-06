@@ -16,19 +16,25 @@
     >
 
     <title>
-        Vendas - Administração D-tech
+        Minhas Vendas - D-tech
     </title>
 
 
     @vite([
         'resources/css/app.css',
-        'resources/css/vendas.css'
+        'resources/css/vendas.css',
+        'resources/css/userSidebar.css',
+
+        'resources/js/userSidebar.js'
     ])
 
 </head>
 
 
 <body class="sales-public-body">
+
+    <x-user-sidebar />
+
 
     <main class="sales-public-main">
 

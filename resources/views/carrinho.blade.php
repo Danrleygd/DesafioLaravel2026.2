@@ -1,8 +1,33 @@
-<x-app-layout>
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-    @vite(['resources/css/carrinho.css'])
+<head>
+    <meta charset="UTF-8">
 
-    <main class="carrinho-page">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="csrf-token"
+        content="{{ csrf_token() }}"
+    >
+
+    <title>Carrinho - D-tech</title>
+
+    @vite([
+        'resources/css/app.css',
+        'resources/css/navLanding.css',
+        'resources/css/carrinho.css'
+    ])
+</head>
+
+<body class="carrinho-body">
+
+    <x-nav-landing />
+
+<main class="carrinho-page">
 
         {{-- =========================================================
             MENSAGENS
@@ -1483,4 +1508,5 @@
 
     </script>
 
-</x-app-layout>
+</body>
+</html>
