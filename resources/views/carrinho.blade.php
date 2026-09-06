@@ -1502,6 +1502,122 @@
                 }
 
 
+                /*
+                |--------------------------------------------------------------------------
+                | CONTINUAR PARA O CHECKOUT
+                |--------------------------------------------------------------------------
+                */
+
+                if (btnContinuar) {
+
+                    btnContinuar.addEventListener(
+                        'click',
+                        async function () {
+
+                            const selecionados =
+                                Array.from(
+                                    pegarProdutos()
+                                )
+                                .filter(
+                                    function (produto) {
+
+                                        const checkbox =
+                                            produto.querySelector(
+                                                '.produto-select'
+                                            );
+
+                                        return (
+                                            checkbox &&
+                                            checkbox.checked
+                                        );
+                                    }
+                                )
+                                .map(
+                                    function (produto) {
+
+                                        return parseInt(
+                                            produto.dataset.itemId
+                                        );
+                                    }
+                                )
+                                .filter(
+                                    function (itemId) {
+
+                                        return Number.isInteger(itemId);
+                                    }
+                                );
+
+                            if (
+                                selecionados.length === 0
+                            ) {
+                                return;
+                            }
+
+                            btnContinuar.disabled = true;
+
+                            try {
+
+                                const response =
+                                    await fetch(
+                                        "{{ route('checkout.itens.selecionar') }}",
+                                        {
+                                            method: 'POST',
+
+                                            headers: {
+                                                'Content-Type':
+                                                    'application/json',
+
+                                                'Accept':
+                                                    'application/json',
+
+                                                'X-CSRF-TOKEN':
+                                                    csrfToken
+                                            },
+
+                                            body:
+                                                JSON.stringify({
+                                                    itens:
+                                                        selecionados
+                                                })
+                                        }
+                                    );
+
+                                const dados =
+                                    await response.json();
+
+                                if (!response.ok) {
+
+                                    alert(
+                                        dados.message
+                                        ??
+                                        'Não foi possível iniciar o checkout.'
+                                    );
+
+                                    return;
+                                }
+
+                                window.location.href =
+                                    dados.redirect
+                                    ??
+                                    "{{ route('checkout.endereco') }}";
+
+                            } catch (erro) {
+
+                                console.error(erro);
+
+                                alert(
+                                    'Erro ao iniciar o checkout.'
+                                );
+
+                            } finally {
+
+                                btnContinuar.disabled = false;
+                            }
+                        }
+                    );
+                }
+
+
                 atualizarResumo();
             }
         );
