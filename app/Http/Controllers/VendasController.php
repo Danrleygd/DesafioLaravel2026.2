@@ -12,11 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class VendasController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | HISTÓRICO DE VENDAS DO USUÁRIO
-    |--------------------------------------------------------------------------
-    */
+    //vendas usuario
 
     public function index(Request $request)
     {
@@ -27,7 +23,6 @@ class VendasController extends Controller
                 ->route('admin.vendas.index');
         }
 
-
         return $this->carregarPagina(
             $request,
             false
@@ -35,16 +30,11 @@ class VendasController extends Controller
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | HISTÓRICO DE TODAS AS VENDAS - ADMIN
-    |--------------------------------------------------------------------------
-    */
+    //vendas admin
 
     public function adminIndex(Request $request)
     {
         $this->garantirAdministrador();
-
 
         return $this->carregarPagina(
             $request,
@@ -53,21 +43,13 @@ class VendasController extends Controller
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | PÁGINA DE VENDAS
-    |--------------------------------------------------------------------------
-    */
+    //vendas usuario e admin
 
     private function carregarPagina(
         Request $request,
         bool $isAdmin
     ) {
-        /*
-        |--------------------------------------------------------------------------
-        | QUERY BASE
-        |--------------------------------------------------------------------------
-        */
+        
 
         $query =
             $this->queryBase(
@@ -75,11 +57,7 @@ class VendasController extends Controller
             );
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | FILTROS
-        |--------------------------------------------------------------------------
-        */
+    
 
         $this->aplicarFiltros(
             $query,
@@ -88,11 +66,7 @@ class VendasController extends Controller
         );
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | ESTATÍSTICAS
-        |--------------------------------------------------------------------------
-        */
+    //estatisticas
 
         $totalVendas =
             (clone $query)
@@ -126,11 +100,7 @@ class VendasController extends Controller
                 );
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | LISTAGEM
-        |--------------------------------------------------------------------------
-        */
+        //listagem
 
         $vendas =
             (clone $query)
@@ -169,23 +139,14 @@ class VendasController extends Controller
                 ->withQueryString();
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | CATEGORIAS
-        |--------------------------------------------------------------------------
-        */
-
+        // categorias
         $categorias =
             DB::table('Categorias')
                 ->orderBy('nome')
                 ->get();
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | VIEW
-        |--------------------------------------------------------------------------
-        */
+       //chamando a view correta dependendo se é admin ou usuário
 
         $view =
             $isAdmin
@@ -208,11 +169,7 @@ class VendasController extends Controller
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | QUERY BASE
-    |--------------------------------------------------------------------------
-    */
+
 
     private function queryBase(
         bool $isAdmin
@@ -274,11 +231,7 @@ class VendasController extends Controller
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | FILTROS
-    |--------------------------------------------------------------------------
-    */
+    //filtros
 
     private function aplicarFiltros(
         Builder $query,
@@ -335,11 +288,7 @@ class VendasController extends Controller
         }
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | CATEGORIA
-        |--------------------------------------------------------------------------
-        */
+        //filtro por categoria
 
         if (
             $request->filled(
@@ -353,11 +302,7 @@ class VendasController extends Controller
         }
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | STATUS
-        |--------------------------------------------------------------------------
-        */
+        
 
         if (
             $request->filled(
@@ -371,11 +316,7 @@ class VendasController extends Controller
         }
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | DATA INICIAL
-        |--------------------------------------------------------------------------
-        */
+      //data
 
         if (
             $request->filled(
@@ -389,12 +330,6 @@ class VendasController extends Controller
             );
         }
 
-
-        /*
-        |--------------------------------------------------------------------------
-        | DATA FINAL
-        |--------------------------------------------------------------------------
-        */
 
         if (
             $request->filled(
@@ -410,11 +345,18 @@ class VendasController extends Controller
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | PDF DO USUÁRIO
-    |--------------------------------------------------------------------------
-    */
+
+
+    public function pdf(
+        Request $request
+    ) {
+        return $this->relatorioPdf(
+            $request
+        );
+    }
+
+
+   //pdf
 
     public function relatorioPdf(
         Request $request
@@ -433,11 +375,17 @@ class VendasController extends Controller
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | PDF DO ADMINISTRADOR
-    |--------------------------------------------------------------------------
-    */
+
+    public function adminPdf(
+        Request $request
+    ) {
+        return $this->adminRelatorioPdf(
+            $request
+        );
+    }
+
+
+    //pdf admin
 
     public function adminRelatorioPdf(
         Request $request
@@ -452,21 +400,13 @@ class VendasController extends Controller
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | GERAR PDF
-    |--------------------------------------------------------------------------
-    */
+  //gerar pdf
 
     private function gerarPdf(
         Request $request,
         bool $isAdmin
     ) {
-        /*
-        |--------------------------------------------------------------------------
-        | PERÍODO OBRIGATÓRIO
-        |--------------------------------------------------------------------------
-        */
+        
 
         $dados =
             $request->validate(
@@ -495,11 +435,7 @@ class VendasController extends Controller
             );
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | CONSULTA
-        |--------------------------------------------------------------------------
-        */
+       
 
         $query =
             $this->queryBase(
@@ -551,11 +487,7 @@ class VendasController extends Controller
                 ->get();
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | TOTAIS
-        |--------------------------------------------------------------------------
-        */
+        
 
         $valorTotal =
             (float) $vendas->sum(
@@ -569,11 +501,7 @@ class VendasController extends Controller
             );
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | PDF
-        |--------------------------------------------------------------------------
-        */
+        
 
         $pdf =
             Pdf::loadView(
@@ -607,11 +535,6 @@ class VendasController extends Controller
                 );
 
 
-        /*
-         * stream() abre o PDF no navegador.
-         * Com target="_blank" abrirá em outra aba.
-         */
-
         return $pdf->stream(
             'relatorio-vendas-' .
             $dados['data_inicio'] .
@@ -622,11 +545,18 @@ class VendasController extends Controller
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | XLSX - SOMENTE ADMIN
-    |--------------------------------------------------------------------------
-    */
+    // planilha xlsx 
+
+    public function adminXlsx(
+        Request $request
+    ) {
+        return $this->adminRelatorioXlsx(
+            $request
+        );
+    }
+
+
+    // planilha xlsx admin
 
     public function adminRelatorioXlsx(
         Request $request
@@ -665,11 +595,7 @@ class VendasController extends Controller
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | GARANTIR ADMINISTRADOR
-    |--------------------------------------------------------------------------
-    */
+    //só adm
 
     private function garantirAdministrador(): void
     {

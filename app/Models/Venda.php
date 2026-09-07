@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
+use Database\Factories\VendaFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Venda extends Model
 {
@@ -13,28 +12,29 @@ class Venda extends Model
 
     protected $table = 'Vendas';
 
-    protected $fillable = [
-        'CompradorId',
-        'ValorTotal',
-        'StatusPagamento',
-        'LocalPagamento',
-        'codigo_transacao',
+    protected $primaryKey = 'id';
+
+    protected $guarded = [];
+
+    public $timestamps = true;
+
+    protected $casts = [
+        'ValorTotal' => 'decimal:2',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
-    protected function casts(): array
+    protected static function newFactory(): VendaFactory
     {
-        return [
-            'ValorTotal' => 'decimal:2',
-        ];
+        return VendaFactory::new();
     }
 
-    public function comprador(): BelongsTo
+    public function comprador()
     {
-        return $this->belongsTo(User::class, 'CompradorId');
-    }
-
-    public function itens(): HasMany
-    {
-        return $this->hasMany(ItemVenda::class, 'VendasId');
+        return $this->belongsTo(
+            User::class,
+            'CompradorId',
+            'id'
+        );
     }
 }

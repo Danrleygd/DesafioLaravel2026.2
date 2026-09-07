@@ -9,39 +9,118 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        $administrador = User::factory()->create([
-            'nome' => 'Administrador',
-            'email' => 'admin@dtech.test',
-            'tipo' => 'administrador',
-            'cpf' => '00000000001',
-        ]);
+       //admin
 
-        $usuarios = User::factory(5)->create();
-        $vendedores = $usuarios->push($administrador);
+        $administrador =
+            User::factory()
+                ->create([
+
+                    'nome' =>
+                        'Administrador',
+
+                    'email' =>
+                        'admin@dtech.test',
+
+                    'tipo' =>
+                        'administrador',
+
+                    'cpf' =>
+                        '00000000001',
+                ]);
+
+
+        //usuario
+
+        $usuarios =
+            User::factory(
+                5
+            )
+                ->create();
+
+
+        //vendendor
+
+        $vendedores =
+            $usuarios
+                ->push(
+                    $administrador
+                );
+
+
+        //categorias
 
         $nomesCategorias = [
+
             'Smartphones',
+
             'Tablets',
+
             'Computadores',
+
             'Controles',
+
             'Consoles',
+
             'Audio',
+
             'Acessorios',
+
             'Eletrodomesticos',
         ];
 
-        $categorias = collect($nomesCategorias)->map(
-            fn (string $nome) => Categoria::factory()->create(['nome' => $nome])
-        );
 
-        Produto::factory(24)->create([
-            'UsuarioId' => fn () => $vendedores->random()->id,
-            'categoria_id' => fn () => $categorias->random()->id,
+        $categorias =
+            collect(
+                $nomesCategorias
+            )
+                ->map(
+                    function (
+                        string $nome
+                    ) {
+
+                        return Categoria::factory()
+                            ->create([
+                                'nome' => $nome,
+                            ]);
+                    }
+                );
+
+
+        //produtos
+
+        Produto::factory(
+            24
+        )
+            ->create([
+
+                'UsuarioId' =>
+                    function () use (
+                        $vendedores
+                    ) {
+
+                        return $vendedores
+                            ->random()
+                            ->id;
+                    },
+
+                'categoria_id' =>
+                    function () use (
+                        $categorias
+                    ) {
+
+                        return $categorias
+                            ->random()
+                            ->id;
+                    },
+            ]);
+
+
+        //vendas
+
+        $this->call([
+            VendaSeeder::class,
         ]);
     }
 }
